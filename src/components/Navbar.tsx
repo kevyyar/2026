@@ -1,18 +1,18 @@
 import React from "react";
-import { Square, Phone, Download, Menu, X } from "lucide-react";
+import { Download, Menu, X, Mail, SquareCode } from "lucide-react";
 
 type NavItem = {
   label: string;
   href: string;
+  disabled?: boolean;
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Product", href: "#product" },
-  { label: "Extensions", href: "#extensions" },
-  { label: "Docs", href: "#docs" },
-  { label: "Blog", href: "#blog" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Resources", href: "#resources" },
+  { label: "About Me", href: "#about-me" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Blog (upcoming)", href: "#", disabled: true },
+  { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -31,15 +31,21 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-40 border-b border-gray-100 bg-white/80 backdrop-blur">
+      <nav className="sticky top-0 z-40 border-b border-gray-100 bg-secondary/30 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Desktop bar */}
           <div className="flex h-14 items-center justify-between">
             {/* Left: Logo + Nav */}
             <div className="flex items-center gap-6">
-              <a href="/" className="flex items-center gap-2 text-gray-900" aria-label="Home">
-                <Square className="h-6 w-6 text-primary" />
-                <span className="hidden text-sm font-medium sm:inline">My Portfolio</span>
+              <a
+                href="/"
+                className="flex items-center gap-2 text-gray-900"
+                aria-label="Home"
+              >
+                <SquareCode className="h-6 w-6 text-primary" />
+                {/*<span className="hidden text-sm font-medium sm:inline">
+                  My Portfolio
+                </span>*/}
               </a>
 
               <ul className="hidden items-center gap-1 md:flex">
@@ -47,7 +53,7 @@ export default function Navbar() {
                   <li key={item.label}>
                     <a
                       href={item.href}
-                      className="rounded-md px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                      className={`rounded-md px-3 py-2 text-sm font-normal ${item.disabled ? "text-gray-400 hover:bg-gray-400 pointer-events-none" : "text-gray-700"} hover:bg-gray-100 hover:text-gray-900`}
                     >
                       {item.label}
                     </a>
@@ -60,18 +66,18 @@ export default function Navbar() {
             <div className="hidden items-center gap-3 md:flex">
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-normal text-gray-900 shadow-sm hover:bg-gray-50"
+                className="btn-secondary flex items-center gap-2"
               >
-                <Phone size={16} />
                 <span>Lets Link</span>
+                <Mail size={16} />
               </a>
               <a
                 href="/cv.pdf"
                 download
-                className="btn inline-flex items-center gap-2"
+                className="btn flex items-center gap-2"
               >
-                <Download size={16} />
                 <span>Download CV</span>
+                <Download size={16} />
               </a>
             </div>
 
@@ -93,16 +99,18 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           {/* Dark overlay */}
-          <div 
-            className={`fixed inset-0 bg-black/50 ${isAnimating ? 'overlay-enter' : 'overlay-exit'}`}
+          <div
+            className={`fixed inset-0 bg-black/50 ${isAnimating ? "overlay-enter" : "overlay-exit"}`}
             onClick={closeMobileMenu}
           />
-          
+
           {/* Drawer */}
-          <div className={`fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl ${isAnimating ? 'drawer-enter' : 'drawer-exit'}`}>
+          <div
+            className={`fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl ${isAnimating ? "drawer-enter" : "drawer-exit"}`}
+          >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-100">
-              <h2 className="text-lg font-medium text-gray-900">Menu</h2>
+              <h2 className="text-primary"><SquareCode /></h2>
               <button
                 type="button"
                 className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100"
@@ -120,7 +128,7 @@ export default function Navbar() {
                   <li key={item.label}>
                     <a
                       href={item.href}
-                      className="block rounded-lg px-3 py-3 text-base font-normal text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                      className={`block rounded-lg px-3 py-3 text-base font-normal ${item.disabled ? "text-gray-400 hover:bg-gray-400 pointer-events-none" : "text-gray-700"} hover:bg-gray-50 hover:text-gray-900 transition-colors`}
                       onClick={closeMobileMenu}
                     >
                       {item.label}
@@ -137,7 +145,7 @@ export default function Navbar() {
                 className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-base font-normal text-gray-900 shadow-sm hover:bg-gray-50 transition-colors"
                 onClick={closeMobileMenu}
               >
-                <Phone size={16} />
+                <Mail size={16} />
                 <span>Lets Link</span>
               </a>
               <a

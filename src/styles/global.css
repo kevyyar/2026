@@ -10,6 +10,8 @@
     --font-family-primary: "Lora", serif;
     --font-family-secondary: "iAWriterQuattroSRegular", sans-serif;
     --color-primary: #0551CF;
+    --color-secondary: #F7F6F2;
+    --color-tertiary: #083894;
 }
 
 @layer base {
@@ -21,14 +23,24 @@
 
 @layer components {
     .heading-display {
-        @apply text-5xl;
-        font-family: var(--font-family-primary);
-        font-weight: 100;
+        @apply text-5xl font-family-primary text-primary;
+    }
+
+    .btn, .btn-secondary {
+        @apply text-sm inline-block px-3 py-2 rounded-lg tracking-tight font-light transition delay-75 duration-300 ease-in-out;
     }
 
     .btn {
-        @apply inline-block px-4 py-2 rounded-lg bg-primary text-white tracking-tight font-light;
+        @apply bg-primary shadow-tertiary text-white hover:bg-tertiary/90;
     }
+
+    .btn-secondary {
+        @apply bg-white shadow-none border border-black/20 text-black hover:bg-gray-100;
+    }
+
+    /*.btn-secondary {
+        @apply text-sm inline-block bg-white shadow-none border border-black/20 text-black items-center gap-2
+    }*/
 }
 
 @layer utilities {
