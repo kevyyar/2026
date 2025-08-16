@@ -33,23 +33,25 @@
 
 @layer utilities {
     .bg-grid {
-        --grid-size: 24px;
+        --grid-size: 32px;
         --grid-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
         background-color: white;
         background-image:
-            repeating-linear-gradient(
-                to right,
-                var(--grid-color),
-                var(--grid-color) 1px,
-                transparent 1px,
-                transparent var(--grid-size)
-            ),
-            repeating-linear-gradient(
+            linear-gradient(
                 to bottom,
-                var(--grid-color),
-                var(--grid-color) 1px,
-                transparent 1px,
-                transparent var(--grid-size)
-            );
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.8) 70%,
+                rgba(255, 255, 255, 1) 100%
+            ),
+            linear-gradient(var(--grid-color) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+        background-size:
+            auto,
+            var(--grid-size) var(--grid-size),
+            var(--grid-size) var(--grid-size);
+        background-position:
+            0 0,
+            0 0,
+            0 0;
     }
 }
