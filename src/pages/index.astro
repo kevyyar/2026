@@ -1,16 +1,23 @@
 ---
-
+import "../styles/global.css";
+import Hero from "../components/Hero";
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>KevTheDev Portfolio | 2025</title>
+    </head>
+    <body>
+        <Hero
+            title="What are we building next?"
+            subtitle="I'm Kevin, a software developer who loves bringing concepts to life on the web. From sleek interfaces to robust functionality, I craft solutions that work."
+            ctaText="Let's connect"
+            ctaHref="#projects"
+            client:visible
+        />
+    </body>
 </html>
