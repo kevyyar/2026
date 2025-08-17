@@ -37,18 +37,47 @@ export default function WorkExperience() {
           role.
         </p>
       </div>
-      <div className="mt-10 space-y-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        {workExperiences.map((experience, index) => (
-          <WorkExperienceCard
-            key={index}
-            title={experience.title}
-            company={experience.company}
-            location={experience.location}
-            duration={experience.duration}
-            description={experience.description}
-            technologies={experience.technologies}
-          />
-        ))}
+      <div className="mt-10 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <div className="flex flex-col">
+          {workExperiences.map((experience, index) => (
+            <div key={index}>
+              {/* Dot at the beginning of each card */}
+              <div className="flex">
+                <div className="w-6 flex justify-center">
+                  <div className="w-2.5 h-2.5 rounded-full bg-secondary border-2 border-primary"></div>
+                </div>
+                <div className="flex-1"></div>
+              </div>
+              
+              {/* Line segment that matches the card height */}
+              <div className="flex items-stretch">
+                <div className="w-6 flex justify-center">
+                  <div className="w-px bg-primary h-full"></div>
+                </div>
+                <div className="flex-1">
+                  <WorkExperienceCard
+                    title={experience.title}
+                    company={experience.company}
+                    location={experience.location}
+                    duration={experience.duration}
+                    description={experience.description}
+                    technologies={experience.technologies}
+                  />
+                </div>
+              </div>
+
+              {/* Connecting line between cards */}
+              {index !== workExperiences.length - 1 && (
+                <div className="flex">
+                  <div className="w-6 flex justify-center">
+                    <div className="w-px bg-primary h-8"></div>
+                  </div>
+                  <div className="flex-1 h-8"></div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
