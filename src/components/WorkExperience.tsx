@@ -3,29 +3,31 @@ import WorkExperienceCard from "./WorkExperienceCard";
 export default function WorkExperience() {
   const workExperiences = [
     {
-      title: "Senior Software Engineer",
-      company: "Acme Cloud",
-      location: "United States",
+      title: "Software Developer",
+      company: "Softtek",
+      location: "Mexico",
       duration: "2022 - Present",
-      description: "Led the design and delivery of a multi-tenant platform, decomposed critical monolith paths into services, improved p95 latency by 40%, defined SLOs and on-call rotations, and mentored junior engineers.",
-      technologies: ["TypeScript", "Node.js", "React", "PostgreSQL", "Redis", "AWS", "Docker", "Kubernetes", "Terraform", "GraphQL"]
+      description:
+        "Frontend-focused developer building polished, accessible product experiences with React, Next.js, and Vue. I partner closely with design and product to turn requirements into fast, maintainable UI, and I use AI daily to accelerate delivery and deepen learning. On the backend I work with Firebase and some Node.js for lightweight APIs. Comfortable in CMS ecosystems like Drupal, I ship thoughtfully: reusable components, SSR/SEO, performance budgets, and pragmatic testing that keeps features moving while preserving quality.",
+      technologies: [
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Vue",
+        "Node.js",
+        "Firebase",
+        "Drupal",
+      ],
     },
     {
-      title: "Full Stack Developer",
-      company: "TechStart Solutions",
-      location: "San Francisco, CA",
-      duration: "2020 - 2022",
-      description: "Built responsive web applications using modern frameworks, collaborated with cross-functional teams to deliver features on time, optimized database queries reducing load times by 30%, and implemented CI/CD pipelines for automated deployment.",
-      technologies: ["JavaScript", "React", "Node.js", "MongoDB", "Express.js", "Git", "Jenkins", "HTML5", "CSS3", "REST APIs"]
+      title: "Freelance Web Developer",
+      company: "Self-Employed",
+      location: "Mexico",
+      duration: "2019 - 2022",
+      description:
+        "Built and launched websites for local businesses needing a strong digital presence. Led end-to-end delivery—from discovery and scoping to UI implementation and handoff—while improving client communication, requirement gathering, and project planning. Focused on clean, responsive frontends and usability, which accelerated my learning and solidified core web fundamentals.",
+      technologies: ["JavaScript", "HTML5", "CSS3"],
     },
-    {
-      title: "Junior Software Developer",
-      company: "Digital Innovations Inc",
-      location: "Austin, TX",
-      duration: "2018 - 2020",
-      description: "Developed and maintained web applications, participated in code reviews and agile development processes, worked on bug fixes and feature enhancements, and gained experience with version control and testing frameworks.",
-      technologies: ["Python", "Django", "JavaScript", "jQuery", "MySQL", "Git", "Bootstrap", "Linux", "JSON", "API Integration"]
-    }
   ];
 
   return (
@@ -48,7 +50,7 @@ export default function WorkExperience() {
                 </div>
                 <div className="flex-1"></div>
               </div>
-              
+
               {/* Line segment that matches the card height */}
               <div className="flex items-stretch">
                 <div className="w-6 flex justify-center">

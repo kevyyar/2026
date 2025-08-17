@@ -30,18 +30,18 @@ export default function WorkExperienceCard({
           </h3>
         </div>
 
-        <div className="flex items-center gap-4 p-2 text-gray-600">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4 p-2 text-gray-600 w-full whitespace-nowrap">
+          <div className="flex items-center gap-2 shrink-0">
             <Building2 className="w-4 h-4" />
             <span className="font-medium">{company}</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 min-w-0">
             <MapPin className="w-4 h-4" />
-            <span>{location}</span>
+            <span className="truncate">{location}</span>
           </div>
           {duration && (
-            <div>
-              <span className="mt-2 text-sm text-gray-500 font-medium">
+            <div className="shrink-0">
+              <span className="mt-2 text-xs text-gray-500 font-medium">
                 {duration}
               </span>
             </div>
