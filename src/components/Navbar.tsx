@@ -8,7 +8,7 @@ type NavItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "About Me", href: "#about-me" },
+  // { label: "About Me", href: "#about-me" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
   { label: "Blog (upcoming)", href: "#", disabled: true },

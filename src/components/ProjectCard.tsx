@@ -48,7 +48,7 @@ export default function ProjectCard({
             <div className="p-2 bg-primary/10 rounded-lg">
               <Folder className="w-6 h-6 text-primary" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 font-family-primary">
+            <h3 className="text-2xl text-gray-900 font-family-primary">
               {title}
             </h3>
           </div>
@@ -58,7 +58,7 @@ export default function ProjectCard({
 
           {/* Problem it solves */}
           <div className="rounded-lg border border-primary/15 bg-primary/5 p-4">
-            <h4 className="text-xs tracking-wide uppercase text-primary font-semibold">
+            <h4 className="text-xs tracking-wide uppercase text-primary">
               Problem it solves
             </h4>
             <p className="mt-2 text-gray-700 leading-relaxed">{problem}</p>

@@ -25,7 +25,7 @@ export default function WorkExperienceCard({
           <div className="p-2 bg-primary/10 rounded-lg">
             <Briefcase className="w-6 h-6 text-primary" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 font-family-primary">
+          <h3 className="text-2xl text-gray-900 font-family-primary">
             {title}
           </h3>
         </div>
@@ -51,7 +51,7 @@ export default function WorkExperienceCard({
 
       {/* Description */}
       <div className="mb-6">
-        <p className="text-gray-700 leading-relaxed text-base">{description}</p>
+        <p className="text-gray-700 leading-relaxed text-base text-left">{description}</p>
       </div>
 
       {/* Technologies */}

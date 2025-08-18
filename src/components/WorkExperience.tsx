@@ -31,7 +31,7 @@ export default function WorkExperience() {
   ];
 
   return (
-    <section className="flex flex-col align-center justify-center text-center py-20 bg-secondary">
+    <section id="experience" className="flex flex-col align-center justify-center text-center py-20 bg-secondary">
       <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <h1 className="heading-display text-3xl">Work Experience</h1>
         <p className="mt-6 text-lg leading-8 text-gray-600">
