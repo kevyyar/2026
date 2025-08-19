@@ -70,17 +70,16 @@ export default function CodeRain({
     "()",
     "<>",
     "</>",
-    "<code/>",
-    "</code>",
-    "</>",
-    "::",
     "=>",
-    "</html>",
     "<div/>",
-    "</script>",
+    "<script />",
+    "foo",
+    "bar",
     "export",
     "import",
-    "() => {}"
+    "() => {}",
+    "Reference Error",
+    "undefined",
   ],
   className = "",
   speedRange = { min: 8, max: 16 },
@@ -142,7 +141,14 @@ export default function CodeRain({
       });
     }
     return items;
-  }, [effectiveCount, symbols, fontSizeRange.min, fontSizeRange.max, opacityRange.min, opacityRange.max]);
+  }, [
+    effectiveCount,
+    symbols,
+    fontSizeRange.min,
+    fontSizeRange.max,
+    opacityRange.min,
+    opacityRange.max,
+  ]);
 
   useLayoutEffect(() => {
     const el = containerRef.current;
@@ -157,7 +163,9 @@ export default function CodeRain({
     if (!width || !height) return;
 
     // Create a tween for each symbol
-    const nodes = Array.from(el.querySelectorAll<HTMLSpanElement>(".js-code-symbol"));
+    const nodes = Array.from(
+      el.querySelectorAll<HTMLSpanElement>(".js-code-symbol"),
+    );
 
     const cleanups: Array<() => void> = [];
 
