@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 type ContactForm = {
   name: string;
   email: string;
+  company: string;
+  projectType: string;
+  budget: string;
   message: string;
 };
 
@@ -47,6 +50,9 @@ export default function Contact() {
     defaultValues: {
       name: "",
       email: "",
+      company: "",
+      projectType: "",
+      budget: "",
       message: "",
     },
   });
@@ -59,87 +65,162 @@ export default function Contact() {
     await new Promise((r) => setTimeout(r, 400));
     // eslint-disable-next-line no-console
     console.log("Contact form submitted:", data);
-    setStatus("Thanks! Your message has been sent.");
+    setStatus("Thank you! We've received your inquiry and will get back to you within 24 hours.");
     reset();
   };
 
   const showNameError = !!dirtyFields.name && !!errors.name;
   const showEmailError = !!dirtyFields.email && !!errors.email;
+  const showCompanyError = !!dirtyFields.company && !!errors.company;
   const showMessageError = !!dirtyFields.message && !!errors.message;
 
   return (
     <section id="contact" className="bg-secondary py-20">
       <div className="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto text-center">
-        <h2 className="heading-display text-3xl">Contact</h2>
+        <h2 className="heading-display text-3xl sm:text-4xl">Let&apos;s Build Something Great</h2>
         <p className="mt-6 text-lg leading-8 text-gray-600">
-          Have a project in mind or just want to say hi? Send a message and
-          I&apos;ll get back to you.
+          Ready to transform your digital presence? Tell us about your project and
+          we&apos;ll get back to you within 24 hours.
         </p>
       </div>
 
       <div className="mt-10 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
         <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6 sm:p-8">
           <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Name */}
+            {/* Name & Email Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Name */}
+              <div className="text-left">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                  Your Name <span className="text-primary">*</span>
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  autoComplete="name"
+                  aria-invalid={showNameError}
+                  aria-describedby={showNameError ? "name-error" : undefined}
+                  className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder-gray-400 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+                  placeholder="John Doe"
+                  {...register("name", {
+                    setValueAs: sanitizeInline,
+                    required: "Please enter your name (at least 2 characters).",
+                    minLength: {
+                      value: 2,
+                      message: "Please enter your name (at least 2 characters).",
+                    },
+                    pattern: {
+                      value: /^[\p{L}\d .,'-]{2,}$/u,
+                      message: "Name contains invalid characters.",
+                    },
+                  })}
+                />
+                {showNameError && (
+                  <p id="name-error" className="mt-2 text-sm text-red-600">
+                    {errors.name?.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div className="text-left">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Work Email <span className="text-primary">*</span>
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  aria-invalid={showEmailError}
+                  aria-describedby={showEmailError ? "email-error" : undefined}
+                  className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder-gray-400 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+                  placeholder="john@company.com"
+                  {...register("email", {
+                    setValueAs: sanitizeEmail,
+                    required: "Please enter your email.",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+                      message: "Please enter a valid email address.",
+                    },
+                  })}
+                />
+                {showEmailError && (
+                  <p id="email-error" className="mt-2 text-sm text-red-600">
+                    {errors.email?.message}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Company */}
             <div className="text-left">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Name <span className="text-primary">*</span>
+              <label htmlFor="company" className="block text-sm font-medium text-gray-700">
+                Company / Organization <span className="text-primary">*</span>
               </label>
               <input
-                id="name"
+                id="company"
                 type="text"
-                autoComplete="name"
-                aria-invalid={showNameError}
-                aria-describedby={showNameError ? "name-error" : undefined}
+                autoComplete="organization"
+                aria-invalid={showCompanyError}
+                aria-describedby={showCompanyError ? "company-error" : undefined}
                 className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder-gray-400 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
-                placeholder="Your name"
-                {...register("name", {
+                placeholder="Your company name"
+                {...register("company", {
                   setValueAs: sanitizeInline,
-                  required: "Please enter your name (at least 2 characters).",
+                  required: "Please enter your company or organization name.",
                   minLength: {
                     value: 2,
-                    message: "Please enter your name (at least 2 characters).",
-                  },
-                  pattern: {
-                    value: /^[\p{L}\d .,'-]{2,}$/u,
-                    message: "Name contains invalid characters.",
+                    message: "Please enter your company name (at least 2 characters).",
                   },
                 })}
               />
-              {showNameError && (
-                <p id="name-error" className="mt-2 text-sm text-red-600">
-                  {errors.name?.message}
+              {showCompanyError && (
+                <p id="company-error" className="mt-2 text-sm text-red-600">
+                  {errors.company?.message}
                 </p>
               )}
             </div>
 
-            {/* Email */}
-            <div className="text-left">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email <span className="text-primary">*</span>
-              </label>
-              <input
-                id="email"
-                type="email"
-                autoComplete="email"
-                aria-invalid={showEmailError}
-                aria-describedby={showEmailError ? "email-error" : undefined}
-                className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder-gray-400 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
-                placeholder="you@example.com"
-                {...register("email", {
-                  setValueAs: sanitizeEmail,
-                  required: "Please enter your email.",
-                  pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
-                    message: "Please enter a valid email address.",
-                  },
-                })}
-              />
-              {showEmailError && (
-                <p id="email-error" className="mt-2 text-sm text-red-600">
-                  {errors.email?.message}
-                </p>
-              )}
+            {/* Project Type & Budget Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Project Type */}
+              <div className="text-left">
+                <label htmlFor="projectType" className="block text-sm font-medium text-gray-700">
+                  Project Type
+                </label>
+                <select
+                  id="projectType"
+                  className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+                  {...register("projectType")}
+                >
+                  <option value="">Select type</option>
+                  <option value="web-app">Web Application</option>
+                  <option value="ecommerce">E-commerce</option>
+                  <option value="website">Website / Landing Page</option>
+                  <option value="redesign">Redesign / Optimization</option>
+                  <option value="maintenance">Maintenance / Support</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              {/* Budget */}
+              <div className="text-left">
+                <label htmlFor="budget" className="block text-sm font-medium text-gray-700">
+                  Budget Range
+                </label>
+                <select
+                  id="budget"
+                  className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+                  {...register("budget")}
+                >
+                  <option value="">Select budget</option>
+                  <option value="5k-10k">$5K - $10K</option>
+                  <option value="10k-25k">$10K - $25K</option>
+                  <option value="25k-50k">$25K - $50K</option>
+                  <option value="50k+">$50K+</option>
+                  <option value="not-sure">Not sure yet</option>
+                </select>
+              </div>
             </div>
 
             {/* Message */}
@@ -158,12 +239,12 @@ export default function Contact() {
                 aria-invalid={showMessageError}
                 aria-describedby={showMessageError ? "message-error" : undefined}
                 className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder-gray-400 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 resize-y"
-                placeholder="How can I help?"
+                placeholder="Tell us about your project, goals, timeline, and any specific requirements..."
                 maxLength={MAX_MESSAGE + 200}
                 {...register("message", {
                   setValueAs: sanitizeMultiline,
-                  required: "Please write a message (at least 10 characters).",
-                  minLength: { value: 10, message: "Please write a message (at least 10 characters)." },
+                  required: "Please describe your project (at least 20 characters).",
+                  minLength: { value: 20, message: "Please describe your project (at least 20 characters)." },
                   maxLength: { value: MAX_MESSAGE, message: `Message is too long (max ${MAX_MESSAGE} characters).` },
                 })}
               />
@@ -198,7 +279,7 @@ export default function Contact() {
                 Clear
               </button>
               <button type="submit" className="btn disabled:opacity-50" disabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Send Message"}
+                {isSubmitting ? "Sending..." : "Submit Inquiry"}
               </button>
             </div>
           </form>

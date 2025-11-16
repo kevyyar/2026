@@ -2,8 +2,10 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import WorkExperience from "../components/WorkExperience";
-import Projects from "../components/Projects";
+import Services from "../components/Services";
+import CaseStudies from "../components/CaseStudies";
+import Process from "../components/Process";
+import About from "../components/About";
 import Contact from "../components/Contact";
 ---
 
@@ -13,19 +15,23 @@ import Contact from "../components/Contact";
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
-        <title>KevTheDev Portfolio | 2025</title>
+        <title>2026 Digital Agency | Web Solutions for Thriving Businesses</title>
     </head>
     <body>
         <Navbar client:load />
         <Hero
-            title="What are we building next?"
-            subtitle="I'm Kevin, a software developer who loves bringing concepts to life on the web. From sleek interfaces to robust functionality, I craft solutions that work."
-            ctaText="Let's connect"
-            ctaHref="#projects"
+            title="Build Digital Products That Drive Growth"
+            subtitle="We're a modern web agency specializing in creating powerful digital solutions for businesses ready to thrive. From concept to launch, we transform your vision into reality with cutting-edge technology and strategic design."
+            ctaText="Start Your Project"
+            ctaHref="#contact"
+            secondaryCtaText="View Our Work"
+            secondaryCtaHref="#case-studies"
             client:visible
         />
-        <WorkExperience />
-        <Projects client:load />
+        <Services client:load />
+        <CaseStudies client:load />
+        <Process client:load />
+        <About client:load />
         <Contact client:load />
     </body>
 </html>

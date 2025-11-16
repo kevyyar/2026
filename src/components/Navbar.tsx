@@ -1,5 +1,5 @@
 import React from "react";
-import { Download, Menu, X, Mail, SquareCode } from "lucide-react";
+import { Menu, X, ArrowRight, SquareCode } from "lucide-react";
 
 type NavItem = {
   label: string;
@@ -8,11 +8,10 @@ type NavItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  // { label: "About Me", href: "#about-me" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { label: "Blog (upcoming)", href: "#", disabled: true },
-  { label: "Contact", href: "#contact" },
+  { label: "Services", href: "#services" },
+  { label: "Case Studies", href: "#case-studies" },
+  { label: "Process", href: "#process" },
+  { label: "About", href: "#about" },
 ];
 
 export default function Navbar() {
@@ -42,10 +41,10 @@ export default function Navbar() {
                 className="flex items-center gap-2 text-gray-900"
                 aria-label="Home"
               >
-                <SquareCode className="h-6 w-6 text-primary" />
-                {/*<span className="hidden text-sm font-medium sm:inline">
-                  My Portfolio
-                </span>*/}
+                <SquareCode className="h-7 w-7 text-primary" />
+                <span className="text-lg font-bold font-family-primary text-primary">
+                  2026
+                </span>
               </a>
 
               <ul className="hidden items-center gap-1 md:flex">
@@ -66,18 +65,10 @@ export default function Navbar() {
             <div className="hidden items-center gap-3 md:flex">
               <a
                 href="#contact"
-                className="btn-secondary flex items-center gap-2"
+                className="btn flex items-center gap-2 px-6 py-3"
               >
-                <span>Lets Link</span>
-                <Mail size={16} />
-              </a>
-              <a
-                href="/cv.pdf"
-                download
-                className="btn flex items-center gap-2"
-              >
-                <span>Download CV</span>
-                <Download size={16} />
+                <span>Get Started</span>
+                <ArrowRight size={16} />
               </a>
             </div>
 
@@ -139,23 +130,14 @@ export default function Navbar() {
             </div>
 
             {/* Actions */}
-            <div className="px-4 py-4 space-y-3 border-t border-gray-100">
+            <div className="px-4 py-4 border-t border-gray-100">
               <a
                 href="#contact"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-base font-normal text-gray-900 shadow-sm hover:bg-gray-50 transition-colors"
-                onClick={closeMobileMenu}
-              >
-                <Mail size={16} />
-                <span>Lets Link</span>
-              </a>
-              <a
-                href="/cv.pdf"
-                download
                 className="btn inline-flex w-full items-center justify-center gap-2 py-3 text-base"
                 onClick={closeMobileMenu}
               >
-                <Download size={16} />
-                <span>Download CV</span>
+                <span>Get Started</span>
+                <ArrowRight size={16} />
               </a>
             </div>
           </div>

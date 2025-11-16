@@ -12,6 +12,7 @@
     --color-primary: #0551CF;
     --color-secondary: #F7F6F2;
     --color-tertiary: #083894;
+    --color-accent: #10B981;
 }
 
 @layer base {
