@@ -1,5 +1,6 @@
-import React from "react";
+import { useState } from "react";
 import { ArrowUpRight, TrendingUp } from "lucide-react";
+import CaseStudyModal from "./CaseStudyModal";
 
 type CaseStudyProps = {
   client: string;
@@ -28,7 +29,8 @@ function CaseStudyCard({
   results,
   tags,
   href = "#",
-}: CaseStudyProps) {
+  onClick,
+}: CaseStudyProps & { onClick?: () => void }) {
   return (
     <article className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300">
       {/* Image */}
@@ -100,19 +102,21 @@ function CaseStudyCard({
         </div>
 
         {/* CTA */}
-        <a
-          href={href}
-          className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+        <button
+          onClick={onClick}
+          className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all cursor-pointer"
         >
           View Case Study
           <ArrowUpRight size={18} />
-        </a>
+        </button>
       </div>
     </article>
   );
 }
 
 export default function CaseStudies() {
+  const [selectedCase, setSelectedCase] = useState<number | null>(null);
+
   const caseStudies = [
     {
       client: "TechFlow Solutions",
@@ -132,6 +136,9 @@ export default function CaseStudies() {
       ],
       tags: ["Next.js", "Node.js", "PostgreSQL", "AWS"],
       href: "#",
+      websiteUrl: "https://techflowsolutions.example.com",
+      fullDescription:
+        "Our team worked closely with TechFlow to migrate their monolithic architecture to a modern microservices approach. This included rebuilding the frontend with Next.js for improved performance, implementing Redis caching, and optimizing PostgreSQL queries that were causing bottlenecks.",
     },
     {
       client: "GreenLeaf Organics",
@@ -151,6 +158,9 @@ export default function CaseStudies() {
       ],
       tags: ["Shopify Plus", "React", "UX Design", "CRO"],
       href: "#",
+      websiteUrl: "https://greenleaforganics.example.com",
+      fullDescription:
+        "Through extensive user testing and analytics review, we identified key friction points in the customer journey. Our redesign focused on streamlining the checkout process from 5 steps to 2, improving product discovery, and creating a mobile-first experience that drives conversions.",
     },
     {
       client: "HealthTrack Pro",
@@ -170,6 +180,9 @@ export default function CaseStudies() {
       ],
       tags: ["React", "HIPAA", "Security", "Healthcare"],
       href: "#",
+      websiteUrl: "https://healthtrackpro.example.com",
+      fullDescription:
+        "Security and usability were paramount for this project. We implemented end-to-end encryption for all patient data, two-factor authentication, and comprehensive audit logging. The interface was designed to be intuitive for patients of all technical skill levels while providing healthcare providers with powerful tools for patient management.",
     },
   ];
 
@@ -188,18 +201,32 @@ export default function CaseStudies() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {caseStudies.slice(0, 2).map((study, idx) => (
-            <CaseStudyCard key={idx} {...study} />
+            <CaseStudyCard
+              key={idx}
+              {...study}
+              onClick={() => setSelectedCase(idx)}
+            />
           ))}
         </div>
 
         <div className="grid grid-cols-1 gap-8">
           {caseStudies.slice(2).map((study, idx) => (
             <div key={idx} className="max-w-3xl mx-auto w-full">
-              <CaseStudyCard {...study} />
+              <CaseStudyCard
+                {...study}
+                onClick={() => setSelectedCase(idx + 2)}
+              />
             </div>
           ))}
         </div>
       </div>
+
+      {/* Modal */}
+      <CaseStudyModal
+        isOpen={selectedCase !== null}
+        onClose={() => setSelectedCase(null)}
+        caseStudy={selectedCase !== null ? caseStudies[selectedCase] : null}
+      />
     </section>
   );
 }

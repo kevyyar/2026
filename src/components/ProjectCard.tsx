@@ -9,6 +9,7 @@ type ProjectCardProps = {
   demoHref?: string;
   repoHref?: string;
   className?: string;
+  onClick?: () => void;
 };
 
 export default function ProjectCard({
@@ -20,10 +21,14 @@ export default function ProjectCard({
   demoHref,
   repoHref,
   className = "",
+  onClick,
 }: ProjectCardProps) {
   return (
     <article
-      className={`bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full ${className}`}
+      className={`bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full ${
+        onClick ? "cursor-pointer" : ""
+      } ${className}`}
+      onClick={onClick}
     >
       <div className="flex flex-col">
         {/* Image on top as background */}

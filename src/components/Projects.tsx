@@ -1,6 +1,10 @@
+import { useState } from "react";
 import ProjectCard from "./ProjectCard";
+import ProjectModal from "./ProjectModal";
 
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+
   const projects = [
     {
       title: "Dev Journal",
@@ -12,6 +16,10 @@ export default function Projects() {
         "Context switching and scattered notes slow down coding sessions. This app centralizes dev notes with fast navigation and a clean writing experience.",
       demoHref: "#",
       repoHref: "#",
+      websiteUrl: "https://devjournal.example.com",
+      technologies: ["React", "TypeScript", "IndexedDB", "Markdown"],
+      fullDescription:
+        "Built for developers who need to capture ideas, code snippets, and technical notes without leaving their flow. Features include syntax highlighting, keyboard shortcuts, and offline-first architecture.",
     },
     {
       title: "TaskBoard",
@@ -23,6 +31,10 @@ export default function Projects() {
         "Most tools are heavy for solo workflows. TaskBoard keeps focus tight, fast, and frictionless while working offline.",
       demoHref: "#",
       repoHref: "#",
+      websiteUrl: "https://taskboard.example.com",
+      technologies: ["React", "DnD Kit", "LocalStorage", "Tailwind CSS"],
+      fullDescription:
+        "Drag-and-drop interface built with accessibility in mind. Works entirely offline, with optional cloud sync. Perfect for managing personal projects and daily todos.",
     },
     {
       title: "API Scout",
@@ -34,6 +46,10 @@ export default function Projects() {
         "Developers often jump between tools to test APIs and write code snippets. API Scout streamlines both in one place.",
       demoHref: "#",
       repoHref: "#",
+      websiteUrl: "https://apiscout.example.com",
+      technologies: ["React", "Monaco Editor", "TypeScript", "Vite"],
+      fullDescription:
+        "Test REST APIs, save collections, and auto-generate TypeScript code snippets. Includes authentication helpers, request history, and environment variables support.",
     },
     {
       title: "Portfolio Builder",
@@ -45,6 +61,10 @@ export default function Projects() {
         "Setting up a personal site takes time. This tool accelerates it with opinionated, accessible defaults.",
       demoHref: "#",
       repoHref: "#",
+      websiteUrl: "https://portfoliobuilder.example.com",
+      technologies: ["Astro", "React", "Tailwind CSS", "MDX"],
+      fullDescription:
+        "Choose from professionally designed templates, customize content and styling, then export production-ready code. Built with modern web standards and optimized for performance.",
     },
   ];
 
@@ -76,10 +96,18 @@ export default function Projects() {
               problem={p.problem}
               demoHref={p.demoHref}
               repoHref={p.repoHref}
+              onClick={() => setSelectedProject(idx)}
             />
           ))}
         </div>
       </div>
+
+      {/* Modal */}
+      <ProjectModal
+        isOpen={selectedProject !== null}
+        onClose={() => setSelectedProject(null)}
+        project={selectedProject !== null ? projects[selectedProject] : null}
+      />
     </section>
   );
 }
