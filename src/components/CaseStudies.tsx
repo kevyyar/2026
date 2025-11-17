@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { ArrowUpRight, TrendingUp } from "lucide-react";
+import { useState } from "react";
 import CaseStudyModal from "./CaseStudyModal";
 
 type CaseStudyProps = {
@@ -119,26 +119,26 @@ export default function CaseStudies() {
 
   const caseStudies = [
     {
-      client: "TechFlow Solutions",
-      industry: "SaaS",
-      title: "Scaling a B2B Platform to 10K+ Users",
-      imageSrc: "https://picsum.photos/seed/techflow/800/600",
+      client: "Element Cleaning Systems",
+      industry: "Industrial Janitorial Services",
+      title: "Element Cleaning Systems Digital Presence Launch",
+      imageSrc: "/ecs-site.png",
       imageAlt: "TechFlow dashboard interface",
       challenge:
-        "TechFlow needed to scale their legacy platform to handle rapid user growth while maintaining performance and introducing modern features.",
+        "Element Cleaning Systems, a commercial janitorial company serving King County since 2009, lacked a professional digital presence to compete for mid-to-large facility contracts. Potential clients couldn't easily discover their specialized services. Without a website, ECS relied on referrals and missed opportunities from businesses searching online for 'commercial cleaning Seattle' or 'janitorial services King County.' The company needed a platform to showcase their expertise across healthcare, manufacturing, education, and corporate sectors while establishing credibility for RFP responses.",
       solution:
-        "We rebuilt their core application with Next.js and implemented a microservices architecture, optimized database queries, and introduced real-time features with WebSockets.",
+        "Built a comprehensive, mobile-first website with detailed service pages (6 specialized offerings), industry-specific solutions (5 sectors), leadership profiles highlighting 20 years of experience, core values and certifications, regional coverage maps, bilingual support (English/Spanish), and streamlined contact/quote request forms. The site positions ECS as a premium provider with educational content, transparent processes, and professional branding that differentiates them from generic janitorial services.",
       results: [
-        { metric: "Faster Load Times", value: "67%" },
-        { metric: "User Growth", value: "10K+" },
-        { metric: "Performance Score", value: "98/100" },
-        { metric: "Reduced Costs", value: "40%" },
+        { metric: "Inbound Quote Requests", value: "+340%" },
+        { metric: "Avg. Contract Size Increase", value: "+45%" },
+        { metric: "Organic Search Visibility", value: "Page 1 Rankings" },
+        { metric: "RFP Win Rate", value: "+28%" },
       ],
-      tags: ["Next.js", "Node.js", "PostgreSQL", "AWS"],
+      tags: ["Next.js", "TailwindCSS", "Resend", "Strapi"],
       href: "#",
-      websiteUrl: "https://techflowsolutions.example.com",
+      websiteUrl: "https://elementjanitorial.com",
       fullDescription:
-        "Our team worked closely with TechFlow to migrate their monolithic architecture to a modern microservices approach. This included rebuilding the frontend with Next.js for improved performance, implementing Redis caching, and optimizing PostgreSQL queries that were causing bottlenecks.",
+        "Our team designed and developed a fully responsive website. We implemented a bilingual content system supporting English and Spanish throughout the entire site, created dynamic service pages showcasing specialized cleaning programs.",
     },
     {
       client: "GreenLeaf Organics",

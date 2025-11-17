@@ -1,5 +1,5 @@
+import { ArrowRight, Menu, SquareCode, X } from "lucide-react";
 import React from "react";
-import { Menu, X, ArrowRight, SquareCode } from "lucide-react";
 
 type NavItem = {
   label: string;
@@ -38,12 +38,12 @@ export default function Navbar() {
             <div className="flex items-center gap-6">
               <a
                 href="/"
-                className="flex items-center gap-2 text-gray-900"
+                className="flex items-center gap-1 text-gray-900"
                 aria-label="Home"
               >
                 <SquareCode className="h-7 w-7 text-primary" />
                 <span className="text-lg font-bold font-family-primary text-primary">
-                  2026
+                  i am Kev
                 </span>
               </a>
 

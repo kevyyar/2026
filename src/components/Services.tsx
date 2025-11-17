@@ -56,14 +56,14 @@ export default function Services() {
     },
     {
       icon: <Rocket size={28} />,
-      title: "Product Strategy",
+      title: "Landing Pages & Websites",
       description:
-        "From concept to launch, we help you build products that solve real problems and achieve business goals with data-driven decisions.",
+        "Professional websites that convert visitors into customers. Perfect for businesses looking to establish or enhance their online presence.",
       features: [
-        "Market research and validation",
-        "Product roadmap planning",
-        "MVP development and iteration",
-        "Go-to-market strategy",
+        "Custom landing pages for campaigns",
+        "Business websites and portfolios",
+        "E-commerce storefronts",
+        "Mobile-responsive across all devices",
       ],
     },
     {
@@ -92,14 +92,14 @@ export default function Services() {
     },
     {
       icon: <LineChart size={28} />,
-      title: "Analytics & Growth",
+      title: "Business Automation",
       description:
-        "Make informed decisions with comprehensive analytics. We track what matters and help you optimize for continuous growth.",
+        "Streamline your operations with custom web tools and automations. Save time and reduce errors by automating repetitive tasks.",
       features: [
-        "Analytics setup and integration",
-        "Conversion rate optimization",
-        "A/B testing and experimentation",
-        "Performance reporting and insights",
+        "Custom dashboards and admin panels",
+        "Workflow automation tools",
+        "Data collection and reporting systems",
+        "Third-party integrations (CRM, email, etc.)",
       ],
     },
   ];
