@@ -37,6 +37,7 @@ function sanitizeMultiline(value: string) {
 
 export default function Contact() {
   const [status, setStatus] = useState("");
+  const [statusType, setStatusType] = useState<"" | "success" | "error">("");
 
   const {
     register,
@@ -62,32 +63,40 @@ export default function Contact() {
 
   const onSubmit = async (data: ContactForm) => {
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      setStatus("");
+      setStatusType("");
+
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY,
           ...data,
-          subject: "New Submission from Contact Form",
         }),
       });
 
       const result = await response.json();
 
+      if (!response.ok || !result.success) {
+        setStatus(result?.message || "Something went wrong. Please try again later.");
+        setStatusType("error");
+        return;
+      }
+
       if (result.success) {
-        setStatus("Thank you! I've received your inquiry and will get back to you within 24 hours.");
+        setStatus(result.message || "Thank you! I've received your inquiry and will get back to you within 24 hours.");
+        setStatusType("success");
         reset();
       } else {
         setStatus("Something went wrong. Please try again later.");
-        // eslint-disable-next-line no-console
-        console.error("Web3Forms Error:", result);
+        setStatusType("error");
+        console.error("Contact submission error:", result);
       }
     } catch (error) {
       setStatus("Something went wrong. Please check your connection and try again.");
-      // eslint-disable-next-line no-console
+      setStatusType("error");
       console.error("Submission Error:", error);
     }
   };
@@ -263,7 +272,7 @@ export default function Contact() {
                 aria-describedby={showMessageError ? "message-error" : undefined}
                 className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder-gray-400 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 resize-y"
                 placeholder="Tell me about your project, goals, timeline, and any specific requirements..."
-                maxLength={MAX_MESSAGE + 200}
+                maxLength={MAX_MESSAGE}
                 {...register("message", {
                   setValueAs: sanitizeMultiline,
                   required: "Please describe your project (at least 20 characters).",
@@ -283,7 +292,11 @@ export default function Contact() {
               <div
                 role="status"
                 aria-live="polite"
-                className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800"
+                className={`rounded-lg px-4 py-3 text-sm ${
+                  statusType === "error"
+                    ? "border border-red-200 bg-red-50 text-red-800"
+                    : "border border-green-200 bg-green-50 text-green-800"
+                }`}
               >
                 {status}
               </div>
@@ -297,6 +310,7 @@ export default function Contact() {
                 onClick={() => {
                   reset();
                   setStatus("");
+                  setStatusType("");
                 }}
               >
                 Clear

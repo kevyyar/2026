@@ -1,5 +1,9 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
+
+// Prefer useLayoutEffect on the client for measurement/animations, but fall back to useEffect on the server to avoid SSR warnings.
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 type CodeRainProps = {
   /**
@@ -51,7 +55,7 @@ function pick<T>(arr: T[]): T {
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (typeof window === "undefined" || !("matchMedia" in window)) return;
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReduced(!!mq.matches);
@@ -87,6 +91,7 @@ export default function CodeRain({
   fontSizeRange = { min: 14, max: 38 },
 }: CodeRainProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [mounted, setMounted] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
 
   // Track container size to adapt animation bounds and density
@@ -95,7 +100,7 @@ export default function CodeRain({
     height: 0,
   });
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
@@ -124,6 +129,8 @@ export default function CodeRain({
   }, [count, size.width]);
 
   const specs: SymbolSpec[] = useMemo(() => {
+    // Avoid rendering random spans during SSR to prevent hydration mismatch
+    if (!mounted) return [];
     const items: SymbolSpec[] = [];
     const minFS = fontSizeRange.min;
     const maxFS = fontSizeRange.max;
@@ -142,6 +149,7 @@ export default function CodeRain({
     }
     return items;
   }, [
+    mounted,
     effectiveCount,
     symbols,
     fontSizeRange.min,
@@ -150,9 +158,10 @@ export default function CodeRain({
     opacityRange.max,
   ]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+    if (!mounted) return;
     if (reducedMotion) return; // Respect reduced motion: no animations
 
     // Clear any previous animations within this container
@@ -227,7 +236,12 @@ export default function CodeRain({
     return () => {
       cleanups.forEach((fn) => fn());
     };
-  }, [reducedMotion, size.height, size.width, speedRange.max, speedRange.min]);
+  }, [mounted, reducedMotion, size.height, size.width, speedRange.max, speedRange.min]);
+
+  // Set mounted flag on client to align initial render with SSR markup
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div
@@ -240,26 +254,27 @@ export default function CodeRain({
         fontFamily: "var(--font-family-secondary)",
       }}
     >
-      {specs.map((s, i) => (
-        <span
-          key={i}
-          className="js-code-symbol absolute"
-          style={{
-            color: "var(--color-primary)",
-            opacity: s.opacity,
-            fontSize: `${s.fontSize}px`,
-            // For reduced motion, statically scatter with percent-based positioning
-            left: reducedMotion ? `${s.leftPct}%` : 0,
-            top: reducedMotion ? `${s.topPct}%` : 0,
-            transform: reducedMotion
-              ? `translate3d(-50%, -50%, 0) rotate(${s.rotate}deg)`
-              : undefined,
-            whiteSpace: "pre",
-          }}
-        >
-          {s.text}
-        </span>
-      ))}
+      {mounted &&
+        specs.map((s, i) => (
+          <span
+            key={i}
+            className="js-code-symbol absolute"
+            style={{
+              color: "var(--color-primary)",
+              opacity: s.opacity,
+              fontSize: `${s.fontSize}px`,
+              // For reduced motion, statically scatter with percent-based positioning
+              left: reducedMotion ? `${s.leftPct}%` : 0,
+              top: reducedMotion ? `${s.topPct}%` : 0,
+              transform: reducedMotion
+                ? `translate3d(-50%, -50%, 0) rotate(${s.rotate}deg)`
+                : undefined,
+              whiteSpace: "pre",
+            }}
+          >
+            {s.text}
+          </span>
+        ))}
     </div>
   );
 }
