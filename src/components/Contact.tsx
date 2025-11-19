@@ -61,12 +61,35 @@ export default function Contact() {
   const messageLen = messageValue.length;
 
   const onSubmit = async (data: ContactForm) => {
-    // simulate async submit, replace with your API call
-    await new Promise((r) => setTimeout(r, 400));
-    // eslint-disable-next-line no-console
-    console.log("Contact form submitted:", data);
-    setStatus("Thank you! I've received your inquiry and will get back to you within 24 hours.");
-    reset();
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY,
+          ...data,
+          subject: "New Submission from Contact Form",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("Thank you! I've received your inquiry and will get back to you within 24 hours.");
+        reset();
+      } else {
+        setStatus("Something went wrong. Please try again later.");
+        // eslint-disable-next-line no-console
+        console.error("Web3Forms Error:", result);
+      }
+    } catch (error) {
+      setStatus("Something went wrong. Please check your connection and try again.");
+      // eslint-disable-next-line no-console
+      console.error("Submission Error:", error);
+    }
   };
 
   const showNameError = !!dirtyFields.name && !!errors.name;
