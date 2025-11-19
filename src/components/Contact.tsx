@@ -65,7 +65,7 @@ export default function Contact() {
     await new Promise((r) => setTimeout(r, 400));
     // eslint-disable-next-line no-console
     console.log("Contact form submitted:", data);
-    setStatus("Thank you! We've received your inquiry and will get back to you within 24 hours.");
+    setStatus("Thank you! I've received your inquiry and will get back to you within 24 hours.");
     reset();
   };
 
@@ -79,8 +79,8 @@ export default function Contact() {
       <div className="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto text-center">
         <h2 className="heading-display text-3xl sm:text-4xl">Let&apos;s Build Something Great</h2>
         <p className="mt-6 text-lg leading-8 text-gray-600">
-          Ready to transform your digital presence? Tell us about your project and
-          we&apos;ll get back to you within 24 hours.
+          Ready to transform your digital presence? Tell me about your project and
+          I&apos;ll get back to you within 24 hours.
         </p>
       </div>
 
@@ -239,7 +239,7 @@ export default function Contact() {
                 aria-invalid={showMessageError}
                 aria-describedby={showMessageError ? "message-error" : undefined}
                 className="mt-2 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder-gray-400 outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 resize-y"
-                placeholder="Tell us about your project, goals, timeline, and any specific requirements..."
+                placeholder="Tell me about your project, goals, timeline, and any specific requirements..."
                 maxLength={MAX_MESSAGE + 200}
                 {...register("message", {
                   setValueAs: sanitizeMultiline,

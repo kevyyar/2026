@@ -66,7 +66,7 @@ export default function Process() {
       icon: <Search size={20} />,
       title: "Discovery & Strategy",
       description:
-        "We start by understanding your business, goals, and challenges. Through in-depth research and stakeholder interviews, we define the project scope and create a strategic roadmap.",
+        "I start by understanding your business, goals, and challenges. Through in-depth research and stakeholder interviews, I define the project scope and create a strategic roadmap.",
       deliverables: [
         "Project brief and requirements document",
         "User research and competitive analysis",
@@ -79,7 +79,7 @@ export default function Process() {
       icon: <Lightbulb size={20} />,
       title: "Design & Prototyping",
       description:
-        "Our design team creates wireframes and high-fidelity prototypes that bring your vision to life. We iterate based on feedback to ensure the solution meets user needs.",
+        "My design process creates wireframes and high-fidelity prototypes that bring your vision to life. I iterate based on feedback to ensure the solution meets user needs.",
       deliverables: [
         "Wireframes and user flows",
         "High-fidelity mockups",
@@ -92,7 +92,7 @@ export default function Process() {
       icon: <Code2 size={20} />,
       title: "Development & Testing",
       description:
-        "We build your solution using modern technologies and best practices. Rigorous testing ensures quality, performance, and security before launch.",
+        "I build your solution using modern technologies and best practices. Rigorous testing ensures quality, performance, and security before launch.",
       deliverables: [
         "Clean, maintainable codebase",
         "Quality assurance testing",
@@ -105,7 +105,7 @@ export default function Process() {
       icon: <Rocket size={20} />,
       title: "Launch & Growth",
       description:
-        "We deploy your product and monitor its performance. Post-launch, we provide ongoing support, gather user feedback, and continuously optimize for growth.",
+        "I deploy your product and monitor its performance. Post-launch, I provide ongoing support, gather user feedback, and continuously optimize for growth.",
       deliverables: [
         "Deployment and hosting setup",
         "Analytics and monitoring",
@@ -120,11 +120,11 @@ export default function Process() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="heading-display text-4xl sm:text-5xl mb-6">
-            How We Work
+            How I Work
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             A proven process that delivers results. From discovery to launch and
-            beyond, we're with you every step of the way.
+            beyond, I'm with you every step of the way.
           </p>
         </div>
 
@@ -146,7 +146,7 @@ export default function Process() {
               Ready to get started?
             </h3>
             <p className="text-gray-600 mb-6 max-w-md">
-              Let's discuss your project and how we can help you achieve your
+              Let's discuss your project and how I can help you achieve your
               goals.
             </p>
             <a href="#contact" className="btn inline-flex items-center px-8 py-4">

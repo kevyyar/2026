@@ -46,7 +46,7 @@ export default function Services() {
       icon: <Palette size={28} />,
       title: "UI/UX Design",
       description:
-        "Beautiful, intuitive interfaces that engage users and drive conversions. We blend aesthetics with usability to create memorable experiences.",
+        "Beautiful, intuitive interfaces that engage users and drive conversions. I blend aesthetics with usability to create memorable experiences.",
       features: [
         "User research and persona development",
         "Wireframing and prototyping",
@@ -70,7 +70,7 @@ export default function Services() {
       icon: <Zap size={28} />,
       title: "Performance Optimization",
       description:
-        "Lightning-fast load times and seamless interactions. We optimize every aspect of your site for speed, SEO, and user experience.",
+        "Lightning-fast load times and seamless interactions. I optimize every aspect of your site for speed, SEO, and user experience.",
       features: [
         "Core Web Vitals optimization",
         "Image and asset optimization",
@@ -116,7 +116,7 @@ export default function Services() {
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Comprehensive digital solutions designed to help your business succeed.
-            We combine technical excellence with strategic thinking to deliver results.
+            I combine technical excellence with strategic thinking to deliver results.
           </p>
         </div>
 

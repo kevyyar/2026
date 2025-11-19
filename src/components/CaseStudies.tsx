@@ -127,7 +127,7 @@ export default function CaseStudies() {
       challenge:
         "Element Cleaning Systems, a commercial janitorial company serving King County since 2009, lacked a professional digital presence to compete for mid-to-large facility contracts. Potential clients couldn't easily discover their specialized services. Without a website, ECS relied on referrals and missed opportunities from businesses searching online for 'commercial cleaning Seattle' or 'janitorial services King County.' The company needed a platform to showcase their expertise across healthcare, manufacturing, education, and corporate sectors while establishing credibility for RFP responses.",
       solution:
-        "Built a comprehensive, mobile-first website with detailed service pages (6 specialized offerings), industry-specific solutions (5 sectors), leadership profiles highlighting 20 years of experience, core values and certifications, regional coverage maps, bilingual support (English/Spanish), and streamlined contact/quote request forms. The site positions ECS as a premium provider with educational content, transparent processes, and professional branding that differentiates them from generic janitorial services.",
+        "I built a comprehensive, mobile-first website with detailed service pages (6 specialized offerings), industry-specific solutions (5 sectors), leadership profiles highlighting 20 years of experience, core values and certifications, regional coverage maps, bilingual support (English/Spanish), and streamlined contact/quote request forms. The site positions ECS as a premium provider with educational content, transparent processes, and professional branding that differentiates them from generic janitorial services.",
       results: [
         { metric: "Inbound Quote Requests", value: "+340%" },
         { metric: "Avg. Contract Size Increase", value: "+45%" },
@@ -138,7 +138,7 @@ export default function CaseStudies() {
       href: "#",
       websiteUrl: "https://elementjanitorial.com",
       fullDescription:
-        "Our team designed and developed a fully responsive website. We implemented a bilingual content system supporting English and Spanish throughout the entire site, created dynamic service pages showcasing specialized cleaning programs.",
+        "I designed and developed a fully responsive website. I implemented a bilingual content system supporting English and Spanish throughout the entire site, created dynamic service pages showcasing specialized cleaning programs.",
     },
     {
       client: "GreenLeaf Organics",
@@ -149,7 +149,7 @@ export default function CaseStudies() {
       challenge:
         "GreenLeaf's online store had high traffic but poor conversion rates due to confusing navigation and a complicated checkout process.",
       solution:
-        "We redesigned the entire user experience with data-driven insights, simplified the checkout flow, and optimized for mobile. Integrated with Shopify Plus for better inventory management.",
+        "I redesigned the entire user experience with data-driven insights, simplified the checkout flow, and optimized for mobile. Integrated with Shopify Plus for better inventory management.",
       results: [
         { metric: "Conversion Rate", value: "+112%" },
         { metric: "Cart Abandonment", value: "-58%" },
@@ -160,7 +160,7 @@ export default function CaseStudies() {
       href: "#",
       websiteUrl: "https://greenleaforganics.example.com",
       fullDescription:
-        "Through extensive user testing and analytics review, we identified key friction points in the customer journey. Our redesign focused on streamlining the checkout process from 5 steps to 2, improving product discovery, and creating a mobile-first experience that drives conversions.",
+        "Through extensive user testing and analytics review, I identified key friction points in the customer journey. My redesign focused on streamlining the checkout process from 5 steps to 2, improving product discovery, and creating a mobile-first experience that drives conversions.",
     },
     {
       client: "HealthTrack Pro",
@@ -171,7 +171,7 @@ export default function CaseStudies() {
       challenge:
         "HealthTrack needed a secure, compliant patient portal that could handle sensitive health data while providing an excellent user experience.",
       solution:
-        "We developed a HIPAA-compliant web application with end-to-end encryption, secure authentication, and intuitive interfaces for both patients and healthcare providers.",
+        "I developed a HIPAA-compliant web application with end-to-end encryption, secure authentication, and intuitive interfaces for both patients and healthcare providers.",
       results: [
         { metric: "Patient Adoption", value: "85%" },
         { metric: "Security Score", value: "A+" },
@@ -182,7 +182,7 @@ export default function CaseStudies() {
       href: "#",
       websiteUrl: "https://healthtrackpro.example.com",
       fullDescription:
-        "Security and usability were paramount for this project. We implemented end-to-end encryption for all patient data, two-factor authentication, and comprehensive audit logging. The interface was designed to be intuitive for patients of all technical skill levels while providing healthcare providers with powerful tools for patient management.",
+        "Security and usability were paramount for this project. I implemented end-to-end encryption for all patient data, two-factor authentication, and comprehensive audit logging. The interface was designed to be intuitive for patients of all technical skill levels while providing healthcare providers with powerful tools for patient management.",
     },
   ];
 
@@ -194,7 +194,7 @@ export default function CaseStudies() {
             Success Stories
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Real results for real businesses. See how we've helped companies
+            Real results for real businesses. See how I've helped companies
             transform their digital presence and achieve measurable growth.
           </p>
         </div>

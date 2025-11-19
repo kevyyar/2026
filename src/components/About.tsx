@@ -27,25 +27,25 @@ export default function About() {
       icon: <Target size={28} />,
       title: "Results-Driven",
       description:
-        "We measure success by your success. Every decision is guided by data and focused on achieving your business goals.",
+        "I measure success by your success. Every decision is guided by data and focused on achieving your business goals.",
     },
     {
       icon: <Users size={28} />,
       title: "Collaborative",
       description:
-        "Your team becomes our team. We believe in transparent communication and working together every step of the way.",
+        "Your team becomes my team. I believe in transparent communication and working together every step of the way.",
     },
     {
       icon: <Award size={28} />,
       title: "Quality First",
       description:
-        "We don't cut corners. From clean code to beautiful design, we maintain the highest standards in everything we deliver.",
+        "I don't cut corners. From clean code to beautiful design, I maintain the highest standards in everything I deliver.",
     },
     {
       icon: <Heart size={28} />,
       title: "User-Focused",
       description:
-        "Great products put users first. We create experiences that people love to use and that solve real problems.",
+        "Great products put users first. I create experiences that people love to use and that solve real problems.",
     },
   ];
 
@@ -67,21 +67,21 @@ export default function About() {
             </h2>
             <div className="space-y-4 text-lg text-gray-600 leading-relaxed">
               <p>
-                We're a modern web agency passionate about creating digital
+                I'm a modern freelance developer passionate about creating digital
                 products that make a real impact. What started as a freelance
-                operation has grown into a full-service agency trusted by
+                operation has evolved into a dedicated partnership trusted by
                 businesses across industries.
               </p>
               <p>
-                Our team combines technical expertise with creative thinking to
+                I combine technical expertise with creative thinking to
                 deliver solutions that don't just look good—they drive measurable
-                results. From startups to established enterprises, we help
+                results. From startups to established enterprises, I help
                 businesses thrive in the digital landscape.
               </p>
               <p>
-                We stay at the cutting edge of web technologies, using modern
+                I stay at the cutting edge of web technologies, using modern
                 frameworks and best practices to build fast, secure, and scalable
-                applications. But technology is just a tool—our real focus is on
+                applications. But technology is just a tool—my real focus is on
                 understanding your business and crafting solutions that help you
                 succeed.
               </p>
@@ -107,11 +107,11 @@ export default function About() {
         <div>
           <div className="text-center mb-12">
             <h3 className="text-3xl font-family-primary text-gray-900 mb-4">
-              What Drives Us
+              What Drives Me
             </h3>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Our core values guide every project we take on and every
-              relationship we build.
+              My core values guide every project I take on and every
+              relationship I build.
             </p>
           </div>
 
