@@ -3,9 +3,9 @@ export { renderers } from '../../renderers.mjs';
 
 const prerender = false;
 const MAX_MESSAGE = 2e3;
-const resendApiKey = "re_ZdWGprVF_JoEcXNeLfC4MpcfkA14Rfspr";
-const fromEmail = "Kevin onboarding@resend.dev";
-const toEmail = "devinthedev90@gmail.com";
+const resendApiKey = process.env.RESEND_API_KEY;
+const fromEmail = process.env.RESEND_FROM_EMAIL;
+const toEmail = process.env.RESEND_TO_EMAIL;
 function sanitizeInline(value) {
   return String(value ?? "").replace(/[<>"'`]/g, "").replace(/\u00A0/g, " ").replace(/\s+/g, " ").trim();
 }
@@ -27,6 +27,12 @@ function jsonResponse(body, status = 200) {
 const POST = async ({ request }) => {
   if (!request.headers.get("content-type")?.includes("application/json")) {
     return jsonResponse({ success: false, message: "Unsupported content type" }, 415);
+  }
+  if (!resendApiKey || !fromEmail || !toEmail) {
+    return jsonResponse(
+      { success: false, message: "Email service is not configured on the server." },
+      500
+    );
   }
   let payload;
   try {
