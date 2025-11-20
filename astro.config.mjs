@@ -6,7 +6,6 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
-  outDir: "./build_artifacts",
   integrations: [react()],
   output: "server",
   adapter: vercel(),
