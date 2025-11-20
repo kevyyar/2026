@@ -10,20 +10,25 @@ type ServiceCardProps = {
 
 function ServiceCard({ icon, title, description, features }: ServiceCardProps) {
   return (
-    <div className="group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-      <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-        {icon}
+    <div className="group relative glass-panel p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+      {/* Glow Effect */}
+      <div className="absolute -inset-px bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
+      
+      <div className="relative z-10">
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-blue-500/10 text-blue-400 mb-6 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.1)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+          {icon}
+        </div>
+        <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
+        <p className="text-gray-400 leading-relaxed mb-6 font-light">{description}</p>
+        <ul className="space-y-3 border-t border-white/5 pt-6">
+          {features.map((feature, idx) => (
+            <li key={idx} className="flex items-start gap-3 text-sm text-gray-300 group-hover:text-white transition-colors">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0 shadow-[0_0_5px_#3b82f6]" />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
       </div>
-      <h3 className="text-2xl font-family-primary text-gray-900 mb-4">{title}</h3>
-      <p className="text-gray-600 leading-relaxed mb-6">{description}</p>
-      <ul className="space-y-3">
-        {features.map((feature, idx) => (
-          <li key={idx} className="flex items-start gap-3 text-sm text-gray-700">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
@@ -32,74 +37,74 @@ export default function Services() {
   const services = [
     {
       icon: <Code size={28} />,
-      title: "Web Development",
+      title: "Full-Stack Engineering",
       description:
-        "Custom web applications built with modern frameworks and best practices. Scalable, performant, and tailored to your business needs.",
+        "Architecting scalable, high-performance applications using cutting-edge frameworks. I build robust digital infrastructure designed for growth.",
       features: [
-        "React, Next.js, and Vue applications",
-        "RESTful APIs and backend integration",
-        "Database design and optimization",
-        "Progressive Web Apps (PWA)",
+        "Next.js & React Ecosystems",
+        "Scalable Cloud Architecture",
+        "API Design & Integration",
+        "Complex State Management",
       ],
     },
     {
       icon: <Palette size={28} />,
-      title: "UI/UX Design",
+      title: "Premium UI/UX Design",
       description:
-        "Beautiful, intuitive interfaces that engage users and drive conversions. I blend aesthetics with usability to create memorable experiences.",
+        "Crafting intuitive, aesthetic interfaces that captivate users. I merge behavioral psychology with visual design to drive engagement.",
       features: [
-        "User research and persona development",
-        "Wireframing and prototyping",
-        "Design systems and component libraries",
-        "Responsive and accessible design",
+        "High-Fidelity Prototyping",
+        "Design Systems & Tokens",
+        "Micro-Interactions & Motion",
+        "Accessibility (WCAG) First",
       ],
     },
     {
       icon: <Rocket size={28} />,
-      title: "Landing Pages & Websites",
+      title: "Digital Product Launch",
       description:
-        "Professional websites that convert visitors into customers. Perfect for businesses looking to establish or enhance their online presence.",
+        "Turning concepts into market-ready products. From MVP to full-scale deployment, I ensure a smooth trajectory for your digital assets.",
       features: [
-        "Custom landing pages for campaigns",
-        "Business websites and portfolios",
-        "E-commerce storefronts",
-        "Mobile-responsive across all devices",
+        "Strategic MVP Development",
+        "Marketing-Ready Landing Pages",
+        "E-commerce Solutions",
+        "Cross-Platform Compatibility",
       ],
     },
     {
       icon: <Zap size={28} />,
-      title: "Performance Optimization",
+      title: "Performance Engineering",
       description:
-        "Lightning-fast load times and seamless interactions. I optimize every aspect of your site for speed, SEO, and user experience.",
+        "Obsessive optimization for lightning-fast load times. Speed is a feature, and I ensure your application delivers instantaneous responses.",
       features: [
-        "Core Web Vitals optimization",
-        "Image and asset optimization",
-        "Caching and CDN strategies",
-        "Code splitting and lazy loading",
+        "Core Web Vitals Mastery",
+        "Advanced Caching Strategies",
+        "Bundle Size Optimization",
+        "Server-Side Rendering (SSR)",
       ],
     },
     {
       icon: <Shield size={28} />,
-      title: "Maintenance & Support",
+      title: "Security & Maintenance",
       description:
-        "Keep your digital products running smoothly with proactive maintenance, updates, and dedicated support when you need it.",
+        "Fortifying your digital presence. Proactive monitoring and updates keep your business secure and running without interruption.",
       features: [
-        "Security updates and monitoring",
-        "Bug fixes and troubleshooting",
-        "Feature enhancements",
-        "24/7 support packages available",
+        "Automated Testing Pipelines",
+        "Security Audits & Hardening",
+        "Real-time Error Monitoring",
+        "Continuous Integration (CI/CD)",
       ],
     },
     {
       icon: <LineChart size={28} />,
-      title: "Business Automation",
+      title: "Data-Driven Automation",
       description:
-        "Streamline your operations with custom web tools and automations. Save time and reduce errors by automating repetitive tasks.",
+        "Leveraging data to streamline operations. I build custom tools that automate workflows and provide actionable business intelligence.",
       features: [
-        "Custom dashboards and admin panels",
-        "Workflow automation tools",
-        "Data collection and reporting systems",
-        "Third-party integrations (CRM, email, etc.)",
+        "Custom Dashboards & Admin Panels",
+        "Workflow Automation",
+        "Data Visualization",
+        "Third-Party API Integration",
       ],
     },
   ];
@@ -107,16 +112,19 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="py-24 bg-secondary"
+      className="py-32 bg-black relative"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+       {/* Subtle background glow */}
+       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <span className="text-blue-400 font-medium tracking-wider uppercase text-sm mb-4 block">Capabilities</span>
           <h2 className="heading-display text-4xl sm:text-5xl mb-6">
-            Services Built for Growth
+            Engineering Digital Excellence
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Comprehensive digital solutions designed to help your business succeed.
-            I combine technical excellence with strategic thinking to deliver results.
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light">
+            I provide a comprehensive suite of technical services designed to elevate your brand and streamline your operations.
           </p>
         </div>
 

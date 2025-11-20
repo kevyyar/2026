@@ -59,51 +59,52 @@ export default function CaseStudyModal({
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${
+      className={`fixed inset-0 z-[60] flex items-center justify-center p-4 ${
         isAnimating && isOpen ? "overlay-enter" : "overlay-exit"
       }`}
       onClick={handleBackdropClick}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/90 backdrop-blur-md" />
 
       {/* Modal */}
       <div
-        className={`relative bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden ${
+        className={`relative bg-[#0F172A] border border-white/10 rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden ${
           isAnimating && isOpen ? "drawer-enter" : "drawer-exit"
         }`}
       >
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 z-10 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors shadow-lg"
+          className="absolute top-4 right-4 z-20 p-2 bg-black/50 backdrop-blur-md rounded-full hover:bg-white/20 transition-colors text-white shadow-lg border border-white/10"
           aria-label="Close modal"
         >
-          <X className="w-6 h-6 text-gray-900" />
+          <X className="w-6 h-6" />
         </button>
 
         {/* Scrollable content */}
-        <div className="overflow-y-auto max-h-[90vh]">
+        <div className="overflow-y-auto max-h-[90vh] custom-scrollbar">
           {/* Hero Image */}
-          <div className="relative w-full h-64 md:h-96 bg-gray-100">
+          <div className="relative w-full h-64 md:h-96 bg-gray-900">
             <img
               src={caseStudy.imageSrc}
               alt={caseStudy.imageAlt}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover opacity-90"
             />
-            <div className="absolute top-6 right-20 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium text-gray-700">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent" />
+            <div className="absolute top-6 right-20 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium text-white border border-white/10">
               {caseStudy.industry}
             </div>
           </div>
 
           {/* Content */}
-          <div className="p-8 md:p-12">
+          <div className="p-8 md:p-12 -mt-12 relative z-10">
             {/* Header */}
             <div className="mb-8">
-              <p className="text-sm font-medium text-primary mb-3">
+              <p className="text-sm font-medium text-blue-400 mb-3 tracking-widest uppercase">
                 {caseStudy.client}
               </p>
-              <h2 className="text-3xl md:text-4xl font-family-primary text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
                 {caseStudy.title}
               </h2>
               {caseStudy.websiteUrl && (
@@ -111,29 +112,29 @@ export default function CaseStudyModal({
                   href={caseStudy.websiteUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-primary hover:text-tertiary transition-colors inline-flex items-center gap-1 text-sm"
+                  className="text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center gap-2 text-sm font-medium border-b border-blue-400/30 hover:border-blue-400 pb-0.5"
                 >
                   {caseStudy.websiteUrl.replace(/^https?:\/\//, "")}
-                  <ArrowUpRight className="w-3 h-3" />
+                  <ArrowUpRight className="w-4 h-4" />
                 </a>
               )}
             </div>
 
             {/* Challenge & Solution */}
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
+            <div className="grid md:grid-cols-2 gap-12 mb-12">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
-                  Challenge
+                <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-widest border-l-2 border-blue-500 pl-3">
+                  The Challenge
                 </h3>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-gray-400 leading-relaxed text-lg font-light">
                   {caseStudy.challenge}
                 </p>
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
-                  Solution
+                <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-widest border-l-2 border-green-500 pl-3">
+                  The Solution
                 </h3>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-gray-400 leading-relaxed text-lg font-light">
                   {caseStudy.solution}
                 </p>
               </div>
@@ -141,31 +142,31 @@ export default function CaseStudyModal({
 
             {/* Full Description */}
             {caseStudy.fullDescription && (
-              <div className="mb-8">
-                <h3 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
-                  Details
+              <div className="mb-12">
+                <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-widest">
+                  Deep Dive
                 </h3>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-gray-400 leading-relaxed text-lg font-light">
                   {caseStudy.fullDescription}
                 </p>
               </div>
             )}
 
             {/* Results */}
-            <div className="bg-secondary rounded-2xl p-8 mb-8">
-              <div className="flex items-center gap-2 mb-6">
-                <TrendingUp className="text-primary" size={24} />
-                <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
-                  Results
+            <div className="bg-white/5 border border-white/5 rounded-2xl p-8 mb-12 backdrop-blur-sm">
+              <div className="flex items-center gap-3 mb-8">
+                <TrendingUp className="text-green-400" size={24} />
+                <h3 className="text-sm font-bold text-white uppercase tracking-widest">
+                  Measurable Outcomes
                 </h3>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 {caseStudy.results.map((result, idx) => (
-                  <div key={idx}>
-                    <p className="text-3xl font-bold text-primary mb-2">
+                  <div key={idx} className="text-center md:text-left">
+                    <p className="text-4xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
                       {result.value}
                     </p>
-                    <p className="text-sm text-gray-600">{result.metric}</p>
+                    <p className="text-sm text-gray-400 font-medium uppercase tracking-wide">{result.metric}</p>
                   </div>
                 ))}
               </div>
@@ -173,14 +174,14 @@ export default function CaseStudyModal({
 
             {/* Tags */}
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
-                Technologies
+              <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-widest">
+                Tech Stack
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {caseStudy.tags.map((tag, idx) => (
                   <span
                     key={idx}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
+                    className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 rounded-full text-sm font-medium transition-colors"
                   >
                     {tag}
                   </span>

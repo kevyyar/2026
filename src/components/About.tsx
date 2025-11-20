@@ -9,14 +9,14 @@ type ValueCardProps = {
 
 function ValueCard({ icon, title, description }: ValueCardProps) {
   return (
-    <div className="text-center">
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-4">
+    <div className="text-center group p-6 rounded-2xl hover:bg-white/5 transition-colors duration-300">
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-500/10 text-blue-400 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
         {icon}
       </div>
-      <h3 className="text-xl font-family-primary text-gray-900 mb-3">
+      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
         {title}
       </h3>
-      <p className="text-gray-600 leading-relaxed">{description}</p>
+      <p className="text-gray-400 leading-relaxed font-light text-sm">{description}</p>
     </div>
   );
 }
@@ -25,78 +25,73 @@ export default function About() {
   const values = [
     {
       icon: <Target size={28} />,
-      title: "Results-Driven",
+      title: "Strategic Precision",
       description:
-        "I measure success by your success. Every decision is guided by data and focused on achieving your business goals.",
+        "I don't just write code; I engineer outcomes. Every decision is calculated to maximize your ROI and technical scalability.",
     },
     {
       icon: <Users size={28} />,
-      title: "Collaborative",
+      title: "Radical Transparency",
       description:
-        "Your team becomes my team. I believe in transparent communication and working together every step of the way.",
+        "You are never in the dark. I operate as an extension of your team, providing clear updates and collaborative decision-making.",
     },
     {
       icon: <Award size={28} />,
-      title: "Quality First",
+      title: "Engineering Excellence",
       description:
-        "I don't cut corners. From clean code to beautiful design, I maintain the highest standards in everything I deliver.",
+        "Compromise is not in my vocabulary. I adhere to strict coding standards to ensure your product is robust, secure, and scalable.",
     },
     {
       icon: <Heart size={28} />,
-      title: "User-Focused",
+      title: "Human-Centric Design",
       description:
-        "Great products put users first. I create experiences that people love to use and that solve real problems.",
+        "Technology serves people. I craft experiences that are intuitive, accessible, and delightful, turning users into advocates.",
     },
   ];
 
   const stats = [
-    { value: "50+", label: "Projects Delivered" },
-    { value: "30+", label: "Happy Clients" },
-    { value: "5+", label: "Years Experience" },
-    { value: "98%", label: "Client Satisfaction" },
+    { value: "50+", label: "Projects Deployed" },
+    { value: "30+", label: "Global Partners" },
+    { value: "5+", label: "Years Innovation" },
+    { value: "98%", label: "Retention Rate" },
   ];
 
   return (
-    <section id="about" className="py-24 bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-32 bg-black relative">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent pointer-events-none" />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
           <div>
+            <span className="text-blue-400 font-medium tracking-wider uppercase text-sm mb-4 block">The Vision</span>
             <h2 className="heading-display text-4xl sm:text-5xl mb-6">
-              Building Digital Excellence Since 2020
+              Architecting the Digital Frontier
             </h2>
-            <div className="space-y-4 text-lg text-gray-600 leading-relaxed">
+            <div className="space-y-6 text-lg text-gray-400 leading-relaxed font-light">
               <p>
-                I'm a modern freelance developer passionate about creating digital
-                products that make a real impact. What started as a freelance
-                operation has evolved into a dedicated partnership trusted by
-                businesses across industries.
+                I am a digital product architect obsessed with the intersection of design and engineering. What began as a pursuit of perfect code has evolved into a holistic practice of building digital ecosystems that thrive.
               </p>
               <p>
-                I combine technical expertise with creative thinking to
-                deliver solutions that don't just look good—they drive measurable
-                results. From startups to established enterprises, I help
-                businesses thrive in the digital landscape.
+                I partner with visionaries—from agile startups to established enterprises—to translate complex requirements into elegant, high-performance solutions. My work is not just about shipping features; it's about creating competitive advantages.
               </p>
               <p>
-                I stay at the cutting edge of web technologies, using modern
-                frameworks and best practices to build fast, secure, and scalable
-                applications. But technology is just a tool—my real focus is on
-                understanding your business and crafting solutions that help you
-                succeed.
+                Leveraging the bleeding edge of web technology (React, Astro, Serverless), I build applications that are fast, secure, and ready for the future. But ultimately, technology is the means; your success is the end.
               </p>
             </div>
           </div>
 
           {/* Stats Grid */}
-          <div className="bg-secondary rounded-3xl p-12">
-            <div className="grid grid-cols-2 gap-8">
+          <div className="glass-panel rounded-3xl p-12 border border-white/10 relative overflow-hidden">
+            <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] pointer-events-none" />
+            
+            <div className="grid grid-cols-2 gap-x-8 gap-y-12 relative z-10">
               {stats.map((stat, idx) => (
                 <div key={idx} className="text-center">
-                  <div className="text-5xl font-bold text-primary mb-2 font-family-primary">
+                  <div className="text-5xl font-bold text-white mb-2 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
                     {stat.value}
                   </div>
-                  <div className="text-gray-600 font-medium">{stat.label}</div>
+                  <div className="text-blue-400 text-sm font-medium uppercase tracking-widest">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -105,13 +100,12 @@ export default function About() {
 
         {/* Values */}
         <div>
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-family-primary text-gray-900 mb-4">
-              What Drives Me
+          <div className="text-center mb-16">
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Core Philosophy
             </h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              My core values guide every project I take on and every
-              relationship I build.
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto font-light">
+              The principles that govern my work and ensure delivery excellence.
             </p>
           </div>
 

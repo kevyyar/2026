@@ -18,40 +18,42 @@ export default function WorkExperienceCard({
   duration,
 }: WorkExperienceCardProps) {
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 max-w-2xl mx-auto hover:shadow-xl transition-shadow duration-300">
+    <div className="glass-panel p-8 max-w-2xl mx-auto hover:bg-white/5 transition-all duration-300 border border-white/10 hover:border-blue-500/30 group text-left">
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="p-2 bg-primary/10 rounded-lg">
-            <Briefcase className="w-6 h-6 text-primary" />
-          </div>
-          <h3 className="text-2xl text-gray-900 font-family-primary">
-            {title}
-          </h3>
-        </div>
-
-        <div className="flex items-center gap-4 p-2 text-gray-600 w-full whitespace-nowrap">
-          <div className="flex items-center gap-2 shrink-0">
-            <Building2 className="w-4 h-4" />
-            <span className="font-medium">{company}</span>
-          </div>
-          <div className="flex items-center gap-2 min-w-0">
-            <MapPin className="w-4 h-4" />
-            <span className="truncate">{location}</span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/20 group-hover:border-blue-500/50 transition-colors">
+              <Briefcase className="w-6 h-6 text-blue-400" />
+            </div>
+            <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">
+              {title}
+            </h3>
           </div>
           {duration && (
-            <div className="shrink-0">
-              <span className="mt-2 text-xs text-gray-500 font-medium">
-                {duration}
-              </span>
-            </div>
-          )}
+             <div className="shrink-0 bg-white/5 px-3 py-1 rounded-full border border-white/10">
+               <span className="text-xs text-gray-300 font-medium">
+                 {duration}
+               </span>
+             </div>
+           )}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-4 text-gray-400 w-full">
+          <div className="flex items-center gap-2 shrink-0">
+            <Building2 className="w-4 h-4 text-gray-500" />
+            <span className="font-medium text-gray-300">{company}</span>
+          </div>
+          <div className="flex items-center gap-2 min-w-0">
+            <MapPin className="w-4 h-4 text-gray-500" />
+            <span className="truncate">{location}</span>
+          </div>
         </div>
       </div>
 
       {/* Description */}
-      <div className="mb-6">
-        <p className="text-gray-700 leading-relaxed text-base text-left">{description}</p>
+      <div className="mb-8">
+        <p className="text-gray-400 leading-relaxed text-base font-light">{description}</p>
       </div>
 
       {/* Technologies */}
@@ -59,7 +61,7 @@ export default function WorkExperienceCard({
         {technologies.map((tech, index) => (
           <span
             key={index}
-            className="px-3 py-1 text-sm bg-primary/10 text-primary rounded-full border border-primary/20 font-medium"
+            className="px-3 py-1 text-sm bg-blue-500/5 hover:bg-blue-500/10 text-blue-300 rounded-full border border-blue-500/10 transition-colors"
           >
             {tech}
           </span>
