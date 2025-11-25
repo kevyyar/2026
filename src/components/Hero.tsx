@@ -70,7 +70,7 @@ export default function Hero({
         {/* Badge */}
         <div
           ref={badgeRef}
-          className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-2 mb-8 backdrop-blur-sm shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+          className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-2 mt-16 mb-8 backdrop-blur-sm shadow-[0_0_15px_rgba(59,130,246,0.3)]"
         >
           <Sparkles className="text-blue-400" size={14} />
           <span className="text-sm font-medium text-blue-200 tracking-wide uppercase">

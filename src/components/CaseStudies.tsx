@@ -137,48 +137,70 @@ export default function CaseStudies() {
         "I designed and developed a fully responsive website. I implemented a bilingual content system supporting English and Spanish throughout the entire site, created dynamic service pages showcasing specialized cleaning programs.",
     },
     {
-      client: "GreenLeaf Organics",
+      client: "Aesthete",
       industry: "E-commerce",
-      title: "Revolutionizing the Purchase Journey",
-      imageSrc: "https://picsum.photos/seed/greenleaf/800/600",
-      imageAlt: "GreenLeaf e-commerce storefront",
+      title: "Abstract Expressionism Meets Modern Commerce",
+      imageSrc: "/aesthete-site.png",
+      imageAlt: "Aesthete fashion e-commerce storefront",
       challenge:
-        "High traffic but low conversion rates plagued this organic retailer due to friction-heavy checkout flows.",
+        "A curated fashion brand needed an immersive digital experience that captured their avant-garde aesthetic while driving conversions.",
       solution:
-        "A complete UX overhaul and Shopify Plus integration streamlined the path to purchase, resulting in record-breaking conversion metrics.",
+        "I crafted a visually striking, dark-themed storefront with cinematic transitions and typography that elevates the shopping experience to match the brand's artistic vision.",
       results: [
-        { metric: "Conversion Rate", value: "+112%" },
-        { metric: "Cart Abandonment", value: "-58%" },
-        { metric: "Mobile Sales", value: "+145%" },
-        { metric: "Revenue", value: "+89%" },
+        { metric: "Avg Session", value: "+87%" },
+        { metric: "Conversion", value: "+64%" },
+        { metric: "Brand Recall", value: "92%" },
+        { metric: "Return Rate", value: "+156%" },
       ],
-      tags: ["Shopify Plus", "React", "UX Research", "CRO"],
+      tags: ["Next.js", "Framer Motion", "Shopify", "UX Design"],
       href: "#",
-      websiteUrl: "https://greenleaforganics.example.com",
+      websiteUrl: "https://aesthete-nine.vercel.app",
       fullDescription:
-        "Through extensive user testing and analytics review, I identified key friction points in the customer journey. My redesign focused on streamlining the checkout process from 5 steps to 2, improving product discovery, and creating a mobile-first experience that drives conversions.",
+        "I designed and developed a premium e-commerce experience that positions Aesthete as a destination for abstract expressionism in fashion. The site features dramatic typography, carefully orchestrated animations, and a moody aesthetic that resonates with their discerning clientele.",
     },
     {
-      client: "HealthTrack Pro",
-      industry: "HealthTech",
-      title: "Next-Gen HIPAA Patient Portal",
-      imageSrc: "https://picsum.photos/seed/healthtrack/800/600",
-      imageAlt: "HealthTrack patient portal",
+      client: "Voces Podcast",
+      industry: "Media",
+      title: "Amplifying Local Stories with Global Reach",
+      imageSrc: "/podcast-site.png",
+      imageAlt: "Voces podcast platform",
       challenge:
-        "Balancing strict HIPAA compliance with a consumer-grade user experience for a growing healthcare provider.",
+        "A Spanish-language podcast needed a distinctive platform to showcase episodes and build community around authentic entrepreneurial stories.",
       solution:
-        "I architected a secure, end-to-end encrypted portal that simplifies patient interaction without compromising on data sovereignty.",
+        "I designed a warm, editorial-style platform with bold typography and a vinyl-inspired visual motif that honors the intimacy of audio storytelling.",
       results: [
-        { metric: "Adoption Rate", value: "85%" },
-        { metric: "Security Audit", value: "A+" },
-        { metric: "Support Load", value: "-72%" },
-        { metric: "Efficiency", value: "15hrs/wk" },
+        { metric: "Listeners", value: "+230%" },
+        { metric: "Avg Listen", value: "92%" },
+        { metric: "Subscribers", value: "+180%" },
+        { metric: "Engagement", value: "4.8x" },
       ],
-      tags: ["React", "Node.js", "Encryption", "AWS"],
+      tags: ["Next.js", "Podcast RSS", "Spanish", "Editorial Design"],
       href: "#",
-      websiteUrl: "https://healthtrackpro.example.com",
+      websiteUrl: "https://podcast-fer-2026.vercel.app",
       fullDescription:
-        "Security and usability were paramount for this project. I implemented end-to-end encryption for all patient data, two-factor authentication, and comprehensive audit logging. The interface was designed to be intuitive for patients of all technical skill levels while providing healthcare providers with powerful tools for patient management.",
+        "I built a bilingual podcast platform featuring episode showcases, integrated audio players, and a warm cream-and-orange aesthetic. The design draws inspiration from vinyl records, emphasizing the authentic, human-centered nature of the storytelling.",
+    },
+    {
+      client: "Amor Digital",
+      industry: "SaaS",
+      title: "Digital Wedding Invitations Made Beautiful",
+      imageSrc: "/amor-digital-site.png",
+      imageAlt: "Amor Digital wedding invitation builder",
+      challenge:
+        "Couples needed an elegant way to create and share digital wedding invitations without design skills, while tracking RSVPs in real-time.",
+      solution:
+        "I built a no-code invitation builder with stunning templates, live RSVP tracking, and personalized guest experiences—all in under 2 minutes.",
+      results: [
+        { metric: "Couples", value: "1,000+" },
+        { metric: "Setup Time", value: "2 min" },
+        { metric: "Satisfaction", value: "98%" },
+        { metric: "RSVP Rate", value: "94%" },
+      ],
+      tags: ["Next.js", "Supabase", "Spanish", "No-Code Builder"],
+      href: "#",
+      websiteUrl: "https://digital-invitations-mu.vercel.app",
+      fullDescription:
+        "I designed and developed a SaaS platform enabling couples to create beautiful, personalized digital wedding invitations. Features include template selection, live preview, RSVP tracking with QR codes, and guest management—all wrapped in a warm, romantic aesthetic.",
     },
   ];
 
@@ -197,24 +219,13 @@ export default function CaseStudies() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {caseStudies.slice(0, 2).map((study, idx) => (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {caseStudies.map((study, idx) => (
             <CaseStudyCard
               key={idx}
               {...study}
               onClick={() => setSelectedCase(idx)}
             />
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1">
-           {caseStudies.slice(2).map((study, idx) => (
-            <div key={idx} className="max-w-4xl mx-auto w-full">
-              <CaseStudyCard
-                {...study}
-                onClick={() => setSelectedCase(idx + 2)}
-              />
-            </div>
           ))}
         </div>
       </div>
