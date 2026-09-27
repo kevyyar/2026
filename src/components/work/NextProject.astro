@@ -1,0 +1,152 @@
+---
+import { Picture } from "astro:assets";
+import type { Project } from "../../data/types";
+
+type Props = { project: Project; index: number; total: number };
+const { project, index, total } = Astro.props;
+const number = String(index + 1).padStart(2, "0");
+---
+
+<section class="sheet surface-deep next" aria-labelledby="next-title" data-next>
+  <a href={`/work/${project.slug}`} class="next__link shell" data-cursor="view">
+    <span class="next__meta mono">
+      <span>Next project</span>
+      <span>{number} / {String(total).padStart(2, "0")}</span>
+    </span>
+    <span class="next__row">
+      <span id="next-title" class="next__title display">{project.title}</span>
+      <span class="next__arrow" aria-hidden="true">→</span>
+    </span>
+    <span class="next__client mono muted">{project.client} — {project.industry}</span>
+    <span class="next__thumb" aria-hidden="true">
+      <Picture
+        src={project.image}
+        alt=""
+        formats={["avif", "webp"]}
+        fallbackFormat="jpg"
+        widths={[480, 800]}
+        sizes="(min-width: 1024px) 26rem, 92vw"
+        loading="lazy"
+        decoding="async"
+      />
+    </span>
+  </a>
+  <div class="next__preview" data-next-preview aria-hidden="true">
+    <Picture
+      src={project.image}
+      alt=""
+      formats={["avif", "webp"]}
+      fallbackFormat="jpg"
+      widths={[480, 800]}
+      sizes="26rem"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+</section>
+
+<style>
+  .next {
+    position: relative;
+    overflow: clip;
+    padding-bottom: var(--radius-sheet);
+  }
+
+  .next__link {
+    display: grid;
+    gap: 1.25rem;
+    padding-block: clamp(3.5rem, 9vw, 8rem);
+  }
+
+  .next__meta {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .next__row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .next__title {
+    font-size: clamp(2.6rem, 8.5vw, 9rem);
+    line-height: 0.9;
+    max-width: 14ch;
+    transition: color 0.4s;
+  }
+
+  .next__link:hover .next__title,
+  .next__link:focus-visible .next__title {
+    color: var(--color-signal-deep);
+  }
+
+  .next__arrow {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: clamp(3.5rem, 8vw, 7rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--color-signal);
+    color: var(--color-ink);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    transition: transform 0.6s var(--ease-out-expo), background-color 0.4s, color 0.4s;
+  }
+
+  .next__link:hover .next__arrow {
+    transform: rotate(-45deg);
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .next__thumb {
+    display: block;
+    overflow: hidden;
+    border-radius: 14px;
+    aspect-ratio: 16 / 9;
+  }
+
+  .next__thumb :global(img),
+  .next__preview :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .next__preview {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .next__thumb {
+      max-width: 30rem;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .next__thumb {
+      display: none;
+    }
+
+    .next__preview {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 5;
+      width: 26rem;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 14px;
+      pointer-events: none;
+      opacity: 0;
+      box-shadow: 0 40px 80px -40px rgb(20 18 16 / 0.7);
+    }
+  }
+</style>

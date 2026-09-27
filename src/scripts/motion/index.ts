@@ -16,6 +16,7 @@ import * as workStack from "./work-stack";
 import * as accordion from "./accordion";
 import * as process from "./process";
 import * as tilt from "./tilt";
+import * as nextProject from "./next-project";
 
 type MotionModule = { init: () => Cleanup };
 
@@ -38,6 +39,7 @@ const modules: MotionModule[] = [
   reveal,
   countUp,
   tilt,
+  nextProject,
 ];
 
 let cleanups: Cleanup[] = [];

@@ -21,7 +21,7 @@ The current site is a generic dark "glass + gradient" template with inflated cop
 - [x] T1 Foundation — tokens, fonts, BaseLayout, typed content modules (`src/data`), metric parser, contact validation extraction, Vitest (RED→GREEN). Route: delegated (writer trigger: 2+ non-trivial files).
 - [x] T2 Shell + signature motion — preloader, nav + full-screen menu, cursor, Lenis, progress bar, hero particle field, marquee. Route: delegated.
 - [x] T3 Content sections — manifesto, work stack cards, services, process, experience, principles. Route: delegated.
-- [ ] T4 Case study pages `/work/[slug]` with view transitions. Route: delegated.
+- [x] T4 Case study pages `/work/[slug]` with view transitions. Route: delegated.
 - [ ] T5 Contact + footer, SEO meta, remove legacy components/deps, README. Route: delegated.
 - [ ] T6 Verification — tests, build, mobile/desktop headless screenshots, reduced-motion pass. Route: delegated + parent spot check.
 
@@ -54,6 +54,11 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - Route: delegated writer. Sections: Manifesto (#about, word scrub + fact count-ups), Work (#work, sticky stacked cards), Services (#services, accordion), Process (#process, pinned horizontal ≥1024 / drawn line on mobile), Experience (#experience, now rendered), Principles (tilt cards).
 - Checks: `./node_modules/.bin/vitest run` → 49 passed; `./node_modules/.bin/astro build` → Complete. CDP screenshots 390 and 1440 reviewed.
 - Fixed during review: process track inherited `max-width` (steps squeezed) → reset; SVG line `vector-effect` broke `pathLength` dashes → removed.
+- Commit: `e61fef5` feat(sections): add manifesto, stacked work cards, services, process, experience and principles.
+
+### T4 Case study pages
+- Route: delegated writer. `src/pages/work/[slug].astro` (prerendered via getStaticPaths), shared `transition:name` `work-<slug>` on the browser frame (card ↔ case hero), story grid, count-up results, next-project band with cursor-following preview (fine pointers) / inline thumbnail (touch). Per-page title/description/OG + CreativeWork JSON-LD.
+- Checks: CDP screenshots `/work/aesthete` (390) and `/work/amor-digital` (1440) reviewed; build below.
 
 ## Next step
 T1.

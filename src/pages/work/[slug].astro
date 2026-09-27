@@ -1,0 +1,340 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BrowserFrame from "../../components/work/BrowserFrame.astro";
+import NextProject from "../../components/work/NextProject.astro";
+import CountUp from "../../components/ui/CountUp.astro";
+import { getNextProject, projects } from "../../data/projects";
+import { profile } from "../../data/profile";
+import type { Project } from "../../data/types";
+
+export const prerender = true;
+
+export const getStaticPaths = (() =>
+  projects.map((project, index) => ({
+    params: { slug: project.slug },
+    props: { project, index },
+  }))) satisfies GetStaticPaths;
+
+type Props = { project: Project; index: number };
+
+const { project, index } = Astro.props;
+const next = getNextProject(project.slug);
+const nextIndex = projects.indexOf(next);
+const total = String(projects.length).padStart(2, "0");
+const number = String(index + 1).padStart(2, "0");
+const liveHost = new URL(project.websiteUrl).host;
+
+const title = `${project.client} — ${project.title} | Case study by ${profile.name}`;
+const description = `${project.challenge} ${project.solution}`;
+const site = Astro.site ?? Astro.url;
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    about: project.industry,
+    description: project.fullDescription,
+    url: new URL(`/work/${project.slug}`, site).href,
+    sameAs: project.websiteUrl,
+    keywords: project.tags.join(", "),
+    creator: { "@type": "Person", name: profile.name, url: profile.github },
+  },
+];
+
+const story = [
+  { label: "The challenge", body: project.challenge },
+  { label: "The solution", body: project.solution },
+  { label: "Deep dive", body: project.fullDescription },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  image={project.image}
+  imageAlt={project.imageAlt}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <article class="case" aria-labelledby="case-title">
+    <header class="case-hero">
+      <div class="case-hero__bg" aria-hidden="true">
+        <div class="blueprint absolute inset-0"></div>
+        <div class="blueprint-cross absolute inset-0"></div>
+      </div>
+
+      <div class="shell case-hero__inner">
+        <div class="case-hero__top">
+          <a href="/#work" class="case-hero__back mono link-underline tap">← All work</a>
+          <span class="mono">{number} / {total}</span>
+        </div>
+
+        <p class="case-hero__meta mono" data-reveal="fade">
+          <span class="chip">{project.industry}</span>
+          <span>{project.client}</span>
+        </p>
+
+        <h1 id="case-title" class="display case-hero__title" data-reveal="lines">{project.title}</h1>
+
+        <div class="case-hero__actions" data-reveal="fade">
+          <a class="btn btn-primary" href={project.websiteUrl} target="_blank" rel="noopener" data-magnetic>
+            Visit live site <span aria-hidden="true">↗</span>
+            <span class="sr-only">({liveHost}, opens in a new tab)</span>
+          </a>
+          <ul class="case-hero__tags" aria-label="Stack">
+            {project.tags.map((tag) => <li class="chip">{tag}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="shell case-hero__media">
+        <BrowserFrame
+          image={project.image}
+          alt={project.imageAlt}
+          url={project.websiteUrl}
+          transitionName={`work-${project.slug}`}
+          sizes="(min-width: 1680px) 1600px, 96vw"
+          eager
+        />
+      </div>
+    </header>
+
+    <section class="sheet surface-light case-story" aria-label="Project story">
+      <div class="shell">
+        {
+          story.map((block, blockIndex) => (
+            <div class="story-row">
+              <div class="rule" data-reveal="rule" />
+              <div class="story-row__grid">
+                <h2 class="story-row__label mono">
+                  <span class="story-row__index">({String(blockIndex + 1).padStart(2, "0")})</span> {block.label}
+                </h2>
+                <p class:list={["story-row__body", { lead: blockIndex === 2 }]} data-reveal="fade">
+                  {block.body}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="sheet surface-ink on-ink case-results" aria-labelledby="results-title">
+      <div class="shell">
+        <div class="case-results__head">
+          <p class="mono"><span class="case-results__index">(04)</span> — Outcome</p>
+          <h2 id="results-title" class="display display-m" data-reveal="lines">
+            The <span class="accent">results</span>
+          </h2>
+        </div>
+
+        <dl class="results">
+          {
+            project.results.map((result) => (
+              <div class="result" data-reveal="fade">
+                <dt class="mono muted">{result.label}</dt>
+                <dd class="result__value display">
+                  <CountUp value={result.value} />
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <div class="case-stack">
+          <h2 class="mono muted">Tech stack</h2>
+          <ul class="case-stack__list">
+            {project.tags.map((tag) => <li class="chip">{tag}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <NextProject project={next} index={nextIndex} total={projects.length} />
+  </article>
+</BaseLayout>
+
+<style>
+  .case-hero {
+    position: relative;
+    padding-bottom: calc(var(--radius-sheet) + clamp(2rem, 6vw, 5rem));
+    overflow: clip;
+  }
+
+  .case-hero__bg {
+    position: absolute;
+    inset: 0 0 40%;
+  }
+
+  .case-hero__inner {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+    padding-top: calc(var(--nav-h) + 1.5rem);
+  }
+
+  .case-hero__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .case-hero__back {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .case-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: clamp(1.5rem, 5vw, 4rem);
+  }
+
+  .case-hero__title {
+    font-size: clamp(2.6rem, 8.2vw, 9.5rem);
+    line-height: 0.9;
+    max-width: 16ch;
+  }
+
+  .case-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+  }
+
+  .case-hero__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .case-hero__media {
+    position: relative;
+    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  .case-story {
+    padding-block: clamp(3.5rem, 8vw, 7rem) calc(var(--radius-sheet) + clamp(3.5rem, 8vw, 7rem));
+  }
+
+  .story-row__grid {
+    display: grid;
+    gap: 1rem;
+    padding-block: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .story-row__label {
+    font-weight: 500;
+  }
+
+  .story-row__index {
+    color: var(--color-signal-deep);
+  }
+
+  .story-row__body {
+    max-width: 38ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 2.6rem);
+    font-weight: 560;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .story-row__body.lead {
+    max-width: 60ch;
+    font-family: var(--font-sans);
+    font-size: var(--text-lead);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: var(--color-ink-soft);
+  }
+
+  @media (min-width: 1024px) {
+    .story-row__grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      column-gap: 1.5rem;
+    }
+  }
+
+  .case-results {
+    padding-block: clamp(3.5rem, 8vw, 7rem) calc(var(--radius-sheet) + clamp(3.5rem, 8vw, 7rem));
+  }
+
+  .case-results__head {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .case-results__index {
+    color: var(--color-signal);
+  }
+
+  .results {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+    border-top: 1px solid var(--color-line-inverse);
+  }
+
+  .result {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    gap: 2rem;
+    min-height: 10rem;
+    padding: 1.25rem 1rem 1.25rem 0;
+    border-bottom: 1px solid var(--color-line-inverse);
+  }
+
+  .result:nth-child(odd) {
+    border-right: 1px solid var(--color-line-inverse);
+  }
+
+  .result:nth-child(even) {
+    padding-left: 1rem;
+  }
+
+  .result__value {
+    font-size: clamp(2.6rem, 8vw, 7.5rem);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-signal);
+  }
+
+  @media (min-width: 1024px) {
+    .results {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .result {
+      min-height: 16rem;
+      padding: 1.5rem 1.5rem 1.5rem 0;
+      border-right: 1px solid var(--color-line-inverse);
+    }
+
+    .result:not(:first-child) {
+      padding-left: 1.5rem;
+    }
+
+    .result:last-child {
+      border-right: 0;
+    }
+  }
+
+  .case-stack {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .case-stack__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+</style>
