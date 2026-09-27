@@ -1,13 +1,21 @@
 ---
-import { principles } from "../../data/principles";
+import { getPrinciples } from "../../data/principles";
+import { getI18n } from "../../i18n/astro";
+import { accentHtml } from "../../i18n/markup";
+
+const { locale, t } = getI18n(Astro);
+const principles = getPrinciples(locale);
 ---
 
 <section class="principles" aria-labelledby="principles-title">
   <div class="principles__head">
-    <p class="mono"><span class="principles__index">(06)</span> — Principles</p>
-    <h2 id="principles-title" class="display display-m" data-reveal="lines">
-      How I <span class="accent">operate</span>
-    </h2>
+    <p class="mono"><span class="principles__index">(06)</span> — {t("principles.label")}</p>
+    <h2
+      id="principles-title"
+      class="display display-m"
+      data-reveal="lines"
+      set:html={accentHtml(t("principles.title"))}
+    />
   </div>
 
   <ol class="principles__grid">

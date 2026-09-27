@@ -1,7 +1,12 @@
 ---
 import Marquee from "./Marquee.astro";
 import CountUp from "../ui/CountUp.astro";
-import { profile } from "../../data/profile";
+import { getProfile } from "../../data/profile";
+import { getI18n } from "../../i18n/astro";
+import { accentHtml } from "../../i18n/markup";
+
+const { locale, t } = getI18n(Astro);
+const profile = getProfile(locale);
 ---
 
 <section id="about" class="sheet surface-deep manifesto" aria-labelledby="about-title">
@@ -9,16 +14,13 @@ import { profile } from "../../data/profile";
 
   <div class="shell manifesto__body">
     <div class="manifesto__meta mono">
-      <span><span class="manifesto__index">(01)</span> — Manifesto</span>
+      <span><span class="manifesto__index">(01)</span> — {t("manifesto.label")}</span>
       <span aria-hidden="true">KB / 2026</span>
     </div>
     <div class="rule" data-reveal="rule"></div>
 
-    <h2 id="about-title" class="sr-only">About Kevin Barreto</h2>
-    <p class="manifesto__statement" data-manifesto>
-      Most software projects don’t fail because of code. They fail in the gaps — between what the business needs and
-      what actually gets built. <em class="accent">I close that gap.</em>
-    </p>
+    <h2 id="about-title" class="sr-only">{t("manifesto.srTitle")}</h2>
+    <p class="manifesto__statement" data-manifesto set:html={accentHtml(t("manifesto.text"))} />
 
     <dl class="facts">
       {
@@ -34,18 +36,10 @@ import { profile } from "../../data/profile";
     </dl>
 
     <div class="about">
-      <p class="mono about__kicker">(About)</p>
+      <p class="mono about__kicker">{t("about.kicker")}</p>
       <div class="about__copy">
-        <p class="lead" data-reveal="fade">
-          I’m Kevin — a frontend-heavy full-stack developer working from México with clients anywhere. Since 2019 I’ve
-          shipped websites, online stores and web apps with React, Next.js, Vue and Astro, backed by Node.js and
-          Firebase.
-        </p>
-        <p class="muted" data-reveal="fade">
-          You work with me directly, in English or Spanish, from the first call to the last deploy — no account
-          managers, no hand-offs. I use AI tooling every day to move faster, and I review every line it touches. The
-          result is software that is fast, accessible and easy for the next developer to own.
-        </p>
+        <p class="lead" data-reveal="fade">{t("about.p1")}</p>
+        <p class="muted" data-reveal="fade">{t("about.p2")}</p>
       </div>
     </div>
   </div>
@@ -81,7 +75,7 @@ import { profile } from "../../data/profile";
     text-wrap: pretty;
   }
 
-  .manifesto__statement .accent {
+  .manifesto__statement :global(.accent) {
     font-size: 1.08em;
     line-height: 0.9;
   }

@@ -2,19 +2,25 @@
 import Monogram from "../ui/Monogram.astro";
 import { navLinks } from "../../data/navigation";
 import { profile } from "../../data/profile";
+import LangSwitch from "./LangSwitch.astro";
+import { getI18n } from "../../i18n/astro";
+
+const { t, href } = getI18n(Astro);
 ---
 
 <header class="nav" data-nav>
   <div class="nav__progress" aria-hidden="true"><span data-scroll-progress></span></div>
   <div class="shell nav__inner">
-    <a href="/" class="nav__mark tap" aria-label={`${profile.name} — home`} data-cursor="hover">
+    <a href={href("/")} class="nav__mark tap" aria-label={t("a11y.home")} data-cursor="hover">
       <Monogram class="nav__monogram" />
     </a>
 
     <p class="nav__status mono">
       <span class="pulse" aria-hidden="true"></span>
-      <span>Available<span class="max-sm:sr-only"> for new projects</span></span>
+      <span class="nav__status-text">{t("nav.status.short")}<span class="max-sm:sr-only">{t("nav.status.rest")}</span></span>
     </p>
+
+    <LangSwitch class="nav__lang" />
 
     <button
       type="button"
@@ -22,26 +28,28 @@ import { profile } from "../../data/profile";
       aria-expanded="false"
       aria-controls="site-menu"
       data-menu-toggle
+      data-label-open={t("nav.menu")}
+      data-label-close={t("nav.close")}
       data-cursor="hover"
     >
-      <span class="nav__toggle-label" data-menu-label>Menu</span>
+      <span class="nav__toggle-label" data-menu-label>{t("nav.menu")}</span>
       <span class="nav__toggle-icon" aria-hidden="true"><span></span><span></span></span>
     </button>
   </div>
 </header>
 
-<div id="site-menu" class="menu on-ink" data-menu role="dialog" aria-modal="true" aria-label="Site menu" hidden>
+<div id="site-menu" class="menu on-ink" data-menu role="dialog" aria-modal="true" aria-label={t("nav.siteMenu")} hidden>
   <div class="shell menu__inner">
-    <nav aria-label="Primary" class="menu__nav">
+    <nav aria-label={t("nav.primary")} class="menu__nav">
       <ol class="menu__list">
         {
           navLinks.map((link, index) => (
             <li class="menu__item">
-              <a href={link.href} class="menu__link" data-menu-link data-cursor="hover">
+              <a href={href(link.href)} class="menu__link" data-menu-link data-cursor="hover">
                 <span class="menu__index mono">({String(index + 1).padStart(2, "0")})</span>
                 <span class="menu__mask">
                   <span class="menu__text display" data-menu-text>
-                    {link.label}
+                    {t(link.label)}
                   </span>
                 </span>
               </a>
@@ -53,16 +61,17 @@ import { profile } from "../../data/profile";
 
     <div class="menu__foot" data-menu-foot>
       <div class="menu__meta mono">
-        <span class="muted">Local time</span>
+        <span class="muted">{t("nav.localTime")}</span>
         <span><time data-clock>GMT−6</time> · CDMX</span>
       </div>
-      <ul class="menu__social mono" aria-label="Contact channels">
-        <li><a class="link-underline tap" href={`mailto:${profile.email}`}>Email</a></li>
+      <ul class="menu__social mono" aria-label={t("nav.channels")}>
+        <li><a class="link-underline tap" href={`mailto:${profile.email}`}>{t("nav.email")}</a></li>
         <li><a class="link-underline tap" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
         <li><a class="link-underline tap" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
       </ul>
-      <a class="btn btn-primary" href="/#contact" data-menu-link>
-        Start a project <span class="btn-arrow" aria-hidden="true">→</span>
+      <LangSwitch tone="ink" />
+      <a class="btn btn-primary" href={href("/#contact")} data-menu-link>
+        {t("cta.start")} <span class="btn-arrow" aria-hidden="true">→</span>
       </a>
     </div>
   </div>
@@ -103,7 +112,7 @@ import { profile } from "../../data/profile";
     height: var(--nav-h);
   }
 
-  .nav__inner > * {
+  .nav__inner > :global(*) {
     pointer-events: auto;
   }
 
@@ -142,6 +151,24 @@ import { profile } from "../../data/profile";
     margin-right: auto;
     margin-left: 0.25rem;
     white-space: nowrap;
+  }
+
+  /* Compact phones: the availability pill collapses to its pulsing dot. */
+  @media (max-width: 479px) {
+    .nav__status {
+      justify-content: center;
+      width: 2.75rem;
+      padding: 0;
+    }
+
+    .nav__status-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
   }
 
   .pulse {

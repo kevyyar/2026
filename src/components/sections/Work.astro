@@ -1,25 +1,29 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
 import FeaturedProject from "../work/FeaturedProject.astro";
-import { projects } from "../../data/projects";
+import { getProjects } from "../../data/projects";
+import { getI18n } from "../../i18n/astro";
 
-const [featured] = projects;
+const { locale, t, href } = getI18n(Astro);
+const [featured] = getProjects(locale);
 ---
 
 <section id="work" class="sheet surface-paper work" aria-labelledby="work-title">
   <div class="shell">
-    <SectionHeading id="work-title" index="02" label="Case study">
-      Featured <span class="accent">work</span>
-      <Fragment slot="intro">
-        One engagement, end to end: strategy, a bilingual build and a launch — with the numbers that followed.
-      </Fragment>
+    <SectionHeading id="work-title" index="02" label={t("work.label")} title={t("work.title")}>
+      <Fragment slot="intro">{t("work.intro")}</Fragment>
     </SectionHeading>
 
     <div class="work__feature">
       <FeaturedProject
         project={featured}
-        href={`/work/${featured.slug}`}
-        labels={{ featured: "Featured case", results: "Results", stack: "Stack", cta: "Read case study" }}
+        href={href(`/work/${featured.slug}`)}
+        labels={{
+          featured: t("work.featured"),
+          results: t("work.results"),
+          stack: t("work.stack"),
+          cta: t("work.readCase"),
+        }}
       />
     </div>
   </div>

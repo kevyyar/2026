@@ -18,6 +18,7 @@ import * as process from "./process";
 import * as tilt from "./tilt";
 import * as footer from "./footer";
 import * as copyEmail from "./copy-email";
+import * as langSwitch from "./lang-switch";
 
 type MotionModule = { init: () => Cleanup };
 
@@ -42,6 +43,7 @@ const modules: MotionModule[] = [
   tilt,
   footer,
   copyEmail,
+  langSwitch,
 ];
 
 let cleanups: Cleanup[] = [];

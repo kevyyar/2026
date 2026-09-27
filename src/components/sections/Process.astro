@@ -1,16 +1,23 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
-import { processSteps } from "../../data/process";
+import { getProcessSteps } from "../../data/process";
+import { getI18n } from "../../i18n/astro";
+import { accentHtml } from "../../i18n/markup";
+
+const { locale, t } = getI18n(Astro);
+const processSteps = getProcessSteps(locale);
 ---
 
 <section id="process" class="sheet surface-light process" aria-labelledby="process-title">
   <div class="shell">
-    <SectionHeading id="process-title" index="04" label="Process" count={String(processSteps.length).padStart(2, "0")}>
-      How we’ll <span class="accent">work</span>
-      <Fragment slot="intro">
-        Four steps from idea to launch. You always know where we are, what comes next and what you get at the end of
-        each stage.
-      </Fragment>
+    <SectionHeading
+      id="process-title"
+      index="04"
+      label={t("process.label")}
+      title={t("process.title")}
+      count={String(processSteps.length).padStart(2, "0")}
+    >
+      <Fragment slot="intro">{t("process.intro")}</Fragment>
     </SectionHeading>
   </div>
 
@@ -29,11 +36,11 @@ import { processSteps } from "../../data/process";
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div class="step__body">
-                <p class="mono muted">Step {index + 1} of {processSteps.length}</p>
+                <p class="mono muted">{t("process.step", { n: index + 1, total: processSteps.length })}</p>
                 <h3 class="step__title display">{step.title}</h3>
                 <p class="step__description">{step.description}</p>
                 <div class="step__deliverables">
-                  <p class="mono muted">You get</p>
+                  <p class="mono muted">{t("process.youGet")}</p>
                   <ul class="step__chips">
                     {step.deliverables.map((item) => (
                       <li class="chip">{item}</li>
@@ -55,10 +62,10 @@ import { processSteps } from "../../data/process";
 
   <div class="shell">
     <a href="#contact" class="cta-band" data-cursor="hover">
-      <span class="cta-band__kicker mono">(Next step)</span>
-      <span class="cta-band__text display">Ready when <span class="accent">you are</span></span>
+      <span class="cta-band__kicker mono">{t("process.ctaKicker")}</span>
+      <span class="cta-band__text display" set:html={accentHtml(t("process.ctaText"))} />
       <span class="cta-band__action">
-        Start a project <span class="cta-band__arrow" aria-hidden="true">→</span>
+        {t("cta.start")} <span class="cta-band__arrow" aria-hidden="true">→</span>
       </span>
     </a>
   </div>
@@ -307,7 +314,7 @@ import { processSteps } from "../../data/process";
     line-height: 0.9;
   }
 
-  .cta-band__text .accent {
+  .cta-band__text :global(.accent) {
     color: inherit;
   }
 

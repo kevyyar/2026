@@ -1,10 +1,14 @@
 ---
 /* Custom cursor for fine pointers. Activated by motion/cursor.ts (adds html.has-cursor). */
+import { getI18n } from "../../i18n/astro";
+
+const { t } = getI18n(Astro);
+const viewLabel = t("cursor.view");
 ---
 
 <div class="cursor" data-cursor-root aria-hidden="true">
   <div class="cursor__ring" data-cursor-ring>
-    <span class="cursor__label mono">View</span>
+    <span class="cursor__label mono">{viewLabel}</span>
   </div>
   <div class="cursor__dot" data-cursor-dot></div>
 </div>

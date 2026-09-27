@@ -12,6 +12,8 @@ import Nav from "../components/layout/Nav.astro";
 import Cursor from "../components/layout/Cursor.astro";
 import Preloader from "../components/layout/Preloader.astro";
 import Footer from "../components/layout/Footer.astro";
+import { localeMeta } from "../i18n/config";
+import { getI18n } from "../i18n/astro";
 
 type Props = {
   title: string;
@@ -25,10 +27,11 @@ type Props = {
 };
 
 const { preloader = false, ...seo } = Astro.props;
+const { locale, t } = getI18n(Astro);
 ---
 
 <!doctype html>
-<html lang="en" data-has-preloader={preloader ? "true" : undefined}>
+<html lang={localeMeta[locale].htmlLang} data-has-preloader={preloader ? "true" : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -64,7 +67,7 @@ const { preloader = false, ...seo } = Astro.props;
     <ClientRouter />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">{t("a11y.skip")}</a>
     {preloader && <Preloader />}
     <Nav />
     <main id="main" tabindex="-1">

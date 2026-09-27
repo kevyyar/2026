@@ -29,7 +29,7 @@ The current site is a generic dark "glass + gradient" template with inflated cop
 Owner decisions: publish `kevyyar@icloud.com` + LinkedIn `https://www.linkedin.com/in/kevyyar/`; remove Aesthete, Voces Podcast and Amor Digital (sites no longer exist) and keep only Element Cleaning Systems; copy approved; add Spanish (default, `/`) + English (`/en/`) with a language switcher. Vercel: RESEND_* already set; `SITE_URL=https://iamkev.xyz` added to Production by orchestrator. Review follow-ups moved to `odd/tasks/portfolio-hardening.md`.
 - [x] T7 Contact channels — email (`mailto:`) + LinkedIn in profile data, menu, contact section, footer, JSON-LD `sameAs`. Route: delegated (writer trigger: 2+ non-trivial files, bundled with T8/T9).
 - [x] T8 Single case study — remove the 3 retired projects (data, images, tests, OG refs); redesign Work section and case page for one featured project (no "next project" loop to itself, no `(04)` / "04 case studies" copy). Route: delegated.
-- [ ] T9 i18n ES (default) + EN — Astro i18n routing (`prefixDefaultLocale: false`), all UI copy and content data translated, language switcher in nav + menu preserving the equivalent page, `hreflang` alternates, `og:locale`, localized contact form messages, tests for dictionary/data parity and path helpers (TDD). Route: delegated.
+- [x] T9 i18n ES (default) + EN — Astro i18n routing (`prefixDefaultLocale: false`), all UI copy and content data translated, language switcher in nav + menu preserving the equivalent page, `hreflang` alternates, `og:locale`, localized contact form messages, tests for dictionary/data parity and path helpers (TDD). Route: delegated.
 - [ ] T10 Verification — tests, check, build, headless screenshots ES + EN at 390/1440, reduced motion. Route: delegated + parent spot check.
 
 ## Acceptance criteria
@@ -95,6 +95,16 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - GREEN: `./node_modules/.bin/vitest run` → 48 passed (ECS fields verbatim, exactly 1 project, `getProject` lookup).
 - Removed: Aesthete, Voces Podcast, Amor Digital (data + images), `getNextProject`, `ProjectCard`, `NextProject`, `work-stack.ts`, `next-project.ts`. New `FeaturedProject` (ink card, clip reveal, parallax via generic `parallax.ts`, all 4 metrics with count-up, tags, CTA pill, shared `transition:name`), `ProjectCta` band on the case page ("Your project could be next → Start a project" → `/#contact`). Fact tile "04" → "1:1 — One point of contact, start to finish" (static, not a count-up).
 - Checks: `./node_modules/.bin/astro check` → 0 errors; `./node_modules/.bin/astro build` → only `/work/element-cleaning-systems` prerendered. Screenshots of Work (390/1440) and case CTA (390) reviewed; STUCK [] and no horizontal scroll.
+
+### T9 i18n — Spanish default, English secondary
+- RED: `./node_modules/.bin/vitest run` → 4 files failed, 40 passed (`Cannot find module './paths'`, `'./ui'`, `'../i18n/config'`; `getProjects is not a function`) — dictionary parity, content parity, path-helper and accent-markup tests written first.
+- GREEN: `./node_modules/.bin/vitest run` → 6 files, 100 tests passed.
+- Architecture: Astro i18n (`defaultLocale: "es"`, `locales: ["es","en"]`, `prefixDefaultLocale: false`); `src/i18n/{config,paths,ui,markup,astro}.ts`; data modules expose `getX(locale)` with per-locale text and single-source URLs/values/tags/images/slugs; pages are thin wrappers (`src/pages/{,en/}index.astro`, `src/pages/{,en/}work/[slug].astro`) around `components/pages/{HomePage,CasePage}.astro`. API route untouched (`git diff -- src/pages/api` empty).
+- Language switcher (`LangSwitch.astro`): nav (mobile + desktop) and menu, sliding pill, `aria-current`, `lang`/`hreflang`, group label "Cambiar idioma"/"Change language"; hash carried over on click (`lang-switch.ts`). On <480px the availability pill collapses to its dot (text stays for screen readers) so the nav fits at 360.
+- SEO: `<html lang>`, canonical per locale, `hreflang` es/en/x-default (→ Spanish), `og:locale` es_MX/en_US + alternate, localized titles/descriptions/JSON-LD (`inLanguage`).
+- Contact form: all labels/options/validation/status strings passed as props; status chosen by outcome (success / 400 validation / other server error / network), payload unchanged.
+- Fixed during review: accent words injected with `set:html` lost scoped `.accent` overrides (process CTA band accent was low-contrast) → `:global(.accent)`.
+- Size note: one cohesive commit (~770 additions / ~750 deletions) because the data API change and every consumer must land together to keep the build green.
 
 ### Native review (RDD)
 - Whole branch (`main..HEAD`): consent granted → `lens_context_budget_exceeded` (17k lines incl. lockfiles/images); no authority created. Split per work unit, each reviewed in a detached worktree.

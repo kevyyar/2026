@@ -1,32 +1,66 @@
 import type { Project } from "./types";
+import type { Locale, Localized } from "../i18n/config";
 import ecsImage from "../assets/work/element-cleaning-systems.png";
 
-export const projects: Project[] = [
+type TranslatableFields = "industry" | "title" | "imageAlt" | "challenge" | "solution" | "fullDescription";
+
+type ProjectSource = Pick<Project, "slug" | "client" | "image" | "tags" | "websiteUrl"> & {
+  text: Localized<Pick<Project, TranslatableFields>>;
+  /** Metric values are reported figures and never translated; labels are. */
+  results: { value: string; label: Localized }[];
+};
+
+const source: ProjectSource[] = [
   {
     slug: "element-cleaning-systems",
     client: "Element Cleaning Systems",
-    industry: "Industrial Services",
-    title: "Digital Transformation for Janitorial Leader",
     image: ecsImage,
-    imageAlt: "Element Cleaning Systems Website",
-    challenge:
-      "A premier janitorial company lacked the digital footprint to compete for enterprise contracts, relying solely on word-of-mouth.",
-    solution:
-      "I engineered a high-performance, bilingual platform that positions ECS as a market leader, featuring automated quoting and regional mapping.",
-    results: [
-      { label: "Quote Requests", value: "+340%" },
-      { label: "Contract Size", value: "+45%" },
-      { label: "SEO Rank", value: "#1" },
-      { label: "RFP Wins", value: "+28%" },
-    ],
     tags: ["Next.js", "Tailwind", "Strapi", "Resend"],
     websiteUrl: "https://elementjanitorial.com",
-    fullDescription:
-      "I designed and developed a fully responsive website. I implemented a bilingual content system supporting English and Spanish throughout the entire site, created dynamic service pages showcasing specialized cleaning programs.",
+    results: [
+      { value: "+340%", label: { es: "Solicitudes de cotización", en: "Quote Requests" } },
+      { value: "+45%", label: { es: "Tamaño de contratos", en: "Contract Size" } },
+      { value: "#1", label: { es: "Posición SEO", en: "SEO Rank" } },
+      { value: "+28%", label: { es: "Licitaciones ganadas", en: "RFP Wins" } },
+    ],
+    text: {
+      es: {
+        industry: "Servicios industriales",
+        title: "Transformación digital para un líder en limpieza comercial",
+        imageAlt: "Sitio web de Element Cleaning Systems",
+        challenge:
+          "Una empresa líder en limpieza comercial no tenía la presencia digital necesaria para competir por contratos corporativos y dependía únicamente de las recomendaciones de boca en boca.",
+        solution:
+          "Desarrollé una plataforma bilingüe de alto rendimiento que posiciona a ECS como líder del mercado, con cotizaciones automatizadas y mapas de cobertura por región.",
+        fullDescription:
+          "Diseñé y desarrollé un sitio web completamente responsivo. Implementé un sistema de contenido bilingüe en inglés y español en todo el sitio y creé páginas de servicio dinámicas que presentan sus programas de limpieza especializados.",
+      },
+      en: {
+        industry: "Industrial Services",
+        title: "Digital Transformation for Janitorial Leader",
+        imageAlt: "Element Cleaning Systems Website",
+        challenge:
+          "A premier janitorial company lacked the digital footprint to compete for enterprise contracts, relying solely on word-of-mouth.",
+        solution:
+          "I engineered a high-performance, bilingual platform that positions ECS as a market leader, featuring automated quoting and regional mapping.",
+        fullDescription:
+          "I designed and developed a fully responsive website. I implemented a bilingual content system supporting English and Spanish throughout the entire site, created dynamic service pages showcasing specialized cleaning programs.",
+      },
+    },
   },
 ];
 
-export function getProject(slug: string): Project | undefined {
-  return projects.find((project) => project.slug === slug);
+export function getProjects(locale: Locale): Project[] {
+  return source.map(({ text, results, ...shared }) => ({
+    ...shared,
+    ...text[locale],
+    results: results.map((result) => ({ label: result.label[locale], value: result.value })),
+  }));
 }
 
+export function getProject(slug: string, locale: Locale): Project | undefined {
+  return getProjects(locale).find((project) => project.slug === slug);
+}
+
+/** Slugs for static paths (locale-independent). */
+export const projectSlugs = source.map((project) => project.slug);

@@ -1,32 +1,77 @@
 ---
-import ContactForm from "../contact/ContactForm.tsx";
+import ContactForm, { type ContactFormStrings } from "../contact/ContactForm.tsx";
 import { profile } from "../../data/profile";
+import { getI18n } from "../../i18n/astro";
+import { accentHtml } from "../../i18n/markup";
+import { MIN_MESSAGE } from "../../lib/contact-validation";
+
+const { t } = getI18n(Astro);
+
+const strings: ContactFormStrings = {
+  name: t("form.name"),
+  email: t("form.email"),
+  company: t("form.company"),
+  projectType: t("form.projectType"),
+  budget: t("form.budget"),
+  optional: t("form.optional"),
+  message: t("form.message"),
+  projectTypes: {
+    "": t("form.notSure"),
+    "web-app": t("form.type.webApp"),
+    ecommerce: t("form.type.ecommerce"),
+    website: t("form.type.website"),
+    redesign: t("form.type.redesign"),
+    maintenance: t("form.type.maintenance"),
+  },
+  budgets: {
+    "": t("form.notSure"),
+    "5k-10k": t("form.budget.5k"),
+    "10k-25k": t("form.budget.10k"),
+    "25k-50k": t("form.budget.25k"),
+    "50k+": t("form.budget.50k"),
+  },
+  required: t("form.required"),
+  tooShort: t("form.tooShort"),
+  invalidEmail: t("form.invalidEmail"),
+  messageTooShort: t("form.messageTooShort", { min: MIN_MESSAGE }),
+  clear: t("form.clear"),
+  send: t("form.send"),
+  sending: t("form.sending"),
+  sent: t("form.sent"),
+  status: {
+    success: t("form.status.success"),
+    validation: t("form.status.validation"),
+    server: t("form.status.server"),
+    network: t("form.status.network"),
+  },
+};
 ---
 
 <section id="contact" class="sheet surface-ink on-ink contact" aria-labelledby="contact-title">
   <div class="shell contact__grid">
     <div class="contact__intro">
-      <p class="mono"><span class="contact__index">(07)</span> — Contact</p>
-      <h2 id="contact-title" class="display contact__title" data-reveal="lines">
-        Got a project? <span class="accent">Let’s build&nbsp;it.</span>
-      </h2>
-      <p class="lead muted contact__lead" data-reveal="fade">
-        Tell me what you’re building, where it stands and what success looks like. I read every message myself.
-      </p>
+      <p class="mono"><span class="contact__index">(07)</span> — {t("contact.label")}</p>
+      <h2
+        id="contact-title"
+        class="display contact__title"
+        data-reveal="lines"
+        set:html={accentHtml(t("contact.title"))}
+      />
+      <p class="lead muted contact__lead" data-reveal="fade">{t("contact.lead")}</p>
 
       <div class="contact__email" data-reveal="fade" data-copy-scope>
-        <p class="mono muted">Write directly</p>
+        <p class="mono muted">{t("contact.writeDirectly")}</p>
         <div class="contact__email-row">
           <a class="contact__email-link display link-underline" href={`mailto:${profile.email}`}>{profile.email}</a>
           <button
             type="button"
             class="contact__copy mono"
             data-copy={profile.email}
-            data-copy-done="Copied"
-            data-copy-failed="Couldn’t copy — use the email link"
+            data-copy-done={t("contact.copied")}
+            data-copy-failed={t("contact.copyFailed")}
             hidden
           >
-            <span data-copy-label>Copy</span>
+            <span data-copy-label>{t("contact.copy")}</span>
           </button>
         </div>
         <p class="sr-only" aria-live="polite" data-copy-status></p>
@@ -34,19 +79,19 @@ import { profile } from "../../data/profile";
 
       <dl class="contact__facts" data-reveal="fade">
         <div>
-          <dt class="mono muted">Reply time</dt>
-          <dd>Within 24 hours</dd>
+          <dt class="mono muted">{t("contact.replyTime")}</dt>
+          <dd>{t("contact.replyValue")}</dd>
         </div>
         <div>
-          <dt class="mono muted">Languages</dt>
-          <dd>English / Español</dd>
+          <dt class="mono muted">{t("contact.languages")}</dt>
+          <dd>{t("contact.languagesValue")}</dd>
         </div>
         <div>
-          <dt class="mono muted">Local time</dt>
+          <dt class="mono muted">{t("nav.localTime")}</dt>
           <dd><time data-clock>GMT−6</time> · México</dd>
         </div>
         <div>
-          <dt class="mono muted">Elsewhere</dt>
+          <dt class="mono muted">{t("contact.elsewhere")}</dt>
           <dd class="contact__links">
             <a class="link-underline" href={profile.linkedin} target="_blank" rel="noopener noreferrer">
               LinkedIn <span aria-hidden="true">↗</span>
@@ -60,7 +105,7 @@ import { profile } from "../../data/profile";
     </div>
 
     <div class="contact__form">
-      <ContactForm client:visible />
+      <ContactForm client:visible strings={strings} />
     </div>
   </div>
 </section>

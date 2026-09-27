@@ -31,7 +31,7 @@ export function init(): Cleanup {
     isOpen = true;
     menu.hidden = false;
     toggle.setAttribute("aria-expanded", "true");
-    if (label) label.textContent = "Close";
+    if (label) label.textContent = toggle.dataset.labelClose ?? "Close";
     root.classList.add("menu-open");
     root.style.overflow = "hidden";
     stopScroll();
@@ -64,7 +64,7 @@ export function init(): Cleanup {
     if (!isOpen) return;
     isOpen = false;
     toggle.setAttribute("aria-expanded", "false");
-    if (label) label.textContent = "Menu";
+    if (label) label.textContent = toggle.dataset.labelOpen ?? "Menu";
     root.classList.remove("menu-open");
     root.style.overflow = "";
     startScroll();

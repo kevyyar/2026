@@ -1,8 +1,10 @@
 ---
 import Star from "../ui/Star.astro";
+import { getI18n } from "../../i18n/astro";
 
-const signalItems = ["Web apps", "E-commerce", "Product launches", "Performance", "Automation", "Consulting"];
-const inkItems = ["Discovery", "Design", "Engineering", "Launch", "Support", "One partner"];
+const { t } = getI18n(Astro);
+const signalItems = t("marquee.services").split("|");
+const inkItems = t("marquee.process").split("|");
 const copies = 4;
 ---
 

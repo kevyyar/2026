@@ -1,9 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { getProject, projects } from "./projects";
-import { services } from "./services";
-import { processSteps } from "./process";
-import { experience } from "./experience";
-import { principles } from "./principles";
+import { getProject, getProjects } from "./projects";
+import { getServices } from "./services";
+import { getProcessSteps } from "./process";
+import { getExperience } from "./experience";
+import { getPrinciples } from "./principles";
+
+// English content is the original, verbatim source; Spanish parity is covered in content.test.ts.
+const projects = getProjects("en");
+const services = getServices("en");
+const processSteps = getProcessSteps("en");
+const experience = getExperience("en");
+const principles = getPrinciples("en");
 
 describe("projects", () => {
   it("contains only the Element Cleaning Systems case study", () => {
@@ -50,8 +57,9 @@ describe("projects", () => {
   });
 
   it("looks projects up by slug", () => {
-    expect(getProject("element-cleaning-systems")?.client).toBe("Element Cleaning Systems");
-    expect(getProject("aesthete")).toBeUndefined();
+    expect(getProject("element-cleaning-systems", "en")?.client).toBe("Element Cleaning Systems");
+    expect(getProject("element-cleaning-systems", "es")?.industry).toBe("Servicios industriales");
+    expect(getProject("aesthete", "en")).toBeUndefined();
   });
 });
 

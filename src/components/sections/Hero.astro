@@ -1,5 +1,16 @@
 ---
 import RotatingBadge from "../ui/RotatingBadge.astro";
+import { getI18n } from "../../i18n/astro";
+import { accentHtml } from "../../i18n/markup";
+
+const { t } = getI18n(Astro);
+// "Line one —|line two|*accent*": one entry per visual line; a trailing " —" only shows from md up.
+const lines = t("hero.title")
+  .split("|")
+  .map((line) => {
+    const dash = line.endsWith(" —");
+    return { html: accentHtml(dash ? line.slice(0, -2) : line), dash };
+  });
 ---
 
 <section id="home" class="hero" data-hero aria-labelledby="hero-title">
@@ -12,31 +23,33 @@ import RotatingBadge from "../ui/RotatingBadge.astro";
   <div class="shell hero__content" data-hero-content>
     <div class="hero__meta">
       <p class="mono" data-hero-fade>
-        Independent developer &amp; consultant<br class="sm:hidden" />
-        <span class="max-sm:hidden"> — </span>México → worldwide
+        {t("hero.kicker")}<br class="sm:hidden" />
+        <span class="max-sm:hidden"> — </span>{t("hero.origin")}
       </p>
-      <p class="mono muted max-md:hidden" data-hero-fade>(Est. 2019)</p>
+      <p class="mono muted max-md:hidden" data-hero-fade>{t("hero.est")}</p>
     </div>
 
-    <h1 id="hero-title" class="display hero__title" data-hero-title>
-      <span class="hero__line">Kevin Barreto<span class="hero__dash"> —</span></span>
-      <span class="hero__line">a software</span>
-      <span class="hero__line">studio <em class="accent">of&nbsp;one.</em></span>
+    <h1 id="hero-title" class="display hero__title" data-hero-title data-lines={lines.length}>
+      {
+        lines.map((line) => (
+          <span class="hero__line">
+            <Fragment set:html={line.html} />
+            {line.dash && <span class="hero__dash"> —</span>}
+          </span>
+        ))
+      }
     </h1>
 
     <div class="hero__foot">
-      <p class="lead hero__lead" data-hero-fade>
-        I plan, design, build and ship web products for businesses that need them done right. One accountable partner
-        — from the first call to the last deploy.
-      </p>
+      <p class="lead hero__lead" data-hero-fade>{t("hero.lead")}</p>
       <div class="hero__ctas" data-hero-fade>
         <a class="btn btn-primary" href="#contact" data-magnetic>
-          Start a project <span class="btn-arrow" aria-hidden="true">→</span>
+          {t("cta.start")} <span class="btn-arrow" aria-hidden="true">→</span>
         </a>
-        <a class="btn btn-ghost" href="#work">See the work</a>
+        <a class="btn btn-ghost" href="#work">{t("hero.seeWork")}</a>
       </div>
       <div class="hero__badge" data-hero-badge>
-        <RotatingBadge href="#work" label="Scroll to selected work" />
+        <RotatingBadge href="#work" label={t("hero.badgeLabel")} text={t("hero.badgeText")} />
       </div>
     </div>
   </div>
@@ -98,7 +111,7 @@ import RotatingBadge from "../ui/RotatingBadge.astro";
     text-wrap: initial;
   }
 
-  .hero__title .accent {
+  .hero__title :global(.accent) {
     font-weight: 400;
     padding-right: 0.06em;
   }
@@ -115,6 +128,11 @@ import RotatingBadge from "../ui/RotatingBadge.astro";
   @media (min-width: 768px) {
     .hero__title {
       font-size: clamp(3.1rem, 11.4vw, 12.5rem);
+    }
+
+    /* Four-line titles (Spanish) scale down to keep the fold. */
+    .hero__title[data-lines="4"] {
+      font-size: clamp(3.1rem, 9.2vw, 10rem);
     }
 
     .hero__dash {

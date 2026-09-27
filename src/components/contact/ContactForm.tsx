@@ -13,24 +13,35 @@ import "./contact-form.css";
 
 type Status = { type: "idle" | "success" | "error"; message: string };
 
-const PROJECT_TYPES = [
-  { value: "", label: "Not sure yet" },
-  { value: "web-app", label: "Web Application" },
-  { value: "ecommerce", label: "E-commerce" },
-  { value: "website", label: "Website / Landing Page" },
-  { value: "redesign", label: "Redesign / Optimization" },
-  { value: "maintenance", label: "Maintenance / Support" },
-];
+/** Option values are part of the API payload and never change; labels are localized. */
+const PROJECT_TYPE_VALUES = ["", "web-app", "ecommerce", "website", "redesign", "maintenance"] as const;
+const BUDGET_VALUES = ["", "5k-10k", "10k-25k", "25k-50k", "50k+"] as const;
 
-const BUDGETS = [
-  { value: "", label: "Not sure yet" },
-  { value: "5k-10k", label: "$5K - $10K" },
-  { value: "10k-25k", label: "$10K - $25K" },
-  { value: "25k-50k", label: "$25K - $50K" },
-  { value: "50k+", label: "$50K+" },
-];
+type ProjectTypeValue = (typeof PROJECT_TYPE_VALUES)[number];
+type BudgetValue = (typeof BUDGET_VALUES)[number];
 
-const FALLBACK_ERROR = "Something went wrong. Please try again later.";
+/** Every user-facing string, provided by the page in the active locale. */
+export type ContactFormStrings = {
+  name: string;
+  email: string;
+  company: string;
+  projectType: string;
+  budget: string;
+  optional: string;
+  message: string;
+  projectTypes: Record<ProjectTypeValue, string>;
+  budgets: Record<BudgetValue, string>;
+  required: string;
+  tooShort: string;
+  invalidEmail: string;
+  messageTooShort: string;
+  clear: string;
+  send: string;
+  sending: string;
+  sent: string;
+  /** Shown by outcome; the server's own (English) message is not displayed. */
+  status: { success: string; validation: string; server: string; network: string };
+};
 
 function prefersReducedMotion() {
   return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -65,7 +76,7 @@ function burst(origin: HTMLElement) {
   window.setTimeout(() => layer.remove(), 1600);
 }
 
-export default function ContactForm() {
+export default function ContactForm({ strings }: { strings: ContactFormStrings }) {
   const [status, setStatus] = useState<Status>({ type: "idle", message: "" });
   const [sent, setSent] = useState(false);
   const submitRef = useRef<HTMLButtonElement>(null);
@@ -109,20 +120,20 @@ export default function ContactForm() {
       const result = await response.json().catch(() => null);
 
       if (!response.ok || !result?.success) {
-        setStatus({ type: "error", message: result?.message || FALLBACK_ERROR });
+        setStatus({
+          type: "error",
+          message: response.status === 400 ? strings.status.validation : strings.status.server,
+        });
         return;
       }
 
-      setStatus({
-        type: "success",
-        message: result.message || "Thank you! I've received your inquiry and will get back to you within 24 hours.",
-      });
+      setStatus({ type: "success", message: strings.status.success });
       setSent(true);
       reset();
       if (submitRef.current) burst(submitRef.current);
     } catch (error) {
       console.error("Submission Error:", error);
-      setStatus({ type: "error", message: "Something went wrong. Please check your connection and try again." });
+      setStatus({ type: "error", message: strings.status.network });
     }
   };
 
@@ -179,38 +190,46 @@ export default function ContactForm() {
       <div className="contact-form__row">
         {textField(
           "name",
-          "Name",
+          strings.name,
           { autoComplete: "name" },
-          { setValueAs: sanitizeInline, required: "Required", minLength: { value: 2, message: "Too short" } },
+          {
+            setValueAs: sanitizeInline,
+            required: strings.required,
+            minLength: { value: 2, message: strings.tooShort },
+          },
         )}
         {textField(
           "email",
-          "Work email",
+          strings.email,
           { type: "email", autoComplete: "email" },
           {
             setValueAs: sanitizeEmail,
-            required: "Required",
-            pattern: { value: EMAIL_PATTERN, message: "Invalid email" },
+            required: strings.required,
+            pattern: { value: EMAIL_PATTERN, message: strings.invalidEmail },
           },
         )}
       </div>
 
       {textField(
         "company",
-        "Company",
+        strings.company,
         { autoComplete: "organization" },
-        { setValueAs: sanitizeInline, required: "Required", minLength: { value: 2, message: "Too short" } },
+        {
+          setValueAs: sanitizeInline,
+          required: strings.required,
+          minLength: { value: 2, message: strings.tooShort },
+        },
       )}
 
       <fieldset className="pills">
         <legend className="pills__legend">
-          Project type <span className="pills__optional">(optional)</span>
+          {strings.projectType} <span className="pills__optional">{strings.optional}</span>
         </legend>
         <div className="pills__options">
-          {PROJECT_TYPES.map((option) => (
-            <label key={option.value || "none"} className="pill">
-              <input type="radio" value={option.value} className="pill__input" {...register("projectType")} />
-              <span className="pill__label">{option.label}</span>
+          {PROJECT_TYPE_VALUES.map((value) => (
+            <label key={value || "none"} className="pill">
+              <input type="radio" value={value} className="pill__input" {...register("projectType")} />
+              <span className="pill__label">{strings.projectTypes[value]}</span>
             </label>
           ))}
         </div>
@@ -218,13 +237,13 @@ export default function ContactForm() {
 
       <fieldset className="pills">
         <legend className="pills__legend">
-          Budget range <span className="pills__optional">(optional)</span>
+          {strings.budget} <span className="pills__optional">{strings.optional}</span>
         </legend>
         <div className="pills__options">
-          {BUDGETS.map((option) => (
-            <label key={option.value || "none"} className="pill">
-              <input type="radio" value={option.value} className="pill__input" {...register("budget")} />
-              <span className="pill__label">{option.label}</span>
+          {BUDGET_VALUES.map((value) => (
+            <label key={value || "none"} className="pill">
+              <input type="radio" value={value} className="pill__input" {...register("budget")} />
+              <span className="pill__label">{strings.budgets[value]}</span>
             </label>
           ))}
         </div>
@@ -241,12 +260,12 @@ export default function ContactForm() {
           aria-describedby={`contact-message-count${messageInvalid ? " contact-message-error" : ""}`}
           {...register("message", {
             setValueAs: sanitizeMultiline,
-            required: "Required",
-            minLength: { value: MIN_MESSAGE, message: `Too short — at least ${MIN_MESSAGE} characters` },
+            required: strings.required,
+            minLength: { value: MIN_MESSAGE, message: strings.messageTooShort },
           })}
         />
         <label htmlFor="contact-message" className="field__label">
-          Tell me about the project <span aria-hidden="true">*</span>
+          {strings.message} <span aria-hidden="true">*</span>
         </label>
         <p id="contact-message-count" className="field__count" aria-live="off">
           {messageLength}/{MAX_MESSAGE}
@@ -277,7 +296,7 @@ export default function ContactForm() {
               setStatus({ type: "idle", message: "" });
             }}
           >
-            Clear form
+            {strings.clear}
           </button>
           <div className="magnet" ref={magneticRef} onPointerMove={onMagnetMove} onPointerLeave={onMagnetLeave}>
             <button
@@ -287,7 +306,7 @@ export default function ContactForm() {
               disabled={isSubmitting}
               aria-busy={isSubmitting}
             >
-              <span className="submit__text">{isSubmitting ? "Sending…" : sent ? "Sent" : "Send message"}</span>
+              <span className="submit__text">{isSubmitting ? strings.sending : sent ? strings.sent : strings.send}</span>
               <span className="submit__icon" aria-hidden="true">
                 {sent ? (
                   <svg viewBox="0 0 24 24" className="submit__check">

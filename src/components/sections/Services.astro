@@ -1,16 +1,22 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
-import { services } from "../../data/services";
+import { getServices } from "../../data/services";
+import { getI18n } from "../../i18n/astro";
+
+const { locale, t } = getI18n(Astro);
+const services = getServices(locale);
 ---
 
 <section id="services" class="sheet surface-ink on-ink services" aria-labelledby="services-title">
   <div class="shell">
-    <SectionHeading id="services-title" index="03" label="Services" count={String(services.length).padStart(2, "0")}>
-      What <span class="accent">I do</span>
-      <Fragment slot="intro">
-        Six ways I can help — from a single landing page to a product that runs your business. Pick one, or hand me
-        the whole thing.
-      </Fragment>
+    <SectionHeading
+      id="services-title"
+      index="03"
+      label={t("services.label")}
+      title={t("services.title")}
+      count={String(services.length).padStart(2, "0")}
+    >
+      <Fragment slot="intro">{t("services.intro")}</Fragment>
     </SectionHeading>
 
     <ul class="services__list" data-accordion>
@@ -40,7 +46,7 @@ import { services } from "../../data/services";
               <div id={panelId} class="service__panel" role="region" aria-labelledby={buttonId} data-accordion-panel>
                 <div class="service__panel-inner">
                   <p class="service__description lead">{service.description}</p>
-                  <ul class="service__features" aria-label={`${service.title} includes`}>
+                  <ul class="service__features" aria-label={t("services.includes", { title: service.title })}>
                     {service.features.map((feature) => (
                       <li class="chip">{feature}</li>
                     ))}

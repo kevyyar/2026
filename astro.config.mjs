@@ -17,6 +17,11 @@ const site =
 // https://astro.build/config
 export default defineConfig({
   site,
+  i18n: {
+    defaultLocale: "es",
+    locales: ["es", "en"],
+    routing: { prefixDefaultLocale: false },
+  },
   integrations: [react()],
   output: "server",
   adapter: vercel(),

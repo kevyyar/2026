@@ -1,23 +1,26 @@
 ---
 import { navLinks } from "../../data/navigation";
 import { profile } from "../../data/profile";
+import { getI18n } from "../../i18n/astro";
+
+const { t, href } = getI18n(Astro);
 ---
 
 <footer class="footer sheet surface-signal" data-footer>
   <div class="shell footer__inner">
     <div class="footer__top">
       <p class="footer__pitch display">
-        Have an idea worth building?<br />
-        <a href="/#contact" class="footer__cta link-underline">Start a project →</a>
+        {t("footer.pitch")}<br />
+        <a href={href("/#contact")} class="footer__cta link-underline">{t("cta.start")} →</a>
       </p>
 
-      <nav aria-label="Footer" class="footer__nav">
+      <nav aria-label={t("nav.footer")} class="footer__nav">
         <ul>
           {
             navLinks.map((link) => (
               <li>
-                <a href={link.href} class="link-underline tap">
-                  {link.label}
+                <a href={href(link.href)} class="link-underline tap">
+                  {t(link.label)}
                 </a>
               </li>
             ))
@@ -27,11 +30,11 @@ import { profile } from "../../data/profile";
     </div>
 
     <div class="footer__meta mono">
-      <span><time data-clock>GMT−6</time> · México</span>
+      <span><span class="sr-only">{t("nav.localTime")}: </span><time data-clock>GMT−6</time> · México</span>
       <a href={`mailto:${profile.email}`} class="footer__email link-underline tap">{profile.email}</a>
       <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" class="link-underline tap">LinkedIn ↗</a>
       <a href={profile.github} target="_blank" rel="noopener noreferrer" class="link-underline tap">GitHub ↗</a>
-      <button type="button" class="footer__top-button link-underline tap" data-back-to-top>Back to top ↑</button>
+      <button type="button" class="footer__top-button link-underline tap" data-back-to-top>{t("footer.backToTop")}</button>
       <span>© 2026 {profile.name}</span>
     </div>
 

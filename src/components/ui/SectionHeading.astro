@@ -1,5 +1,9 @@
 ---
+import { accentHtml } from "../../i18n/markup";
+
 type Props = {
+  /** Heading text; *marked* words render as the italic accent. */
+  title: string;
   /** Section index, rendered as "(02)". */
   index: string;
   label: string;
@@ -9,7 +13,7 @@ type Props = {
   class?: string;
 };
 
-const { index, label, count, id, class: className } = Astro.props;
+const { title, index, label, count, id, class: className } = Astro.props;
 ---
 
 <header class:list={["section-heading", className]}>
@@ -19,9 +23,7 @@ const { index, label, count, id, class: className } = Astro.props;
   </div>
   <div class="rule" data-reveal="rule"></div>
   <div class="section-heading__body">
-    <h2 id={id} class="display display-l section-heading__title" data-reveal="lines">
-      <slot />
-    </h2>
+    <h2 id={id} class="display display-l section-heading__title" data-reveal="lines" set:html={accentHtml(title)} />
     {
       Astro.slots.has("intro") && (
         <div class="section-heading__intro lead muted" data-reveal="fade">

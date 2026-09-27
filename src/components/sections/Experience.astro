@@ -1,15 +1,21 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
-import { experience } from "../../data/experience";
+import { getExperience } from "../../data/experience";
+import { getI18n } from "../../i18n/astro";
+
+const { locale, t } = getI18n(Astro);
+const experience = getExperience(locale);
 ---
 
 <section id="experience" class="experience" aria-labelledby="experience-title">
-  <SectionHeading id="experience-title" index="05" label="Experience" count="2019 → now">
-    Track <span class="accent">record</span>
-    <Fragment slot="intro">
-      Enterprise discipline and freelance hustle. Years inside large delivery teams, and years running projects end to
-      end on my own. Now: independent.
-    </Fragment>
+  <SectionHeading
+    id="experience-title"
+    index="05"
+    label={t("experience.label")}
+    title={t("experience.title")}
+    count={t("experience.count")}
+  >
+    <Fragment slot="intro">{t("experience.intro")}</Fragment>
   </SectionHeading>
 
   <ol class="roles">
@@ -27,7 +33,7 @@ import { experience } from "../../data/experience";
             </div>
             <div class="role__what" data-reveal="fade">
               <p class="role__description">{role.description}</p>
-              <ul class="role__tech" aria-label="Technologies">
+              <ul class="role__tech" aria-label={t("experience.technologies")}>
                 {role.technologies.map((tech) => (
                   <li class="chip">{tech}</li>
                 ))}
