@@ -1,72 +1,57 @@
 import { describe, expect, it } from "vitest";
-import { projects } from "./projects";
+import { getProject, projects } from "./projects";
 import { services } from "./services";
 import { processSteps } from "./process";
 import { experience } from "./experience";
 import { principles } from "./principles";
 
 describe("projects", () => {
-  it("contains exactly the four selected case studies, in order", () => {
-    expect(projects.map((p) => p.slug)).toEqual([
-      "element-cleaning-systems",
-      "aesthete",
-      "voces-podcast",
-      "amor-digital",
-    ]);
+  it("contains only the Element Cleaning Systems case study", () => {
+    expect(projects.map((p) => p.slug)).toEqual(["element-cleaning-systems"]);
   });
 
-  it("has unique slugs", () => {
-    expect(new Set(projects.map((p) => p.slug)).size).toBe(projects.length);
-  });
-
-  it("keeps the live website URLs", () => {
-    expect(projects.map((p) => p.websiteUrl)).toEqual([
-      "https://elementjanitorial.com",
-      "https://aesthete-nine.vercel.app",
-      "https://podcast-fer-2026.vercel.app",
-      "https://digital-invitations-mu.vercel.app",
-    ]);
-  });
-
-  it("preserves every result verbatim", () => {
-    expect(Object.fromEntries(projects.map((p) => [p.slug, p.results]))).toEqual({
-      "element-cleaning-systems": [
+  it("preserves the Element Cleaning Systems data verbatim", () => {
+    const [ecs] = projects;
+    expect({
+      client: ecs.client,
+      industry: ecs.industry,
+      title: ecs.title,
+      imageAlt: ecs.imageAlt,
+      challenge: ecs.challenge,
+      solution: ecs.solution,
+      results: ecs.results,
+      tags: ecs.tags,
+      websiteUrl: ecs.websiteUrl,
+      fullDescription: ecs.fullDescription,
+    }).toEqual({
+      client: "Element Cleaning Systems",
+      industry: "Industrial Services",
+      title: "Digital Transformation for Janitorial Leader",
+      imageAlt: "Element Cleaning Systems Website",
+      challenge:
+        "A premier janitorial company lacked the digital footprint to compete for enterprise contracts, relying solely on word-of-mouth.",
+      solution:
+        "I engineered a high-performance, bilingual platform that positions ECS as a market leader, featuring automated quoting and regional mapping.",
+      results: [
         { label: "Quote Requests", value: "+340%" },
         { label: "Contract Size", value: "+45%" },
         { label: "SEO Rank", value: "#1" },
         { label: "RFP Wins", value: "+28%" },
       ],
-      aesthete: [
-        { label: "Avg Session", value: "+87%" },
-        { label: "Conversion", value: "+64%" },
-        { label: "Brand Recall", value: "92%" },
-        { label: "Return Rate", value: "+156%" },
-      ],
-      "voces-podcast": [
-        { label: "Listeners", value: "+230%" },
-        { label: "Avg Listen", value: "92%" },
-        { label: "Subscribers", value: "+180%" },
-        { label: "Engagement", value: "4.8x" },
-      ],
-      "amor-digital": [
-        { label: "Couples", value: "1,000+" },
-        { label: "Setup Time", value: "2 min" },
-        { label: "Satisfaction", value: "98%" },
-        { label: "RSVP Rate", value: "94%" },
-      ],
+      tags: ["Next.js", "Tailwind", "Strapi", "Resend"],
+      websiteUrl: "https://elementjanitorial.com",
+      fullDescription:
+        "I designed and developed a fully responsive website. I implemented a bilingual content system supporting English and Spanish throughout the entire site, created dynamic service pages showcasing specialized cleaning programs.",
     });
   });
 
-  it("gives every project a client, an image with alt text and full copy", () => {
-    for (const project of projects) {
-      expect(project.client.length).toBeGreaterThan(0);
-      expect(project.image).toBeTruthy();
-      expect(project.imageAlt.trim().length).toBeGreaterThan(0);
-      expect(project.challenge.length).toBeGreaterThan(0);
-      expect(project.solution.length).toBeGreaterThan(0);
-      expect(project.fullDescription.length).toBeGreaterThan(0);
-      expect(project.tags.length).toBe(4);
-    }
+  it("has an optimized image", () => {
+    expect(projects[0].image).toBeTruthy();
+  });
+
+  it("looks projects up by slug", () => {
+    expect(getProject("element-cleaning-systems")?.client).toBe("Element Cleaning Systems");
+    expect(getProject("aesthete")).toBeUndefined();
   });
 });
 

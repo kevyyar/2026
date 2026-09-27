@@ -2,27 +2,23 @@
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import BrowserFrame from "../../components/work/BrowserFrame.astro";
-import NextProject from "../../components/work/NextProject.astro";
+import ProjectCta from "../../components/work/ProjectCta.astro";
 import CountUp from "../../components/ui/CountUp.astro";
-import { getNextProject, projects } from "../../data/projects";
+import { projects } from "../../data/projects";
 import { profile } from "../../data/profile";
 import type { Project } from "../../data/types";
 
 export const prerender = true;
 
 export const getStaticPaths = (() =>
-  projects.map((project, index) => ({
+  projects.map((project) => ({
     params: { slug: project.slug },
-    props: { project, index },
+    props: { project },
   }))) satisfies GetStaticPaths;
 
-type Props = { project: Project; index: number };
+type Props = { project: Project };
 
-const { project, index } = Astro.props;
-const next = getNextProject(project.slug);
-const nextIndex = projects.indexOf(next);
-const total = String(projects.length).padStart(2, "0");
-const number = String(index + 1).padStart(2, "0");
+const { project } = Astro.props;
 const liveHost = new URL(project.websiteUrl).host;
 
 const title = `${project.client} — ${project.title} | Case study by ${profile.name}`;
@@ -67,7 +63,7 @@ const story = [
       <div class="shell case-hero__inner">
         <div class="case-hero__top">
           <a href="/#work" class="case-hero__back mono link-underline tap">← All work</a>
-          <span class="mono">{number} / {total}</span>
+          <span class="mono">Case study</span>
         </div>
 
         <p class="case-hero__meta mono" data-reveal="fade">
@@ -151,7 +147,13 @@ const story = [
       </div>
     </section>
 
-    <NextProject project={next} index={nextIndex} total={projects.length} />
+    <ProjectCta
+      href="/#contact"
+      kicker="(Next)"
+      lead="Your project could be"
+      accent="next"
+      action="Start a project"
+    />
   </article>
 </BaseLayout>
 

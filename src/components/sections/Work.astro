@@ -1,24 +1,27 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
-import ProjectCard from "../work/ProjectCard.astro";
+import FeaturedProject from "../work/FeaturedProject.astro";
 import { projects } from "../../data/projects";
 
-const total = String(projects.length).padStart(2, "0");
+const [featured] = projects;
 ---
 
 <section id="work" class="sheet surface-paper work" aria-labelledby="work-title">
   <div class="shell">
-    <SectionHeading id="work-title" index="02" label="Selected work" count={total}>
-      Selected work <span class="accent">({total})</span>
+    <SectionHeading id="work-title" index="02" label="Case study">
+      Featured <span class="accent">work</span>
       <Fragment slot="intro">
-        Four recent projects, all live. Different industries, one standard: clear goals, sharp execution, results you
-        can measure.
+        One engagement, end to end: strategy, a bilingual build and a launch — with the numbers that followed.
       </Fragment>
     </SectionHeading>
 
-    <ol class="stack" data-stack>
-      {projects.map((project, index) => <ProjectCard project={project} index={index} total={projects.length} />)}
-    </ol>
+    <div class="work__feature">
+      <FeaturedProject
+        project={featured}
+        href={`/work/${featured.slug}`}
+        labels={{ featured: "Featured case", results: "Results", stack: "Stack", cta: "Read case study" }}
+      />
+    </div>
   </div>
 </section>
 
@@ -28,8 +31,7 @@ const total = String(projects.length).padStart(2, "0");
     padding-bottom: calc(var(--radius-sheet) + clamp(3rem, 8vw, 6rem));
   }
 
-  .stack {
-    display: grid;
+  .work__feature {
     padding-top: clamp(2.5rem, 6vw, 5rem);
   }
 </style>

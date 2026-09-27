@@ -14,7 +14,7 @@ export const profile: Profile = {
   availability: "Available for new projects",
   facts: [
     { value: "2019", label: "Writing production code since" },
-    { value: "04", label: "Selected case studies below" },
+    { value: "1:1", label: "One point of contact, start to finish" },
     { value: "EN / ES", label: "Bilingual delivery, English & Spanish" },
     { value: "< 24h", label: "Reply time on new inquiries" },
   ],

@@ -12,11 +12,10 @@ import * as dotField from "./dot-field";
 import * as marquee from "./marquee";
 import * as manifesto from "./manifesto";
 import * as countUp from "./countup";
-import * as workStack from "./work-stack";
+import * as parallax from "./parallax";
 import * as accordion from "./accordion";
 import * as process from "./process";
 import * as tilt from "./tilt";
-import * as nextProject from "./next-project";
 import * as footer from "./footer";
 import * as copyEmail from "./copy-email";
 
@@ -36,12 +35,11 @@ const modules: MotionModule[] = [
   marquee,
   manifesto,
   accordion,
-  workStack,
+  parallax,
   process,
   reveal,
   countUp,
   tilt,
-  nextProject,
   footer,
   copyEmail,
 ];
