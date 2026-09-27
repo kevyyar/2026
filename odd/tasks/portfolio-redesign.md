@@ -22,7 +22,7 @@ The current site is a generic dark "glass + gradient" template with inflated cop
 - [x] T2 Shell + signature motion — preloader, nav + full-screen menu, cursor, Lenis, progress bar, hero particle field, marquee. Route: delegated.
 - [x] T3 Content sections — manifesto, work stack cards, services, process, experience, principles. Route: delegated.
 - [x] T4 Case study pages `/work/[slug]` with view transitions. Route: delegated.
-- [ ] T5 Contact + footer, SEO meta, remove legacy components/deps, README. Route: delegated.
+- [x] T5 Contact + footer, SEO meta, remove legacy components/deps, README. Route: delegated.
 - [ ] T6 Verification — tests, build, mobile/desktop headless screenshots, reduced-motion pass. Route: delegated + parent spot check.
 
 ## Acceptance criteria
@@ -58,7 +58,14 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 
 ### T4 Case study pages
 - Route: delegated writer. `src/pages/work/[slug].astro` (prerendered via getStaticPaths), shared `transition:name` `work-<slug>` on the browser frame (card ↔ case hero), story grid, count-up results, next-project band with cursor-following preview (fine pointers) / inline thumbnail (touch). Per-page title/description/OG + CreativeWork JSON-LD.
-- Checks: CDP screenshots `/work/aesthete` (390) and `/work/amor-digital` (1440) reviewed; build below.
+- Checks: CDP screenshots `/work/aesthete` (390) and `/work/amor-digital` (1440) reviewed; `astro build` → 4 case pages prerendered.
+- Commit: `4cb41de` feat(work): add case study pages with shared-element view transitions.
+
+### T5 Contact, footer, SEO, cleanup
+- Route: delegated writer. ContactForm React island (`client:visible`): same fields, option values, sanitizers (shared from `src/lib/contact-validation.ts`) and exact POST payload; pill radio groups (optional, "Not sure yet" = empty value), floating labels, live counter, magnetic submit, check morph + particle burst, inline errors (`role=alert`, `aria-describedby`). Company now also requires ≥2 chars client-side (matches the API). Footer with fit-to-width wordmark. Home JSON-LD Person + ProfessionalService.
+- Removed: 11 legacy React components, iA Writer font, `lucide-react`. README rewritten.
+- Not done: `.env.example` could not be edited (deny rule) — `SITE_URL` is documented in README only.
+- Checks: `./node_modules/.bin/vitest run` → 49 passed; `./node_modules/.bin/astro build` → Complete; contact/footer screenshots 390 + 1440 reviewed.
 
 ## Next step
 T1.

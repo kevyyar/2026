@@ -1,0 +1,107 @@
+---
+import ContactForm from "../contact/ContactForm.tsx";
+import { profile } from "../../data/profile";
+---
+
+<section id="contact" class="sheet surface-ink on-ink contact" aria-labelledby="contact-title">
+  <div class="shell contact__grid">
+    <div class="contact__intro">
+      <p class="mono"><span class="contact__index">(07)</span> — Contact</p>
+      <h2 id="contact-title" class="display contact__title" data-reveal="lines">
+        Got a project? <span class="accent">Let’s build&nbsp;it.</span>
+      </h2>
+      <p class="lead muted contact__lead" data-reveal="fade">
+        Tell me what you’re building, where it stands and what success looks like. I read every message myself.
+      </p>
+
+      <dl class="contact__facts" data-reveal="fade">
+        <div>
+          <dt class="mono muted">Reply time</dt>
+          <dd>Within 24 hours</dd>
+        </div>
+        <div>
+          <dt class="mono muted">Languages</dt>
+          <dd>English / Español</dd>
+        </div>
+        <div>
+          <dt class="mono muted">Local time</dt>
+          <dd><time data-clock>GMT−6</time> · México</dd>
+        </div>
+        <div>
+          <dt class="mono muted">Code</dt>
+          <dd>
+            <a class="link-underline" href={profile.github} target="_blank" rel="noopener noreferrer">
+              github.com/{profile.githubHandle} <span aria-hidden="true">↗</span>
+            </a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="contact__form">
+      <ContactForm client:visible />
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding-block: clamp(4rem, 9vw, 8rem) calc(var(--radius-sheet) + clamp(4rem, 9vw, 8rem));
+  }
+
+  .contact__grid {
+    display: grid;
+    gap: clamp(3rem, 7vw, 5rem);
+  }
+
+  .contact__intro {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+
+  .contact__index {
+    color: var(--color-signal);
+  }
+
+  .contact__title {
+    font-size: clamp(3rem, 9vw, 8.5rem);
+    line-height: 0.9;
+  }
+
+  .contact__lead {
+    max-width: 34ch;
+  }
+
+  .contact__facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line-inverse);
+  }
+
+  .contact__facts dd {
+    margin-top: 0.35rem;
+    font-weight: 500;
+  }
+
+  .contact__facts a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .contact__grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      column-gap: 4rem;
+    }
+
+    .contact__intro {
+      position: sticky;
+      top: calc(var(--nav-h) + 2rem);
+      align-self: start;
+    }
+  }
+</style>
