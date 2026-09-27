@@ -76,7 +76,17 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - Reduced motion: no preloader, no Lenis, manifesto words fully opaque, process numbers filled and line drawn. No-JS: all content visible, services panels expanded.
 - Fixed: on desktop case pages the 4 result values overflowed into each other (e.g. "+180%4.8x") → smaller clamp at ≥1024 + nowrap; re-verified at 1440, 1024 and 360.
 - Commit: `4b0174d` fix(work): keep case study result values inside their columns; add astro check.
-- Delivery: `single-pr`, not pushed. Native review assessment was not run by the writer.
+- Delivery: `single-pr`, not pushed.
+
+### Native review (RDD)
+- Whole branch (`main..HEAD`): consent granted → `lens_context_budget_exceeded` (17k lines incl. lockfiles/images); no authority created. Split per work unit, each reviewed in a detached worktree.
+- T1 `2980049` medium → granted → approved, acknowledged (`review-89fa00c421f5ee86`).
+- T2 `cc96e69` medium → granted → approved, acknowledged (`review-0e9d4c7c26c742ca`).
+- T3 `e61fef5` medium → granted → approved, acknowledged (`review-6c1e0472f6b16be4`).
+- T4 `4cb41de` medium → granted → approved, acknowledged (`review-d9fe7cee77e054ec`).
+- T5+T6 `7b5f294..4b0174d` medium → granted → approved, acknowledged (`review-05a86230e0d73808`).
+- `9bb9515` docs-only (passive), not reviewed.
+- Advisory follow-ups still present at HEAD (non-blocking): `astro.config.mjs` falls back to localhost `site` outside Vercel without `SITE_URL`; `BaseLayout.astro` after-swap does not restore `motion-failed`; preloader has no failsafe if a motion module throws; `footer.ts` cleanup does not kill its tween/ScrollTrigger; accordion/tilt/next-project cleanup leaves in-flight tweens; no tests for ContactForm submit, `getNextProject` wrap, or motion gates. Resolved by later commits: home content (T1), dangling anchors (T2).
 
 ## Next step
 All tasks done. Owner: confirm copy/data decisions (see final report), set `SITE_URL` in Vercel, then push `feat/portfolio-redesign` and open the PR.
