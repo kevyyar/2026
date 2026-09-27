@@ -113,6 +113,7 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - Headless Chromium (CDP) against the static build: `/`, `/en/`, both case pages at 390 and 1440, all four at 360, reduced motion (`/` and `/en/work/…` at 390, `/en/` at 390), Spanish no-JS, menus (ES 390, EN 1440). Every run: STUCK [] (no visible text at opacity 0/hidden after a full scroll) and `scrollWidth == clientWidth`, `scrollX` 0 → no horizontal scroll.
 - Language switcher: `/`→`/en/`, `/en/`→`/`, `/work/ecs/`→`/en/work/ecs/`, `/en/work/ecs/`→`/work/ecs/`, `/#contact`→`/en/#contact`, `/en/#services`→`/#services`; `<html lang>` and `aria-current` follow.
 - Contact form (fetch stubbed, ES and EN): success / 400 / 500 / network each show the localized dictionary message; payload `{"name","email","company","projectType":"","budget":"","message"}` unchanged.
+- Commits: T7 `5d61fb5`, T8 `6c66869`, T9 `56e5492`, T10 `2a3d31f`.
 - Fixed: one capture showed the footer wordmark transiently oversized, widening the footer grid (other rows clipped); not reproducible in 4 re-runs (fit logic is H3, out of scope) → `grid-template-columns: minmax(0, 1fr)` guard so it can never widen the other rows.
 
 ### Native review (RDD)
@@ -126,4 +127,4 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - Advisory follow-ups still present at HEAD (non-blocking): `astro.config.mjs` falls back to localhost `site` outside Vercel without `SITE_URL`; `BaseLayout.astro` after-swap does not restore `motion-failed`; preloader has no failsafe if a motion module throws; `footer.ts` cleanup does not kill its tween/ScrollTrigger; accordion/tilt/next-project cleanup leaves in-flight tweens; no tests for ContactForm submit, `getNextProject` wrap, or motion gates. Resolved by later commits: home content (T1), dangling anchors (T2).
 
 ## Next step
-T7 → T10 (round 2). Then owner pushes `feat/portfolio-redesign` and opens the PR.
+Round 2 (T7–T10) done. Owner reviews the Spanish copy, then pushes `feat/portfolio-redesign` and opens the PR. Hardening follow-ups: `odd/tasks/portfolio-hardening.md` (next: H1).
