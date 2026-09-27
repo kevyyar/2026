@@ -25,6 +25,13 @@ The current site is a generic dark "glass + gradient" template with inflated cop
 - [x] T5 Contact + footer, SEO meta, remove legacy components/deps, README. Route: delegated.
 - [x] T6 Verification — tests, build, mobile/desktop headless screenshots, reduced-motion pass. Route: delegated + parent spot check.
 
+### Round 2 (owner feedback 2026-09-27)
+Owner decisions: publish `kevyyar@icloud.com` + LinkedIn `https://www.linkedin.com/in/kevyyar/`; remove Aesthete, Voces Podcast and Amor Digital (sites no longer exist) and keep only Element Cleaning Systems; copy approved; add Spanish (default, `/`) + English (`/en/`) with a language switcher. Vercel: RESEND_* already set; `SITE_URL=https://iamkev.xyz` added to Production by orchestrator. Review follow-ups moved to `odd/tasks/portfolio-hardening.md`.
+- [ ] T7 Contact channels — email (`mailto:`) + LinkedIn in profile data, menu, contact section, footer, JSON-LD `sameAs`. Route: delegated (writer trigger: 2+ non-trivial files, bundled with T8/T9).
+- [ ] T8 Single case study — remove the 3 retired projects (data, images, tests, OG refs); redesign Work section and case page for one featured project (no "next project" loop to itself, no `(04)` / "04 case studies" copy). Route: delegated.
+- [ ] T9 i18n ES (default) + EN — Astro i18n routing (`prefixDefaultLocale: false`), all UI copy and content data translated, language switcher in nav + menu preserving the equivalent page, `hreflang` alternates, `og:locale`, localized contact form messages, tests for dictionary/data parity and path helpers (TDD). Route: delegated.
+- [ ] T10 Verification — tests, check, build, headless screenshots ES + EN at 390/1440, reduced motion. Route: delegated + parent spot check.
+
 ## Acceptance criteria
 - `astro build` passes; `vitest run` passes.
 - All 4 projects with unchanged data reachable from home and `/work/<slug>`.
@@ -89,4 +96,4 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - Advisory follow-ups still present at HEAD (non-blocking): `astro.config.mjs` falls back to localhost `site` outside Vercel without `SITE_URL`; `BaseLayout.astro` after-swap does not restore `motion-failed`; preloader has no failsafe if a motion module throws; `footer.ts` cleanup does not kill its tween/ScrollTrigger; accordion/tilt/next-project cleanup leaves in-flight tweens; no tests for ContactForm submit, `getNextProject` wrap, or motion gates. Resolved by later commits: home content (T1), dangling anchors (T2).
 
 ## Next step
-All tasks done. Owner: confirm copy/data decisions (see final report), set `SITE_URL` in Vercel, then push `feat/portfolio-redesign` and open the PR.
+T7 → T10 (round 2). Then owner pushes `feat/portfolio-redesign` and opens the PR.
