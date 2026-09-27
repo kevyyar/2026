@@ -56,9 +56,11 @@ import { profile } from "../../data/profile";
         <span class="muted">Local time</span>
         <span><time data-clock>GMT−6</time> · CDMX</span>
       </div>
-      <a class="menu__social mono link-underline tap" href={profile.github} target="_blank" rel="noopener noreferrer">
-        GitHub ↗
-      </a>
+      <ul class="menu__social mono" aria-label="Contact channels">
+        <li><a class="link-underline tap" href={`mailto:${profile.email}`}>Email</a></li>
+        <li><a class="link-underline tap" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
+        <li><a class="link-underline tap" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+      </ul>
       <a class="btn btn-primary" href="/#contact" data-menu-link>
         Start a project <span class="btn-arrow" aria-hidden="true">→</span>
       </a>
@@ -300,6 +302,12 @@ import { profile } from "../../data/profile";
   }
 
   .menu__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.25rem;
+  }
+
+  .menu__social a {
     display: inline-flex;
     align-items: center;
   }

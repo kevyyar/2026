@@ -28,6 +28,8 @@ import { profile } from "../../data/profile";
 
     <div class="footer__meta mono">
       <span><time data-clock>GMT−6</time> · México</span>
+      <a href={`mailto:${profile.email}`} class="footer__email link-underline tap">{profile.email}</a>
+      <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" class="link-underline tap">LinkedIn ↗</a>
       <a href={profile.github} target="_blank" rel="noopener noreferrer" class="link-underline tap">GitHub ↗</a>
       <button type="button" class="footer__top-button link-underline tap" data-back-to-top>Back to top ↑</button>
       <span>© 2026 {profile.name}</span>
@@ -107,6 +109,11 @@ import { profile } from "../../data/profile";
     font: inherit;
     letter-spacing: inherit;
     text-transform: inherit;
+  }
+
+  .footer__email {
+    text-transform: none !important;
+    letter-spacing: 0.02em !important;
   }
 
   .footer__wordmark {

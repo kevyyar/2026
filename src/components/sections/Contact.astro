@@ -14,6 +14,24 @@ import { profile } from "../../data/profile";
         Tell me what you’re building, where it stands and what success looks like. I read every message myself.
       </p>
 
+      <div class="contact__email" data-reveal="fade" data-copy-scope>
+        <p class="mono muted">Write directly</p>
+        <div class="contact__email-row">
+          <a class="contact__email-link display link-underline" href={`mailto:${profile.email}`}>{profile.email}</a>
+          <button
+            type="button"
+            class="contact__copy mono"
+            data-copy={profile.email}
+            data-copy-done="Copied"
+            data-copy-failed="Couldn’t copy — use the email link"
+            hidden
+          >
+            <span data-copy-label>Copy</span>
+          </button>
+        </div>
+        <p class="sr-only" aria-live="polite" data-copy-status></p>
+      </div>
+
       <dl class="contact__facts" data-reveal="fade">
         <div>
           <dt class="mono muted">Reply time</dt>
@@ -28,10 +46,13 @@ import { profile } from "../../data/profile";
           <dd><time data-clock>GMT−6</time> · México</dd>
         </div>
         <div>
-          <dt class="mono muted">Code</dt>
-          <dd>
+          <dt class="mono muted">Elsewhere</dt>
+          <dd class="contact__links">
+            <a class="link-underline" href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn <span aria-hidden="true">↗</span>
+            </a>
             <a class="link-underline" href={profile.github} target="_blank" rel="noopener noreferrer">
-              github.com/{profile.githubHandle} <span aria-hidden="true">↗</span>
+              GitHub <span aria-hidden="true">↗</span>
             </a>
           </dd>
         </div>
@@ -71,6 +92,57 @@ import { profile } from "../../data/profile";
 
   .contact__lead {
     max-width: 34ch;
+  }
+
+  .contact__email {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .contact__email-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+  }
+
+  .contact__email-link {
+    font-size: clamp(1.45rem, 4.2vw, 2.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    overflow-wrap: anywhere;
+    color: var(--color-paper);
+  }
+
+  .contact__email-link:hover {
+    color: var(--color-signal);
+  }
+
+  .contact__copy {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 1rem;
+    border: 1px solid var(--color-line-inverse);
+    border-radius: 999px;
+    color: var(--color-paper);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+
+  .contact__copy:hover {
+    border-color: var(--color-paper);
+  }
+
+  .contact__copy.is-copied {
+    background: var(--color-signal);
+    border-color: var(--color-signal);
+    color: var(--color-ink);
+  }
+
+  .contact__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
   }
 
   .contact__facts {

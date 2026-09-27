@@ -7,6 +7,8 @@ export const profile: Profile = {
   positioning: "A software studio of one.",
   location: "México",
   timeZone: "America/Mexico_City",
+  email: "kevyyar@icloud.com",
+  linkedin: "https://www.linkedin.com/in/kevyyar/",
   github: "https://github.com/kevyyar",
   githubHandle: "kevyyar",
   availability: "Available for new projects",

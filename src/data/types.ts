@@ -59,6 +59,8 @@ export type Profile = {
   positioning: string;
   location: string;
   timeZone: string;
+  email: string;
+  linkedin: string;
   github: string;
   githubHandle: string;
   availability: string;

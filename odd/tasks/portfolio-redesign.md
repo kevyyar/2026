@@ -27,7 +27,7 @@ The current site is a generic dark "glass + gradient" template with inflated cop
 
 ### Round 2 (owner feedback 2026-09-27)
 Owner decisions: publish `kevyyar@icloud.com` + LinkedIn `https://www.linkedin.com/in/kevyyar/`; remove Aesthete, Voces Podcast and Amor Digital (sites no longer exist) and keep only Element Cleaning Systems; copy approved; add Spanish (default, `/`) + English (`/en/`) with a language switcher. Vercel: RESEND_* already set; `SITE_URL=https://iamkev.xyz` added to Production by orchestrator. Review follow-ups moved to `odd/tasks/portfolio-hardening.md`.
-- [ ] T7 Contact channels — email (`mailto:`) + LinkedIn in profile data, menu, contact section, footer, JSON-LD `sameAs`. Route: delegated (writer trigger: 2+ non-trivial files, bundled with T8/T9).
+- [x] T7 Contact channels — email (`mailto:`) + LinkedIn in profile data, menu, contact section, footer, JSON-LD `sameAs`. Route: delegated (writer trigger: 2+ non-trivial files, bundled with T8/T9).
 - [ ] T8 Single case study — remove the 3 retired projects (data, images, tests, OG refs); redesign Work section and case page for one featured project (no "next project" loop to itself, no `(04)` / "04 case studies" copy). Route: delegated.
 - [ ] T9 i18n ES (default) + EN — Astro i18n routing (`prefixDefaultLocale: false`), all UI copy and content data translated, language switcher in nav + menu preserving the equivalent page, `hreflang` alternates, `og:locale`, localized contact form messages, tests for dictionary/data parity and path helpers (TDD). Route: delegated.
 - [ ] T10 Verification — tests, check, build, headless screenshots ES + EN at 390/1440, reduced motion. Route: delegated + parent spot check.
@@ -84,6 +84,11 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - Fixed: on desktop case pages the 4 result values overflowed into each other (e.g. "+180%4.8x") → smaller clamp at ≥1024 + nowrap; re-verified at 1440, 1024 and 360.
 - Commit: `4b0174d` fix(work): keep case study result values inside their columns; add astro check.
 - Delivery: `single-pr`, not pushed.
+
+### T7 Contact channels
+- `profile.email` / `profile.linkedin` added; rendered in menu footer (Email · LinkedIn · GitHub), contact section (large `mailto:` link + Copy button + LinkedIn/GitHub) and site footer. JSON-LD Person + ProfessionalService gain `email` and `sameAs: [LinkedIn, GitHub]`.
+- Copy button (`src/scripts/motion/copy-email.ts`) is rendered `hidden` and only revealed when `navigator.clipboard.writeText` exists (no-JS → plain mailto link). Result is announced in an `aria-live="polite"` region.
+- Checks: `./node_modules/.bin/vitest run` → 49 passed; `./node_modules/.bin/astro build` → Complete. CDP on the static build (:4501): with clipboard permission granted → label "Copied", `is-copied`, status "Copied: kevyyar@icloud.com", clipboard read back "kevyyar@icloud.com"; without permission → status "Couldn’t copy — use the email link". Contact/menu screenshots at 390 reviewed; STUCK [] and no horizontal scroll.
 
 ### Native review (RDD)
 - Whole branch (`main..HEAD`): consent granted → `lens_context_budget_exceeded` (17k lines incl. lockfiles/images); no authority created. Split per work unit, each reviewed in a detached worktree.
