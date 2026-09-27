@@ -1,0 +1,16 @@
+---
+/**
+ * Renders a metric exactly as given; motion/countup.ts animates numeric values
+ * (see src/lib/metric.ts) when they scroll into view. Non-numeric values stay static.
+ */
+type Props = {
+  value: string;
+  /** Start value for the count-up (defaults to 0). */
+  from?: number;
+  class?: string;
+};
+
+const { value, from, class: className } = Astro.props;
+---
+
+<span class={className} data-count={value} data-count-from={from}>{value}</span>

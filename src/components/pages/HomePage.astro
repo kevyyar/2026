@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/sections/Hero.astro";
+import Manifesto from "../../components/sections/Manifesto.astro";
+import Work from "../../components/sections/Work.astro";
+import Services from "../../components/sections/Services.astro";
+import Process from "../../components/sections/Process.astro";
+import Experience from "../../components/sections/Experience.astro";
+import Principles from "../../components/sections/Principles.astro";
+import Contact from "../../components/sections/Contact.astro";
+import { getProfile } from "../../data/profile";
+import { getServices } from "../../data/services";
+import { getProjects } from "../../data/projects";
+import { getI18n } from "../../i18n/astro";
+
+const { locale, t, href } = getI18n(Astro);
+const profile = getProfile(locale);
+const services = getServices(locale);
+const [featured] = getProjects(locale);
+
+const title = t("meta.home.title");
+const description = t("meta.home.description");
+
+const site = Astro.site ?? Astro.url;
+const home = new URL(href("/"), site).href;
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${home}#person`,
+    name: profile.name,
+    jobTitle: profile.role,
+    url: home,
+    email: profile.email,
+    sameAs: [profile.linkedin, profile.github],
+    address: { "@type": "PostalAddress", addressCountry: "MX" },
+    knowsLanguage: ["en", "es"],
+    knowsAbout: ["React", "Next.js", "Vue", "Astro", "TypeScript", "Node.js", "Firebase"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: t("meta.service.name"),
+    description,
+    url: home,
+    founder: { "@id": `${home}#person` },
+    email: profile.email,
+    sameAs: [profile.linkedin, profile.github],
+    areaServed: t("meta.areaServed"),
+    address: { "@type": "PostalAddress", addressCountry: "MX" },
+    availableLanguage: ["Spanish", "English"],
+    inLanguage: locale,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: t("services.label"),
+      itemListElement: services.map((service) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: service.title, description: service.description },
+      })),
+    },
+  },
+];
+---
+
+<BaseLayout title={title} description={description} image={featured.image} imageAlt={featured.imageAlt} jsonLd={jsonLd} preloader>
+  <Hero />
+  <Manifesto />
+  <Work />
+  <Services />
+  <Process />
+  <div class="sheet surface-paper record">
+    <div class="shell">
+      <Experience />
+      <Principles />
+    </div>
+  </div>
+  <Contact />
+</BaseLayout>
+
+<style>
+  .record {
+    padding-top: clamp(3.5rem, 8vw, 7rem);
+    padding-bottom: calc(var(--radius-sheet) + clamp(4rem, 9vw, 8rem));
+  }
+</style>

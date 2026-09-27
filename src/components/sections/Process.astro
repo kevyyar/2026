@@ -1,0 +1,358 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import { getProcessSteps } from "../../data/process";
+import { getI18n } from "../../i18n/astro";
+import { accentHtml } from "../../i18n/markup";
+
+const { locale, t } = getI18n(Astro);
+const processSteps = getProcessSteps(locale);
+---
+
+<section id="process" class="sheet surface-light process" aria-labelledby="process-title">
+  <div class="shell">
+    <SectionHeading
+      id="process-title"
+      index="04"
+      label={t("process.label")}
+      title={t("process.title")}
+      count={String(processSteps.length).padStart(2, "0")}
+    >
+      <Fragment slot="intro">{t("process.intro")}</Fragment>
+    </SectionHeading>
+  </div>
+
+  <div class="process__pin" data-process>
+    <div class="process__viewport">
+      <svg class="process__line" viewBox="0 0 2 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M1 0V100" pathLength="1" class="process__line-base"></path>
+        <path d="M1 0V100" pathLength="1" class="process__line-draw" data-process-line></path>
+      </svg>
+
+      <ol class="process__track" data-process-track>
+        {
+          processSteps.map((step, index) => (
+            <li class="step" data-process-step>
+              <span class="step__number display" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div class="step__body">
+                <p class="mono muted">{t("process.step", { n: index + 1, total: processSteps.length })}</p>
+                <h3 class="step__title display">{step.title}</h3>
+                <p class="step__description">{step.description}</p>
+                <div class="step__deliverables">
+                  <p class="mono muted">{t("process.youGet")}</p>
+                  <ul class="step__chips">
+                    {step.deliverables.map((item) => (
+                      <li class="chip">{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+    <div class="process__progress shell" aria-hidden="true">
+      <span class="mono">01</span>
+      <span class="process__bar"><span data-process-progress></span></span>
+      <span class="mono">04</span>
+    </div>
+  </div>
+
+  <div class="shell">
+    <a href="#contact" class="cta-band" data-cursor="hover">
+      <span class="cta-band__kicker mono">{t("process.ctaKicker")}</span>
+      <span class="cta-band__text display" set:html={accentHtml(t("process.ctaText"))} />
+      <span class="cta-band__action">
+        {t("cta.start")} <span class="cta-band__arrow" aria-hidden="true">→</span>
+      </span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .process {
+    padding-top: clamp(3.5rem, 8vw, 7rem);
+    padding-bottom: calc(var(--radius-sheet) + clamp(3rem, 7vw, 6rem));
+  }
+
+  .process__pin {
+    position: relative;
+    padding-top: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .process__viewport {
+    position: relative;
+  }
+
+  /* Mobile / default: vertical steps with a drawn line. */
+  .process__line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--gutter) + 1.6rem);
+    width: 2px;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .process__line path {
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .process__line-base {
+    stroke: var(--color-line);
+  }
+
+  .process__line-draw {
+    stroke: var(--color-signal);
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+
+  .process__track {
+    display: grid;
+    gap: clamp(3rem, 8vw, 5rem);
+    padding-inline: var(--gutter);
+  }
+
+  .step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.2rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .step__number {
+    position: relative;
+    z-index: 1;
+    align-self: start;
+    padding-block: 0.25rem;
+    background: var(--color-paper-light);
+    font-size: 2.6rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-signal-deep);
+    transition: color 0.5s, -webkit-text-stroke-color 0.5s;
+  }
+
+  .step__body {
+    display: grid;
+    gap: 1rem;
+    max-width: 38rem;
+  }
+
+  .step__title {
+    font-size: clamp(1.9rem, 5vw, 3.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+
+  .step__description {
+    color: var(--color-ink-soft);
+    font-size: 1.05rem;
+  }
+
+  .step__deliverables {
+    display: grid;
+    gap: 0.6rem;
+    padding-top: 0.5rem;
+  }
+
+  .step__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .process__progress {
+    display: none;
+  }
+
+  /* Outlined numbers fill as they pass the centre (motion only). */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js:not(.motion-failed)) .step__number {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--color-ink);
+    }
+
+    :global(html.js:not(.motion-failed)) .step.is-active .step__number {
+      color: var(--color-signal);
+      -webkit-text-stroke-color: var(--color-signal);
+    }
+
+    :global(html.js:not(.motion-failed)) .process__line-draw {
+      stroke-dashoffset: 1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .process__line {
+      display: none;
+    }
+
+    .process__track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 3rem;
+      max-width: 1680px;
+      margin-inline: auto;
+    }
+
+    .step {
+      grid-template-columns: minmax(0, 1fr);
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--color-line);
+    }
+
+    .step__number {
+      font-size: clamp(6rem, 11vw, 11rem);
+      background: none;
+      line-height: 0.85;
+    }
+  }
+
+  /* Desktop with motion: pinned horizontal scroll. */
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    :global(html.js:not(.motion-failed)) .process__pin {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 0;
+    }
+
+    :global(html.js:not(.motion-failed)) .process__track {
+      display: flex;
+      width: max-content;
+      max-width: none;
+      gap: 0;
+      margin: 0;
+      padding-inline: var(--gutter) 30vw;
+    }
+
+    :global(html.js:not(.motion-failed)) .step {
+      flex-shrink: 0;
+      width: min(62vw, 58rem);
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 2.5rem;
+      padding: 2rem 3rem 0 0;
+      margin-right: 3rem;
+    }
+
+    :global(html.js:not(.motion-failed)) .step__number {
+      font-size: clamp(8rem, 13vw, 14rem);
+    }
+
+    :global(html.js:not(.motion-failed)) .step__title {
+      font-size: clamp(2.8rem, 4.6vw, 5.2rem);
+    }
+
+    :global(html.js:not(.motion-failed)) .step__description {
+      font-size: 1.2rem;
+    }
+
+    :global(html.js:not(.motion-failed)) .process__progress {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+  }
+
+  .process__bar {
+    height: 2px;
+    background: var(--color-line);
+  }
+
+  .process__bar span {
+    display: block;
+    height: 100%;
+    background: var(--color-signal);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .cta-band {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(4rem, 9vw, 8rem);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-radius: 24px;
+    background: var(--color-signal);
+    color: var(--color-ink);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .cta-band::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-ink);
+    transform: translateY(101%);
+    transition: transform 0.7s var(--ease-out-expo);
+  }
+
+  .cta-band:hover::before,
+  .cta-band:focus-visible::before {
+    transform: none;
+  }
+
+  .cta-band:hover,
+  .cta-band:focus-visible {
+    color: var(--color-paper);
+  }
+
+  .cta-band__text {
+    font-size: clamp(2.4rem, 8vw, 7.5rem);
+    line-height: 0.9;
+  }
+
+  .cta-band__text :global(.accent) {
+    color: inherit;
+  }
+
+  .cta-band__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .cta-band__arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    transition: transform 0.6s var(--ease-out-expo), background-color 0.4s, color 0.4s;
+  }
+
+  .cta-band:hover .cta-band__arrow {
+    transform: rotate(-45deg);
+    background: var(--color-signal);
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 1024px) {
+    .cta-band {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 2rem;
+    }
+
+    .cta-band__kicker {
+      align-self: start;
+    }
+  }
+</style>

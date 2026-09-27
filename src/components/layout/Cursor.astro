@@ -1,0 +1,105 @@
+---
+/* Custom cursor for fine pointers. Activated by motion/cursor.ts (adds html.has-cursor). */
+import { getI18n } from "../../i18n/astro";
+
+const { t } = getI18n(Astro);
+const viewLabel = t("cursor.view");
+---
+
+<div class="cursor" data-cursor-root aria-hidden="true">
+  <div class="cursor__ring" data-cursor-ring>
+    <span class="cursor__label mono">{viewLabel}</span>
+  </div>
+  <div class="cursor__dot" data-cursor-dot></div>
+</div>
+
+<style>
+  .cursor {
+    display: none;
+  }
+
+  :global(html.has-cursor) .cursor {
+    display: block;
+  }
+
+  .cursor__dot,
+  .cursor__ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 170;
+    pointer-events: none;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .cursor.is-visible .cursor__dot,
+  .cursor.is-visible .cursor__ring {
+    opacity: 1;
+  }
+
+  .cursor__dot {
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    background: var(--color-paper);
+    mix-blend-mode: difference;
+  }
+
+  .cursor__ring {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 1px solid var(--color-paper);
+    mix-blend-mode: difference;
+    transition:
+      opacity 0.3s,
+      width 0.5s var(--ease-out-expo),
+      height 0.5s var(--ease-out-expo),
+      margin 0.5s var(--ease-out-expo),
+      background-color 0.4s,
+      border-color 0.4s;
+  }
+
+  .cursor.is-hover .cursor__ring {
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    background: var(--color-paper);
+  }
+
+  .cursor.is-view .cursor__ring {
+    width: 108px;
+    height: 108px;
+    margin: -54px 0 0 -54px;
+    background: var(--color-signal);
+    border-color: var(--color-signal);
+    mix-blend-mode: normal;
+  }
+
+  .cursor.is-view .cursor__dot {
+    opacity: 0;
+  }
+
+  .cursor__label {
+    color: var(--color-ink);
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.3s, transform 0.5s var(--ease-out-expo);
+  }
+
+  .cursor.is-view .cursor__label {
+    opacity: 1;
+    transform: none;
+  }
+
+  :global(html.has-cursor body),
+  :global(html.has-cursor a),
+  :global(html.has-cursor button),
+  :global(html.has-cursor label) {
+    cursor: none;
+  }
+</style>

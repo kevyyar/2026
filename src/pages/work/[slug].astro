@@ -1,0 +1,13 @@
+---
+import type { GetStaticPaths } from "astro";
+import CasePage from "../../components/pages/CasePage.astro";
+import { projectSlugs } from "../../data/projects";
+
+export const prerender = true;
+
+export const getStaticPaths = (() => projectSlugs.map((slug) => ({ params: { slug } }))) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+---
+
+<CasePage slug={slug} />

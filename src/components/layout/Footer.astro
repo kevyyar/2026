@@ -1,0 +1,134 @@
+---
+import { navLinks } from "../../data/navigation";
+import { profile } from "../../data/profile";
+import { getI18n } from "../../i18n/astro";
+
+const { t, href } = getI18n(Astro);
+---
+
+<footer class="footer sheet surface-signal" data-footer>
+  <div class="shell footer__inner">
+    <div class="footer__top">
+      <p class="footer__pitch display">
+        {t("footer.pitch")}<br />
+        <a href={href("/#contact")} class="footer__cta link-underline">{t("cta.start")} →</a>
+      </p>
+
+      <nav aria-label={t("nav.footer")} class="footer__nav">
+        <ul>
+          {
+            navLinks.map((link) => (
+              <li>
+                <a href={href(link.href)} class="link-underline tap">
+                  {t(link.label)}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer__meta mono">
+      <span><span class="sr-only">{t("nav.localTime")}: </span><time data-clock>GMT−6</time> · México</span>
+      <a href={`mailto:${profile.email}`} class="footer__email link-underline tap">{profile.email}</a>
+      <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" class="link-underline tap">LinkedIn ↗</a>
+      <a href={profile.github} target="_blank" rel="noopener noreferrer" class="link-underline tap">GitHub ↗</a>
+      <button type="button" class="footer__top-button link-underline tap" data-back-to-top>{t("footer.backToTop")}</button>
+      <span>© 2026 {profile.name}</span>
+    </div>
+
+    <p class="footer__wordmark display" data-wordmark aria-hidden="true">{profile.name}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    overflow: clip;
+  }
+
+  .footer :global(:focus-visible) {
+    outline-color: var(--color-ink);
+  }
+
+  .footer__inner {
+    display: grid;
+    /* A transiently oversized wordmark must never widen the other rows. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 4rem);
+    padding-top: clamp(3.5rem, 8vw, 6rem);
+    padding-bottom: clamp(0.75rem, 2vw, 1.5rem);
+  }
+
+  .footer__top {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .footer__pitch {
+    font-size: clamp(1.8rem, 4.5vw, 3.6rem);
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .footer__cta {
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+
+  .footer__nav ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 1.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .footer__nav a {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .footer__top {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+      align-items: end;
+    }
+  }
+
+  .footer__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(20 18 16 / 0.3);
+  }
+
+  .footer__meta a,
+  .footer__top-button {
+    display: inline-flex;
+    align-items: center;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+
+  .footer__email {
+    text-transform: none !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .footer__wordmark {
+    font-size: 15.5vw;
+    font-weight: 800;
+    line-height: 0.78;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+    justify-self: center;
+    padding-bottom: 0.04em;
+    margin-bottom: -0.02em;
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+type Props = {
+  class?: string;
+  /** Inverted renders paper background with ink strokes. */
+  inverted?: boolean;
+  title?: string;
+};
+
+const { class: className, inverted = false, title } = Astro.props;
+const bg = inverted ? "var(--color-paper-light)" : "var(--color-ink)";
+const fg = inverted ? "var(--color-ink)" : "var(--color-paper)";
+---
+
+<svg
+  class={className}
+  viewBox="0 0 64 64"
+  xmlns="http://www.w3.org/2000/svg"
+  role={title ? "img" : undefined}
+  aria-label={title}
+  aria-hidden={title ? undefined : "true"}
+>
+  <rect width="64" height="64" rx="14" fill={bg}></rect>
+  <g fill="none" stroke={fg} stroke-width="4.5" stroke-linecap="square">
+    <path d="M15 17v30M29 17 16.5 32 29 47"></path>
+    <path d="M35 17h7.5a6.5 6.5 0 0 1 0 13H35M35 30h8.5a8.5 8.5 0 0 1 0 17H35zM35 17v30"></path>
+  </g>
+  <circle cx="54" cy="47" r="3.5" fill="var(--color-signal)"></circle>
+</svg>

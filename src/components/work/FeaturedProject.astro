@@ -1,0 +1,259 @@
+---
+import type { Project } from "../../data/types";
+import BrowserFrame from "./BrowserFrame.astro";
+import CountUp from "../ui/CountUp.astro";
+
+type Props = {
+  project: Project;
+  href: string;
+  labels: { featured: string; results: string; stack: string; cta: string };
+};
+
+const { project, href, labels } = Astro.props;
+---
+
+<article class="featured on-ink" data-cursor="view">
+  <div class="featured__head">
+    <div class="featured__meta mono">
+      <span class="featured__badge">{labels.featured}</span>
+      <span class="chip">{project.industry}</span>
+    </div>
+    <p class="featured__client mono muted">{project.client}</p>
+    <h3 class="featured__title display">
+      <a href={href} class="featured__link">{project.title}</a>
+    </h3>
+    <p class="featured__challenge muted">{project.challenge}</p>
+    <span class="featured__cta" aria-hidden="true">
+      {labels.cta}
+      <span class="featured__arrow">→</span>
+    </span>
+  </div>
+
+  <div class="featured__media" data-reveal="clip">
+    <BrowserFrame
+      image={project.image}
+      alt={project.imageAlt}
+      url={project.websiteUrl}
+      transitionName={`work-${project.slug}`}
+      sizes="(min-width: 1024px) 58vw, 92vw"
+    />
+  </div>
+
+  <dl class="featured__metrics" aria-label={labels.results}>
+    {
+      project.results.map((metric) => (
+        <div class="featured__metric">
+          <dt class="mono muted">{metric.label}</dt>
+          <dd class="featured__value display">
+            <CountUp value={metric.value} />
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <ul class="featured__tags" aria-label={labels.stack}>
+    {project.tags.map((tag) => <li class="chip">{tag}</li>)}
+  </ul>
+</article>
+
+<style>
+  .featured {
+    position: relative;
+    display: grid;
+    gap: 1.75rem;
+    padding: clamp(1rem, 3vw, 2.5rem);
+    border-radius: 28px;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* Faint signal glow in the corner for depth. */
+  .featured::before {
+    content: "";
+    position: absolute;
+    right: -20%;
+    top: -30%;
+    z-index: -1;
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 74 28 / 0.18), transparent 65%);
+    pointer-events: none;
+  }
+
+  .featured__head {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .featured__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .featured__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-signal);
+  }
+
+  .featured__badge::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-signal);
+  }
+
+  .featured__title {
+    font-size: clamp(2rem, 5.2vw, 4.8rem);
+    line-height: 0.95;
+    max-width: 16ch;
+    transition: color 0.4s;
+  }
+
+  /* Stretched link: the whole card is clickable, the title is the accessible name. */
+  .featured__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+  }
+
+  .featured__link:focus-visible {
+    outline: none;
+  }
+
+  .featured:has(.featured__link:focus-visible) {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 4px;
+  }
+
+  .featured:hover .featured__title {
+    color: var(--color-signal);
+  }
+
+  .featured__challenge {
+    max-width: 44ch;
+    font-size: 1.05rem;
+  }
+
+  .featured__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 1rem;
+    min-height: 3.5rem;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.4rem 0.4rem 1.5rem;
+    border-radius: 999px;
+    background: var(--color-signal);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.05rem;
+    transition: background-color 0.4s;
+  }
+
+  .featured__arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    transition: transform 0.6s var(--ease-out-expo);
+  }
+
+  .featured:hover .featured__cta {
+    background: var(--color-paper);
+  }
+
+  .featured:hover .featured__arrow,
+  .featured:has(.featured__link:focus-visible) .featured__arrow {
+    transform: rotate(-45deg);
+  }
+
+  .featured__metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--color-line-inverse);
+  }
+
+  .featured__metric {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.25rem 1rem 1.25rem 0;
+    border-bottom: 1px solid var(--color-line-inverse);
+  }
+
+  .featured__metric:nth-child(odd) {
+    border-right: 1px solid var(--color-line-inverse);
+  }
+
+  .featured__metric:nth-child(even) {
+    padding-left: 1rem;
+  }
+
+  .featured__value {
+    font-size: clamp(2.2rem, 10vw, 4.5rem);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--color-signal);
+  }
+
+  .featured__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .featured {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      column-gap: 2.5rem;
+      row-gap: 2.5rem;
+    }
+
+    .featured__head {
+      align-content: space-between;
+    }
+
+    .featured__metrics,
+    .featured__tags {
+      grid-column: 1 / -1;
+    }
+
+    .featured__metrics {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .featured__metric {
+      padding: 1.5rem 1.5rem 1.5rem 0;
+      border-right: 1px solid var(--color-line-inverse);
+    }
+
+    .featured__metric:not(:first-child) {
+      padding-left: 1.5rem;
+    }
+
+    .featured__metric:last-child {
+      border-right: 0;
+    }
+
+    .featured__value {
+      font-size: clamp(3rem, 5vw, 5.5rem);
+    }
+  }
+</style>

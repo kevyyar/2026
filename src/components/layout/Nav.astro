@@ -1,0 +1,348 @@
+---
+import Monogram from "../ui/Monogram.astro";
+import { navLinks } from "../../data/navigation";
+import { profile } from "../../data/profile";
+import LangSwitch from "./LangSwitch.astro";
+import { getI18n } from "../../i18n/astro";
+
+const { t, href } = getI18n(Astro);
+---
+
+<header class="nav" data-nav>
+  <div class="nav__progress" aria-hidden="true"><span data-scroll-progress></span></div>
+  <div class="shell nav__inner">
+    <a href={href("/")} class="nav__mark tap" aria-label={t("a11y.home")} data-cursor="hover">
+      <Monogram class="nav__monogram" />
+    </a>
+
+    <p class="nav__status mono">
+      <span class="pulse" aria-hidden="true"></span>
+      <span class="nav__status-text">{t("nav.status.short")}<span class="max-sm:sr-only">{t("nav.status.rest")}</span></span>
+    </p>
+
+    <LangSwitch class="nav__lang" />
+
+    <button
+      type="button"
+      class="nav__toggle mono"
+      aria-expanded="false"
+      aria-controls="site-menu"
+      data-menu-toggle
+      data-label-open={t("nav.menu")}
+      data-label-close={t("nav.close")}
+      data-cursor="hover"
+    >
+      <span class="nav__toggle-label" data-menu-label>{t("nav.menu")}</span>
+      <span class="nav__toggle-icon" aria-hidden="true"><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+
+<div id="site-menu" class="menu on-ink" data-menu role="dialog" aria-modal="true" aria-label={t("nav.siteMenu")} hidden>
+  <div class="shell menu__inner">
+    <nav aria-label={t("nav.primary")} class="menu__nav">
+      <ol class="menu__list">
+        {
+          navLinks.map((link, index) => (
+            <li class="menu__item">
+              <a href={href(link.href)} class="menu__link" data-menu-link data-cursor="hover">
+                <span class="menu__index mono">({String(index + 1).padStart(2, "0")})</span>
+                <span class="menu__mask">
+                  <span class="menu__text display" data-menu-text>
+                    {t(link.label)}
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <div class="menu__foot" data-menu-foot>
+      <div class="menu__meta mono">
+        <span class="muted">{t("nav.localTime")}</span>
+        <span><time data-clock>GMT−6</time> · CDMX</span>
+      </div>
+      <ul class="menu__social mono" aria-label={t("nav.channels")}>
+        <li><a class="link-underline tap" href={`mailto:${profile.email}`}>{t("nav.email")}</a></li>
+        <li><a class="link-underline tap" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
+        <li><a class="link-underline tap" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+      </ul>
+      <LangSwitch tone="ink" />
+      <a class="btn btn-primary" href={href("/#contact")} data-menu-link>
+        {t("cta.start")} <span class="btn-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+    pointer-events: none;
+    transition: transform 0.6s var(--ease-out-expo);
+  }
+
+  .nav.is-hidden {
+    transform: translateY(-110%);
+  }
+
+  .nav__progress {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+  }
+
+  .nav__progress span {
+    display: block;
+    height: 100%;
+    background: var(--color-signal);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    height: var(--nav-h);
+  }
+
+  .nav__inner > :global(*) {
+    pointer-events: auto;
+  }
+
+  .nav__mark {
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+  }
+
+  .nav__mark :global(.nav__monogram) {
+    width: 2.75rem;
+    height: 2.75rem;
+    transition: transform 0.6s var(--ease-out-expo);
+  }
+
+  .nav__mark:hover :global(.nav__monogram) {
+    transform: rotate(-8deg) scale(1.05);
+  }
+
+  .nav__status,
+  .nav__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: rgb(245 241 232 / 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--color-ink);
+  }
+
+  .nav__status {
+    margin-right: auto;
+    margin-left: 0.25rem;
+    white-space: nowrap;
+  }
+
+  /* Compact phones: the availability pill collapses to its pulsing dot. */
+  @media (max-width: 479px) {
+    .nav__status {
+      justify-content: center;
+      width: 2.75rem;
+      padding: 0;
+    }
+
+    .nav__status-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+
+  .pulse {
+    position: relative;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-signal);
+  }
+
+  .pulse::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--color-signal);
+    animation: pulse 1.8s var(--ease-out-expo) infinite;
+  }
+
+  @keyframes pulse {
+    from {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    to {
+      transform: scale(3.2);
+      opacity: 0;
+    }
+  }
+
+  .nav__toggle {
+    gap: 0.75rem;
+    padding-right: 0.85rem;
+    transition: background-color 0.4s, color 0.4s;
+  }
+
+  .nav__toggle:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .nav__toggle-icon {
+    display: grid;
+    gap: 5px;
+    width: 1.1rem;
+  }
+
+  .nav__toggle-icon span {
+    display: block;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+
+  [aria-expanded="true"] .nav__toggle-icon span:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+
+  [aria-expanded="true"] .nav__toggle-icon span:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+
+  /* Full-screen menu */
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    clip-path: circle(0% at var(--menu-x, 100%) var(--menu-y, 0%));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .menu.is-open {
+    clip-path: circle(150% at var(--menu-x, 100%) var(--menu-y, 0%));
+  }
+
+  .menu__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5rem;
+    min-height: 100%;
+    padding-top: calc(var(--nav-h) + 2rem);
+    padding-bottom: 1.5rem;
+  }
+
+  .menu__list {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .menu__item {
+    border-bottom: 1px solid var(--color-line-inverse);
+  }
+
+  .menu__link {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding: 0.35rem 0;
+    min-height: 44px;
+  }
+
+  .menu__index {
+    min-width: 2.6rem;
+    color: var(--color-signal);
+    transition: opacity 0.4s, transform 0.5s var(--ease-out-expo);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .menu__index {
+      opacity: 0;
+      transform: translateX(-0.5rem);
+    }
+
+    .menu__link:hover .menu__index,
+    .menu__link:focus-visible .menu__index {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .menu__mask {
+    display: block;
+    overflow: clip;
+    padding-bottom: 0.06em;
+  }
+
+  .menu__text {
+    display: block;
+    font-size: clamp(3rem, 13vw, 8.5rem);
+    line-height: 0.95;
+    transition: transform 0.6s var(--ease-out-expo), color 0.4s;
+  }
+
+  .menu__link:hover .menu__text,
+  .menu__link:focus-visible .menu__text {
+    color: var(--color-signal);
+    transform: translateX(0.12em);
+  }
+
+  .menu__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line-inverse);
+  }
+
+  .menu__meta {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .menu__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.25rem;
+  }
+
+  .menu__social a {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .menu__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 3rem;
+    }
+  }
+</style>

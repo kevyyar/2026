@@ -1,0 +1,83 @@
+---
+import type { ImageMetadata } from "astro";
+import { ClientRouter } from "astro:transitions";
+import "@fontsource-variable/bricolage-grotesque/opsz.css";
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/instrument-serif/400-italic.css";
+import "@fontsource-variable/jetbrains-mono/wght.css";
+import "../styles/global.css";
+import displayFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url";
+import Seo from "../components/layout/Seo.astro";
+import Nav from "../components/layout/Nav.astro";
+import Cursor from "../components/layout/Cursor.astro";
+import Preloader from "../components/layout/Preloader.astro";
+import Footer from "../components/layout/Footer.astro";
+import { localeMeta } from "../i18n/config";
+import { getI18n } from "../i18n/astro";
+
+type Props = {
+  title: string;
+  description: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  type?: "website" | "article";
+  jsonLd?: Record<string, unknown>[];
+  /** Show the first-visit preloader on this page. */
+  preloader?: boolean;
+};
+
+const { preloader = false, ...seo } = Astro.props;
+const { locale, t } = getI18n(Astro);
+---
+
+<!doctype html>
+<html lang={localeMeta[locale].htmlLang} data-has-preloader={preloader ? "true" : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#EDE8DD" />
+    <meta name="color-scheme" content="light" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <Seo {...seo} />
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add("js");
+        try {
+          var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (!reduce && root.dataset.hasPreloader === "true" && !sessionStorage.getItem("kb:visited")) {
+            root.classList.add("is-loading");
+          }
+        } catch (e) {}
+        // Safety net: never leave content hidden if the motion runtime fails to boot.
+        setTimeout(function () {
+          if (!root.classList.contains("motion-ready")) {
+            root.classList.add("motion-failed");
+            root.classList.remove("is-loading");
+          }
+        }, 4000);
+        // Client-side navigations replace <html> attributes; restore the JS flag.
+        document.addEventListener("astro:after-swap", function () {
+          document.documentElement.classList.add("js");
+        });
+      })();
+    </script>
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t("a11y.skip")}</a>
+    {preloader && <Preloader />}
+    <Nav />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <div class="grain" aria-hidden="true"></div>
+    <Cursor />
+    <script>
+      import "../scripts/motion/index";
+    </script>
+  </body>
+</html>

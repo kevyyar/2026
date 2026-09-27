@@ -24,3 +24,5 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 build_artifacts/
+# Local Pi runtime state
+.atl/

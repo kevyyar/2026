@@ -1,0 +1,128 @@
+---
+/** Closing band on case study pages: invites the visitor to start their own project. */
+type Props = {
+  href: string;
+  kicker: string;
+  /** Headline words before the accent. */
+  lead: string;
+  accent: string;
+  action: string;
+};
+
+const { href, kicker, lead, accent, action } = Astro.props;
+---
+
+<section class="sheet surface-deep project-cta" aria-labelledby="project-cta-title">
+  <div class="shell">
+    <a href={href} class="project-cta__link on-ink" data-cursor="hover">
+      <span class="project-cta__kicker mono">{kicker}</span>
+      <span id="project-cta-title" class="project-cta__title display">
+        {lead} <span class="accent">{accent}</span>
+      </span>
+      <span class="project-cta__action">
+        {action}
+        <span class="project-cta__arrow" aria-hidden="true">→</span>
+      </span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .project-cta {
+    padding-block: clamp(3.5rem, 9vw, 8rem) calc(var(--radius-sheet) + clamp(3rem, 7vw, 6rem));
+  }
+
+  .project-cta__link {
+    position: relative;
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-radius: 24px;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .project-cta__link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-signal);
+    transform: translateY(101%);
+    transition: transform 0.7s var(--ease-out-expo);
+  }
+
+  .project-cta__link:hover::before,
+  .project-cta__link:focus-visible::before {
+    transform: none;
+  }
+
+  .project-cta__link:hover,
+  .project-cta__link:focus-visible {
+    color: var(--color-ink);
+  }
+
+  .project-cta__kicker {
+    color: var(--color-signal);
+    transition: color 0.4s;
+  }
+
+  .project-cta__link:hover .project-cta__kicker {
+    color: var(--color-ink);
+  }
+
+  .project-cta__title {
+    font-size: clamp(2.4rem, 8vw, 7.5rem);
+    line-height: 0.92;
+    max-width: 14ch;
+  }
+
+  .project-cta__title .accent {
+    color: var(--color-signal);
+    transition: color 0.4s;
+  }
+
+  .project-cta__link:hover .project-cta__title .accent {
+    color: inherit;
+  }
+
+  .project-cta__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .project-cta__arrow {
+    display: inline-grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--color-signal);
+    color: var(--color-ink);
+    transition: transform 0.6s var(--ease-out-expo), background-color 0.4s, color 0.4s;
+  }
+
+  .project-cta__link:hover .project-cta__arrow {
+    transform: rotate(-45deg);
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  @media (min-width: 1024px) {
+    .project-cta__link {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 2rem;
+    }
+
+    .project-cta__kicker {
+      align-self: start;
+    }
+  }
+</style>

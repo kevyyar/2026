@@ -1,0 +1,118 @@
+---
+import { localeMeta, locales } from "../../i18n/config";
+import { getAlternatePath } from "../../i18n/paths";
+import { getI18n } from "../../i18n/astro";
+
+type Props = { class?: string; tone?: "light" | "ink" };
+
+const { class: className, tone = "light" } = Astro.props;
+const { locale, t } = getI18n(Astro);
+const active = locales.indexOf(locale);
+---
+
+<div
+  class:list={["lang", `lang--${tone}`, className]}
+  role="group"
+  aria-label={t("lang.label")}
+  style={`--active: ${active}; --count: ${locales.length}`}
+>
+  <span class="lang__pill" aria-hidden="true"></span>
+  {
+    locales.map((target) => (
+      <a
+        class="lang__link mono"
+        href={getAlternatePath(Astro.url.pathname, target)}
+        hreflang={target}
+        lang={target}
+        aria-current={target === locale ? "true" : undefined}
+        data-lang-link
+        data-cursor="hover"
+      >
+        <span aria-hidden="true">{localeMeta[target].short}</span>
+        <span class="sr-only">{localeMeta[target].label}</span>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .lang {
+    --pad: 3px;
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: repeat(var(--count), 2.75rem);
+    align-items: stretch;
+    height: 2.75rem;
+    padding: var(--pad);
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: rgb(245 241 232 / 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--color-ink);
+    isolation: isolate;
+  }
+
+  .lang--ink {
+    border-color: var(--color-line-inverse);
+    background: transparent;
+    color: var(--color-paper);
+  }
+
+  /* The pill slides under the active locale, and previews the other on hover/focus. */
+  .lang__pill {
+    position: absolute;
+    top: var(--pad);
+    bottom: var(--pad);
+    left: var(--pad);
+    z-index: -1;
+    width: calc((100% - var(--pad) * 2) / var(--count));
+    border-radius: 999px;
+    background: var(--color-ink);
+    transform: translateX(calc(var(--active) * 100%));
+    transition: transform 0.55s var(--ease-out-expo);
+  }
+
+  .lang--ink .lang__pill {
+    background: var(--color-signal);
+  }
+
+  .lang:has(.lang__link:nth-of-type(1):is(:hover, :focus-visible)) .lang__pill {
+    transform: translateX(0%);
+  }
+
+  .lang:has(.lang__link:nth-of-type(2):is(:hover, :focus-visible)) .lang__pill {
+    transform: translateX(100%);
+  }
+
+  .lang__link {
+    display: grid;
+    place-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    margin-block: calc(var(--pad) * -1);
+    border-radius: 999px;
+    transition: color 0.4s;
+  }
+
+  .lang__link[aria-current="true"] {
+    color: var(--color-paper);
+  }
+
+  .lang--ink .lang__link[aria-current="true"] {
+    color: var(--color-ink);
+  }
+
+  /* While hovering the other locale, the colours follow the pill. */
+  .lang:has(.lang__link:not([aria-current]):is(:hover, :focus-visible)) .lang__link[aria-current="true"] {
+    color: inherit;
+  }
+
+  .lang__link:not([aria-current]):is(:hover, :focus-visible) {
+    color: var(--color-paper);
+  }
+
+  .lang--ink .lang__link:not([aria-current]):is(:hover, :focus-visible) {
+    color: var(--color-ink);
+  }
+</style>

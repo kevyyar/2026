@@ -1,0 +1,129 @@
+---
+import Star from "../ui/Star.astro";
+import { getI18n } from "../../i18n/astro";
+
+const { t } = getI18n(Astro);
+const signalItems = t("marquee.services").split("|");
+const inkItems = t("marquee.process").split("|");
+const copies = 4;
+---
+
+<div class="marquee-cross" data-marquee>
+  <ul class="sr-only">
+    {signalItems.map((item) => <li>{item}</li>)}
+  </ul>
+
+  <div class="band band--ink" data-marquee-band data-direction="1" aria-hidden="true">
+    <div class="band__track" data-marquee-track>
+      {
+        Array.from({ length: copies }, () => (
+          <div class="band__group">
+            {inkItems.map((item) => (
+              <span class="band__item">
+                {item}
+                <Star class="band__star" />
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="band band--signal" data-marquee-band data-direction="-1" aria-hidden="true">
+    <div class="band__track" data-marquee-track>
+      {
+        Array.from({ length: copies }, () => (
+          <div class="band__group">
+            {signalItems.map((item) => (
+              <span class="band__item">
+                {item}
+                <Star class="band__star" />
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .marquee-cross {
+    position: relative;
+    height: clamp(11rem, 26vw, 18rem);
+    overflow: clip;
+  }
+
+  .band {
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    width: 120%;
+    padding-block: clamp(0.7rem, 1.4vw, 1.25rem);
+    overflow: clip;
+  }
+
+  .marquee-cross {
+    --band-angle: 6deg;
+  }
+
+  @media (min-width: 768px) {
+    .marquee-cross {
+      --band-angle: 4deg;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .marquee-cross {
+      --band-angle: 3deg;
+    }
+  }
+
+  .band--signal {
+    background: var(--color-signal);
+    color: var(--color-ink);
+    transform: translateY(-50%) rotate(calc(var(--band-angle) * -1));
+    box-shadow: 0 18px 40px -24px rgb(20 18 16 / 0.6);
+  }
+
+  .band--ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    transform: translateY(-50%) rotate(var(--band-angle));
+  }
+
+  .band__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .band__group {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .band__item {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 2rem);
+    padding-right: clamp(1rem, 2vw, 2rem);
+    font-family: var(--font-display);
+    font-weight: 760;
+    font-size: clamp(1.6rem, 4.6vw, 4rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .band :global(.band__star) {
+    width: 0.7em;
+    height: 0.7em;
+    flex-shrink: 0;
+  }
+
+  .band--ink :global(.band__star) {
+    color: var(--color-signal);
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import Monogram from "../ui/Monogram.astro";
+import { getI18n } from "../../i18n/astro";
+
+const { t } = getI18n(Astro);
+const [name, tagline] = t("preloader.tagline").split("|");
+---
+
+<div class="preloader" data-preloader aria-hidden="true">
+  <div class="preloader__mark" data-preloader-mark>
+    <Monogram class="preloader__monogram" />
+  </div>
+  <p class="preloader__count display" data-preloader-count>000</p>
+  <p class="preloader__label mono">{name}<br />{tagline}</p>
+  <div class="preloader__panel" data-preloader-panel></div>
+</div>
+
+<style>
+  .preloader {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 180;
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  :global(html.is-loading) .preloader {
+    display: block;
+  }
+
+  :global(html.is-loading) {
+    overflow: hidden;
+  }
+
+  .preloader__mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+  }
+
+  .preloader__mark :global(.preloader__monogram) {
+    width: clamp(4.5rem, 16vw, 7rem);
+    height: auto;
+  }
+
+  .preloader__count {
+    position: absolute;
+    left: var(--gutter);
+    bottom: 1rem;
+    font-size: clamp(4rem, 20vw, 14rem);
+    font-variant-numeric: tabular-nums;
+    line-height: 0.8;
+  }
+
+  .preloader__label {
+    position: absolute;
+    right: var(--gutter);
+    bottom: 1.25rem;
+    text-align: right;
+    color: var(--color-ink-soft);
+  }
+
+  .preloader__panel {
+    position: absolute;
+    inset: 0;
+    background: var(--color-signal);
+    clip-path: inset(100% 0 0 0);
+  }
+</style>

@@ -1,0 +1,111 @@
+---
+import { getPrinciples } from "../../data/principles";
+import { getI18n } from "../../i18n/astro";
+import { accentHtml } from "../../i18n/markup";
+
+const { locale, t } = getI18n(Astro);
+const principles = getPrinciples(locale);
+---
+
+<section class="principles" aria-labelledby="principles-title">
+  <div class="principles__head">
+    <p class="mono"><span class="principles__index">(06)</span> — {t("principles.label")}</p>
+    <h2
+      id="principles-title"
+      class="display display-m"
+      data-reveal="lines"
+      set:html={accentHtml(t("principles.title"))}
+    />
+  </div>
+
+  <ol class="principles__grid">
+    {
+      principles.map((principle, index) => (
+        <li class="principle" data-tilt data-reveal="fade" data-reveal-delay={index * 0.06}>
+          <div class="principle__inner" data-tilt-inner>
+            <span class="principle__number mono">({String(index + 1).padStart(2, "0")})</span>
+            <h3 class="principle__title display">{principle.title}</h3>
+            <p class="principle__description">{principle.description}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .principles {
+    padding-top: clamp(5rem, 11vw, 9rem);
+  }
+
+  .principles__head {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .principles__index {
+    color: var(--color-signal-deep);
+  }
+
+  .principles__grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+    perspective: 1200px;
+  }
+
+  @media (min-width: 768px) {
+    .principles__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+  }
+
+  .principle {
+    transform-style: preserve-3d;
+  }
+
+  .principle__inner {
+    position: relative;
+    display: grid;
+    align-content: space-between;
+    gap: 2.5rem;
+    height: 100%;
+    min-height: 15rem;
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    border: 1px solid var(--color-line);
+    border-radius: 24px;
+    background: var(--color-paper-light);
+    transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+  }
+
+  .principle:hover .principle__inner {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    border-color: var(--color-ink);
+  }
+
+  .principle__number {
+    color: var(--color-signal-deep);
+  }
+
+  .principle:hover .principle__number {
+    color: var(--color-signal);
+  }
+
+  .principle__title {
+    font-size: clamp(1.8rem, 4vw, 3.4rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+
+  .principle__description {
+    max-width: 34ch;
+    color: var(--color-ink-soft);
+    transition: color 0.5s;
+  }
+
+  .principle:hover .principle__description {
+    color: rgb(237 232 221 / 0.75);
+  }
+</style>

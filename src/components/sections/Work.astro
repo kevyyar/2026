@@ -1,0 +1,41 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import FeaturedProject from "../work/FeaturedProject.astro";
+import { getProjects } from "../../data/projects";
+import { getI18n } from "../../i18n/astro";
+
+const { locale, t, href } = getI18n(Astro);
+const [featured] = getProjects(locale);
+---
+
+<section id="work" class="sheet surface-paper work" aria-labelledby="work-title">
+  <div class="shell">
+    <SectionHeading id="work-title" index="02" label={t("work.label")} title={t("work.title")}>
+      <Fragment slot="intro">{t("work.intro")}</Fragment>
+    </SectionHeading>
+
+    <div class="work__feature">
+      <FeaturedProject
+        project={featured}
+        href={href(`/work/${featured.slug}`)}
+        labels={{
+          featured: t("work.featured"),
+          results: t("work.results"),
+          stack: t("work.stack"),
+          cta: t("work.readCase"),
+        }}
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .work {
+    padding-top: clamp(3.5rem, 8vw, 7rem);
+    padding-bottom: calc(var(--radius-sheet) + clamp(3rem, 8vw, 6rem));
+  }
+
+  .work__feature {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+  }
+</style>
