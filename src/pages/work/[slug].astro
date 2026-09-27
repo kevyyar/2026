@@ -301,14 +301,19 @@ const story = [
   }
 
   .result__value {
-    font-size: clamp(2.6rem, 8vw, 7.5rem);
+    font-size: clamp(2.6rem, 11vw, 5rem);
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
     color: var(--color-signal);
   }
 
   @media (min-width: 1024px) {
     .results {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .result__value {
+      font-size: clamp(3rem, 5.2vw, 6rem);
     }
 
     .result {
