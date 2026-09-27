@@ -23,7 +23,7 @@ The current site is a generic dark "glass + gradient" template with inflated cop
 - [x] T3 Content sections — manifesto, work stack cards, services, process, experience, principles. Route: delegated.
 - [x] T4 Case study pages `/work/[slug]` with view transitions. Route: delegated.
 - [x] T5 Contact + footer, SEO meta, remove legacy components/deps, README. Route: delegated.
-- [ ] T6 Verification — tests, build, mobile/desktop headless screenshots, reduced-motion pass. Route: delegated + parent spot check.
+- [x] T6 Verification — tests, build, mobile/desktop headless screenshots, reduced-motion pass. Route: delegated + parent spot check.
 
 ## Acceptance criteria
 - `astro build` passes; `vitest run` passes.
@@ -66,6 +66,17 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - Removed: 11 legacy React components, iA Writer font, `lucide-react`. README rewritten.
 - Not done: `.env.example` could not be edited (deny rule) — `SITE_URL` is documented in README only.
 - Checks: `./node_modules/.bin/vitest run` → 49 passed; `./node_modules/.bin/astro build` → Complete; contact/footer screenshots 390 + 1440 reviewed.
+- Commit: `7b5f294` feat(contact): add contact form island, footer and structured data; remove legacy site.
+
+### T6 Verification
+- `./node_modules/.bin/vitest run` → 3 files, 49 tests passed.
+- `./node_modules/.bin/astro check` → 65 files, 0 errors, 0 warnings, 0 hints (after pinning TypeScript 5.9; TS 7.0 has no programmatic API for `astro check`).
+- `./node_modules/.bin/astro build` → Complete; `/` and 4 `/work/<slug>` pages prerendered.
+- Headless Chromium (CDP) against the production static output (`.vercel/output/static`): home at 390/1440/360, case pages at 390/1440/1024/360, reduced motion (home + case at 390, first visit), no-JS (390), first-visit preloader. Each run scrolled the full page and then checked for visible text stuck at opacity 0 / visibility hidden → none; `scrollWidth == clientWidth` and `scrollX` stays 0 at 360/390/1024/1440 → no horizontal scroll; no console errors.
+- Reduced motion: no preloader, no Lenis, manifesto words fully opaque, process numbers filled and line drawn. No-JS: all content visible, services panels expanded.
+- Fixed: on desktop case pages the 4 result values overflowed into each other (e.g. "+180%4.8x") → smaller clamp at ≥1024 + nowrap; re-verified at 1440, 1024 and 360.
+- Commit: `4b0174d` fix(work): keep case study result values inside their columns; add astro check.
+- Delivery: `single-pr`, not pushed. Native review assessment was not run by the writer.
 
 ## Next step
-T1.
+All tasks done. Owner: confirm copy/data decisions (see final report), set `SITE_URL` in Vercel, then push `feat/portfolio-redesign` and open the PR.
