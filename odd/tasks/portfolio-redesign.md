@@ -19,7 +19,7 @@ The current site is a generic dark "glass + gradient" template with inflated cop
 
 ## Tasks
 - [x] T1 Foundation — tokens, fonts, BaseLayout, typed content modules (`src/data`), metric parser, contact validation extraction, Vitest (RED→GREEN). Route: delegated (writer trigger: 2+ non-trivial files).
-- [ ] T2 Shell + signature motion — preloader, nav + full-screen menu, cursor, Lenis, progress bar, hero particle field, marquee. Route: delegated.
+- [x] T2 Shell + signature motion — preloader, nav + full-screen menu, cursor, Lenis, progress bar, hero particle field, marquee. Route: delegated.
 - [ ] T3 Content sections — manifesto, work stack cards, services, process, experience, principles. Route: delegated.
 - [ ] T4 Case study pages `/work/[slug]` with view transitions. Route: delegated.
 - [ ] T5 Contact + footer, SEO meta, remove legacy components/deps, README. Route: delegated.
@@ -42,6 +42,12 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - GREEN: `./node_modules/.bin/vitest run` → 3 files, 49 tests passed.
 - Build: `./node_modules/.bin/astro build` → Complete (needed `sharp` as a direct dependency under pnpm; `pnpm-workspace.yaml` allowBuilds esbuild/sharp = true).
 - Notes: `package-lock.json` removed (pnpm only). API `/api/contact` now imports `src/lib/contact-validation.ts`; messages/status codes unchanged. Screenshots moved to `src/assets/work/<slug>.png`. `site` comes from `SITE_URL` or Vercel's production URL (no domain invented).
+- Commit: `2980049` feat(foundation): add design tokens, typed content modules and tested metric/contact logic.
+
+### T2 Shell + signature motion
+- Route: delegated writer. Motion runtime in `src/scripts/motion/*` (one `init(): Cleanup` per effect, orchestrated on `astro:page-load` / torn down on `astro:before-swap`).
+- Checks: `./node_modules/.bin/astro build` → Complete. Headless CDP screenshots (390, 360, 1440) of hero, open menu and preloader reviewed.
+- Fixed during review: `<html data-preloader>` collided with the `[data-preloader]` selector (whole page clipped white) → renamed `data-has-preloader`; child-component classes needed `:global()`; hero title split waits for fonts and uses explicit lines.
 
 ## Next step
 T1.

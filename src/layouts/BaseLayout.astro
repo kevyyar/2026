@@ -8,6 +8,9 @@ import "@fontsource-variable/jetbrains-mono/wght.css";
 import "../styles/global.css";
 import displayFont from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url";
 import Seo from "../components/layout/Seo.astro";
+import Nav from "../components/layout/Nav.astro";
+import Cursor from "../components/layout/Cursor.astro";
+import Preloader from "../components/layout/Preloader.astro";
 
 type Props = {
   title: string;
@@ -24,7 +27,7 @@ const { preloader = false, ...seo } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" data-preloader={preloader ? "true" : undefined}>
+<html lang="en" data-has-preloader={preloader ? "true" : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -40,7 +43,7 @@ const { preloader = false, ...seo } = Astro.props;
         root.classList.add("js");
         try {
           var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-          if (!reduce && root.dataset.preloader === "true" && !sessionStorage.getItem("kb:visited")) {
+          if (!reduce && root.dataset.hasPreloader === "true" && !sessionStorage.getItem("kb:visited")) {
             root.classList.add("is-loading");
           }
         } catch (e) {}
@@ -61,11 +64,16 @@ const { preloader = false, ...seo } = Astro.props;
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <slot name="chrome" />
+    {preloader && <Preloader />}
+    <Nav />
     <main id="main" tabindex="-1">
       <slot />
     </main>
     <slot name="footer" />
     <div class="grain" aria-hidden="true"></div>
+    <Cursor />
+    <script>
+      import "../scripts/motion/index";
+    </script>
   </body>
 </html>

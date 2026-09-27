@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { profile } from "../data/profile";
+import Hero from "../components/sections/Hero.astro";
+import Marquee from "../components/sections/Marquee.astro";
 import { projects } from "../data/projects";
 
 export const prerender = true;
@@ -10,9 +11,9 @@ const description =
   "Kevin Barreto is an independent software developer and consultant in México. A software studio of one: planning, design, engineering and launch of web products for businesses worldwide.";
 ---
 
-<BaseLayout title={title} description={description} image={projects[0].image} imageAlt={projects[0].imageAlt}>
-  <section class="shell py-32">
-    <p class="mono muted">{profile.role}</p>
-    <h1 class="display display-xl mt-6">{profile.name} — <span class="accent">{profile.positioning}</span></h1>
+<BaseLayout title={title} description={description} image={projects[0].image} imageAlt={projects[0].imageAlt} preloader>
+  <Hero />
+  <section id="about" class="sheet surface-light pb-40">
+    <Marquee />
   </section>
 </BaseLayout>
