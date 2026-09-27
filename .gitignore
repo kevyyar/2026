@@ -26,3 +26,5 @@ pnpm-debug.log*
 build_artifacts/
 # Local Pi runtime state
 .atl/
+.vercel
+.env*
