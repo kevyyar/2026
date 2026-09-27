@@ -1,37 +1,18 @@
 ---
-import "../styles/global.css";
-import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-import Services from "../components/Services";
-import CaseStudies from "../components/CaseStudies";
-import Process from "../components/Process";
-import About from "../components/About";
-import Contact from "../components/Contact";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { profile } from "../data/profile";
+import { projects } from "../data/projects";
+
+export const prerender = true;
+
+const title = "Kevin Barreto — Independent Software Developer & Consultant";
+const description =
+  "Kevin Barreto is an independent software developer and consultant in México. A software studio of one: planning, design, engineering and launch of web products for businesses worldwide.";
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>Kevin | Full-Stack Freelancer & Web Developer</title>
-    </head>
-    <body>
-        <Navbar client:load />
-        <Hero
-            title="Architecting the Digital Future"
-            subtitle="I craft immersive web experiences that merge technical precision with award-winning aesthetics. Elevate your brand with next-generation digital solutions."
-            ctaText="Initiate Project"
-            ctaHref="#contact"
-            secondaryCtaText="Explore Work"
-            secondaryCtaHref="#case-studies"
-            client:visible
-        />
-        <Services client:load />
-        <CaseStudies client:load />
-        <Process client:load />
-        <About client:load />
-        <Contact client:load />
-    </body>
-</html>
+<BaseLayout title={title} description={description} image={projects[0].image} imageAlt={projects[0].imageAlt}>
+  <section class="shell py-32">
+    <p class="mono muted">{profile.role}</p>
+    <h1 class="display display-xl mt-6">{profile.name} — <span class="accent">{profile.positioning}</span></h1>
+  </section>
+</BaseLayout>
