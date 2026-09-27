@@ -30,7 +30,7 @@ Owner decisions: publish `kevyyar@icloud.com` + LinkedIn `https://www.linkedin.c
 - [x] T7 Contact channels — email (`mailto:`) + LinkedIn in profile data, menu, contact section, footer, JSON-LD `sameAs`. Route: delegated (writer trigger: 2+ non-trivial files, bundled with T8/T9).
 - [x] T8 Single case study — remove the 3 retired projects (data, images, tests, OG refs); redesign Work section and case page for one featured project (no "next project" loop to itself, no `(04)` / "04 case studies" copy). Route: delegated.
 - [x] T9 i18n ES (default) + EN — Astro i18n routing (`prefixDefaultLocale: false`), all UI copy and content data translated, language switcher in nav + menu preserving the equivalent page, `hreflang` alternates, `og:locale`, localized contact form messages, tests for dictionary/data parity and path helpers (TDD). Route: delegated.
-- [ ] T10 Verification — tests, check, build, headless screenshots ES + EN at 390/1440, reduced motion. Route: delegated + parent spot check.
+- [x] T10 Verification — tests, check, build, headless screenshots ES + EN at 390/1440, reduced motion. Route: delegated + parent spot check.
 
 ## Acceptance criteria
 - `astro build` passes; `vitest run` passes.
@@ -105,6 +105,15 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - Contact form: all labels/options/validation/status strings passed as props; status chosen by outcome (success / 400 validation / other server error / network), payload unchanged.
 - Fixed during review: accent words injected with `set:html` lost scoped `.accent` overrides (process CTA band accent was low-contrast) → `:global(.accent)`.
 - Size note: one cohesive commit (~770 additions / ~750 deletions) because the data API change and every consumer must land together to keep the build green.
+
+### T10 Verification (round 2)
+- `./node_modules/.bin/vitest run` → 6 files, 100 tests passed.
+- `./node_modules/.bin/astro check` → 79 files, 0 errors, 0 warnings, 0 hints.
+- `SITE_URL=https://iamkev.xyz ./node_modules/.bin/astro build` → Complete; prerendered `/`, `/en/`, `/work/element-cleaning-systems/`, `/en/work/element-cleaning-systems/`. Each page has 3 `<link rel="alternate" hreflang>` (es, en, x-default → Spanish), per-locale canonical, `<html lang>` es/en, `og:locale` es_MX/en_US + alternate.
+- Headless Chromium (CDP) against the static build: `/`, `/en/`, both case pages at 390 and 1440, all four at 360, reduced motion (`/` and `/en/work/…` at 390, `/en/` at 390), Spanish no-JS, menus (ES 390, EN 1440). Every run: STUCK [] (no visible text at opacity 0/hidden after a full scroll) and `scrollWidth == clientWidth`, `scrollX` 0 → no horizontal scroll.
+- Language switcher: `/`→`/en/`, `/en/`→`/`, `/work/ecs/`→`/en/work/ecs/`, `/en/work/ecs/`→`/work/ecs/`, `/#contact`→`/en/#contact`, `/en/#services`→`/#services`; `<html lang>` and `aria-current` follow.
+- Contact form (fetch stubbed, ES and EN): success / 400 / 500 / network each show the localized dictionary message; payload `{"name","email","company","projectType":"","budget":"","message"}` unchanged.
+- Fixed: one capture showed the footer wordmark transiently oversized, widening the footer grid (other rows clipped); not reproducible in 4 re-runs (fit logic is H3, out of scope) → `grid-template-columns: minmax(0, 1fr)` guard so it can never widen the other rows.
 
 ### Native review (RDD)
 - Whole branch (`main..HEAD`): consent granted → `lens_context_budget_exceeded` (17k lines incl. lockfiles/images); no authority created. Split per work unit, each reviewed in a detached worktree.

@@ -53,6 +53,8 @@ const { t, href } = getI18n(Astro);
 
   .footer__inner {
     display: grid;
+    /* A transiently oversized wordmark must never widen the other rows. */
+    grid-template-columns: minmax(0, 1fr);
     gap: clamp(2.5rem, 6vw, 4rem);
     padding-top: clamp(3.5rem, 8vw, 6rem);
     padding-bottom: clamp(0.75rem, 2vw, 1.5rem);
