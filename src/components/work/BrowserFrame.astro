@@ -1,0 +1,109 @@
+---
+import type { ImageMetadata } from "astro";
+import { Picture } from "astro:assets";
+
+type Props = {
+  image: ImageMetadata;
+  alt: string;
+  url: string;
+  /** Shared view-transition name between the work card and the case study hero. */
+  transitionName: string;
+  sizes: string;
+  eager?: boolean;
+  class?: string;
+};
+
+const { image, alt, url, transitionName, sizes, eager = false, class: className } = Astro.props;
+const host = new URL(url).host;
+---
+
+<figure class:list={["frame", className]} transition:name={transitionName}>
+  <div class="frame__bar" aria-hidden="true">
+    <span class="frame__dots"><i></i><i></i><i></i></span>
+    <span class="frame__url">{host}</span>
+  </div>
+  <div class="frame__viewport">
+    <Picture
+      src={image}
+      alt={alt}
+      formats={["avif", "webp"]}
+      fallbackFormat="jpg"
+      widths={[480, 800, 1200, 1600, 2000]}
+      sizes={sizes}
+      loading={eager ? "eager" : "lazy"}
+      fetchpriority={eager ? "high" : undefined}
+      decoding="async"
+      class="frame__img"
+      data-parallax
+    />
+  </div>
+</figure>
+
+<style>
+  .frame {
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid rgb(20 18 16 / 0.2);
+    background: var(--color-ink);
+    box-shadow: 0 30px 60px -40px rgb(20 18 16 / 0.6);
+  }
+
+  .frame__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 1.9rem;
+    padding: 0 0.75rem;
+    background: #221f1b;
+    color: rgb(237 232 221 / 0.6);
+  }
+
+  .frame__dots {
+    display: inline-flex;
+    gap: 0.3rem;
+  }
+
+  .frame__dots i {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: rgb(237 232 221 / 0.25);
+  }
+
+  .frame__dots i:first-child {
+    background: var(--color-signal);
+  }
+
+  .frame__url {
+    flex: 1;
+    overflow: hidden;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: rgb(237 232 221 / 0.08);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .frame__viewport {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .frame__viewport :global(picture),
+  .frame__viewport :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .frame__viewport :global(img) {
+    object-fit: cover;
+    object-position: 50% 0%;
+    transform-origin: 50% 50%;
+  }
+</style>

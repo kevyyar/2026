@@ -1,0 +1,76 @@
+---
+type Props = {
+  /** Section index, rendered as "(02)". */
+  index: string;
+  label: string;
+  /** Optional right-aligned counter, e.g. "04". */
+  count?: string;
+  id: string;
+  class?: string;
+};
+
+const { index, label, count, id, class: className } = Astro.props;
+---
+
+<header class:list={["section-heading", className]}>
+  <div class="section-heading__meta mono">
+    <span><span class="section-heading__index">({index})</span> — {label}</span>
+    {count && <span aria-hidden="true">[ {count} ]</span>}
+  </div>
+  <div class="rule" data-reveal="rule"></div>
+  <div class="section-heading__body">
+    <h2 id={id} class="display display-l section-heading__title" data-reveal="lines">
+      <slot />
+    </h2>
+    {
+      Astro.slots.has("intro") && (
+        <div class="section-heading__intro lead muted" data-reveal="fade">
+          <slot name="intro" />
+        </div>
+      )
+    }
+  </div>
+</header>
+
+<style>
+  .section-heading {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .section-heading__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .section-heading__index {
+    color: var(--color-signal-deep);
+  }
+
+  :global(.on-ink) .section-heading__index {
+    color: var(--color-signal);
+  }
+
+  .section-heading__body {
+    display: grid;
+    gap: 1.5rem;
+    padding-top: 1.25rem;
+  }
+
+  .section-heading__intro {
+    max-width: 38ch;
+  }
+
+  @media (min-width: 1024px) {
+    .section-heading__body {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+      align-items: end;
+      column-gap: 1.5rem;
+    }
+
+    .section-heading__intro {
+      justify-self: end;
+    }
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import { experience } from "../../data/experience";
+---
+
+<section id="experience" class="experience" aria-labelledby="experience-title">
+  <SectionHeading id="experience-title" index="05" label="Experience" count="2019 → now">
+    Track <span class="accent">record</span>
+    <Fragment slot="intro">
+      Enterprise discipline and freelance hustle. Years inside large delivery teams, and years running projects end to
+      end on my own. Now: independent.
+    </Fragment>
+  </SectionHeading>
+
+  <ol class="roles">
+    {
+      experience.map((role) => (
+        <li class="role">
+          <div class="rule" data-reveal="rule" />
+          <div class="role__grid">
+            <p class="role__period mono">{role.period}</p>
+            <div class="role__who" data-reveal="fade">
+              <h3 class="role__title display">{role.role}</h3>
+              <p class="role__company">
+                {role.company} <span class="muted">· {role.location}</span>
+              </p>
+            </div>
+            <div class="role__what" data-reveal="fade">
+              <p class="role__description">{role.description}</p>
+              <ul class="role__tech" aria-label="Technologies">
+                {role.technologies.map((tech) => (
+                  <li class="chip">{tech}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .roles {
+    margin-top: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .role:last-child {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .role__grid {
+    display: grid;
+    gap: 1rem;
+    padding-block: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .role__period {
+    color: var(--color-signal-deep);
+  }
+
+  .role__title {
+    font-size: clamp(1.7rem, 3.6vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .role__company {
+    margin-top: 0.5rem;
+    font-weight: 600;
+  }
+
+  .role__what {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .role__description {
+    max-width: 62ch;
+    color: var(--color-ink-soft);
+  }
+
+  .role__tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .role__grid {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 4fr) minmax(0, 6fr);
+      column-gap: 1.5rem;
+    }
+  }
+</style>

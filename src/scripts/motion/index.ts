@@ -10,11 +10,35 @@ import * as reveal from "./reveal";
 import * as hero from "./hero";
 import * as dotField from "./dot-field";
 import * as marquee from "./marquee";
+import * as manifesto from "./manifesto";
+import * as countUp from "./countup";
+import * as workStack from "./work-stack";
+import * as accordion from "./accordion";
+import * as process from "./process";
+import * as tilt from "./tilt";
 
 type MotionModule = { init: () => Cleanup };
 
 /** Order matters: Lenis before the preloader (it unlocks scroll), preloader before intros. */
-const modules: MotionModule[] = [lenis, preloader, nav, menu, clock, cursor, magnetic, reveal, hero, dotField, marquee];
+const modules: MotionModule[] = [
+  lenis,
+  preloader,
+  nav,
+  menu,
+  clock,
+  cursor,
+  magnetic,
+  hero,
+  dotField,
+  marquee,
+  manifesto,
+  accordion,
+  workStack,
+  process,
+  reveal,
+  countUp,
+  tilt,
+];
 
 let cleanups: Cleanup[] = [];
 

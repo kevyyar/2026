@@ -20,7 +20,7 @@ The current site is a generic dark "glass + gradient" template with inflated cop
 ## Tasks
 - [x] T1 Foundation — tokens, fonts, BaseLayout, typed content modules (`src/data`), metric parser, contact validation extraction, Vitest (RED→GREEN). Route: delegated (writer trigger: 2+ non-trivial files).
 - [x] T2 Shell + signature motion — preloader, nav + full-screen menu, cursor, Lenis, progress bar, hero particle field, marquee. Route: delegated.
-- [ ] T3 Content sections — manifesto, work stack cards, services, process, experience, principles. Route: delegated.
+- [x] T3 Content sections — manifesto, work stack cards, services, process, experience, principles. Route: delegated.
 - [ ] T4 Case study pages `/work/[slug]` with view transitions. Route: delegated.
 - [ ] T5 Contact + footer, SEO meta, remove legacy components/deps, README. Route: delegated.
 - [ ] T6 Verification — tests, build, mobile/desktop headless screenshots, reduced-motion pass. Route: delegated + parent spot check.
@@ -48,6 +48,12 @@ TDD: strict, source = session config; runner = Vitest 3.2 (`./node_modules/.bin/
 - Route: delegated writer. Motion runtime in `src/scripts/motion/*` (one `init(): Cleanup` per effect, orchestrated on `astro:page-load` / torn down on `astro:before-swap`).
 - Checks: `./node_modules/.bin/astro build` → Complete. Headless CDP screenshots (390, 360, 1440) of hero, open menu and preloader reviewed.
 - Fixed during review: `<html data-preloader>` collided with the `[data-preloader]` selector (whole page clipped white) → renamed `data-has-preloader`; child-component classes needed `:global()`; hero title split waits for fonts and uses explicit lines.
+- Commit: `cc96e69` feat(shell): add preloader, navigation menu, cursor, smooth scroll, hero dot field and marquee.
+
+### T3 Content sections
+- Route: delegated writer. Sections: Manifesto (#about, word scrub + fact count-ups), Work (#work, sticky stacked cards), Services (#services, accordion), Process (#process, pinned horizontal ≥1024 / drawn line on mobile), Experience (#experience, now rendered), Principles (tilt cards).
+- Checks: `./node_modules/.bin/vitest run` → 49 passed; `./node_modules/.bin/astro build` → Complete. CDP screenshots 390 and 1440 reviewed.
+- Fixed during review: process track inherited `max-width` (steps squeezed) → reset; SVG line `vector-effect` broke `pathLength` dashes → removed.
 
 ## Next step
 T1.

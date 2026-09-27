@@ -1,0 +1,165 @@
+---
+import Marquee from "./Marquee.astro";
+import CountUp from "../ui/CountUp.astro";
+import { profile } from "../../data/profile";
+---
+
+<section id="about" class="sheet surface-deep manifesto" aria-labelledby="about-title">
+  <Marquee />
+
+  <div class="shell manifesto__body">
+    <div class="manifesto__meta mono">
+      <span><span class="manifesto__index">(01)</span> — Manifesto</span>
+      <span aria-hidden="true">KB / 2026</span>
+    </div>
+    <div class="rule" data-reveal="rule"></div>
+
+    <h2 id="about-title" class="sr-only">About Kevin Barreto</h2>
+    <p class="manifesto__statement" data-manifesto>
+      Most software projects don’t fail because of code. They fail in the gaps — between what the business needs and
+      what actually gets built. <em class="accent">I close that gap.</em>
+    </p>
+
+    <dl class="facts">
+      {
+        profile.facts.map((fact, index) => (
+          <div class="fact" data-reveal="fade" data-reveal-delay={index * 0.05}>
+            <dt class="fact__label mono muted">{fact.label}</dt>
+            <dd class="fact__value display">
+              <CountUp value={fact.value} from={fact.value === "2019" ? 2000 : undefined} />
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="about">
+      <p class="mono about__kicker">(About)</p>
+      <div class="about__copy">
+        <p class="lead" data-reveal="fade">
+          I’m Kevin — a frontend-heavy full-stack developer working from México with clients anywhere. Since 2019 I’ve
+          shipped websites, online stores and web apps with React, Next.js, Vue and Astro, backed by Node.js and
+          Firebase.
+        </p>
+        <p class="muted" data-reveal="fade">
+          You work with me directly, in English or Spanish, from the first call to the last deploy — no account
+          managers, no hand-offs. I use AI tooling every day to move faster, and I review every line it touches. The
+          result is software that is fast, accessible and easy for the next developer to own.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .manifesto {
+    padding-bottom: calc(var(--radius-sheet) + clamp(5rem, 10vw, 9rem));
+  }
+
+  .manifesto__body {
+    display: grid;
+    gap: 1rem;
+    padding-top: clamp(2rem, 5vw, 4rem);
+  }
+
+  .manifesto__meta {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .manifesto__index {
+    color: var(--color-signal-deep);
+  }
+
+  .manifesto__statement {
+    padding-block: clamp(2rem, 6vw, 5rem);
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: clamp(2rem, 6.4vw, 6rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: pretty;
+  }
+
+  .manifesto__statement .accent {
+    font-size: 1.08em;
+    line-height: 0.9;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--color-line);
+  }
+
+  .fact {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    gap: 2.5rem;
+    min-height: 11rem;
+    padding: 1.25rem 1rem 1.25rem 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .fact:nth-child(odd) {
+    border-right: 1px solid var(--color-line);
+  }
+
+  .fact:nth-child(even) {
+    padding-left: 1rem;
+  }
+
+  .fact__value {
+    font-size: clamp(2.6rem, 7vw, 6rem);
+    font-variant-numeric: tabular-nums;
+    line-height: 0.9;
+  }
+
+  .fact__label {
+    max-width: 22ch;
+  }
+
+  @media (min-width: 1024px) {
+    .facts {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .fact {
+      min-height: 15rem;
+      padding: 1.5rem 1.5rem 1.5rem 0;
+      border-right: 1px solid var(--color-line);
+    }
+
+    .fact:not(:first-child) {
+      padding-left: 1.5rem;
+    }
+
+    .fact:last-child {
+      border-right: 0;
+    }
+  }
+
+  .about {
+    display: grid;
+    gap: 1rem;
+    padding-top: clamp(3rem, 7vw, 6rem);
+  }
+
+  .about__kicker {
+    color: var(--color-signal-deep);
+  }
+
+  .about__copy {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 44rem;
+  }
+
+  @media (min-width: 1024px) {
+    .about {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      column-gap: 1.5rem;
+    }
+  }
+</style>

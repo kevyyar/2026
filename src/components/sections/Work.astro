@@ -1,0 +1,35 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import ProjectCard from "../work/ProjectCard.astro";
+import { projects } from "../../data/projects";
+
+const total = String(projects.length).padStart(2, "0");
+---
+
+<section id="work" class="sheet surface-paper work" aria-labelledby="work-title">
+  <div class="shell">
+    <SectionHeading id="work-title" index="02" label="Selected work" count={total}>
+      Selected work <span class="accent">({total})</span>
+      <Fragment slot="intro">
+        Four recent projects, all live. Different industries, one standard: clear goals, sharp execution, results you
+        can measure.
+      </Fragment>
+    </SectionHeading>
+
+    <ol class="stack" data-stack>
+      {projects.map((project, index) => <ProjectCard project={project} index={index} total={projects.length} />)}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .work {
+    padding-top: clamp(3.5rem, 8vw, 7rem);
+    padding-bottom: calc(var(--radius-sheet) + clamp(3rem, 8vw, 6rem));
+  }
+
+  .stack {
+    display: grid;
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+  }
+</style>
