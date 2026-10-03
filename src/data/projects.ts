@@ -4,8 +4,9 @@ import ecsImage from "../assets/work/element-cleaning-systems.png";
 
 type TranslatableFields = "industry" | "title" | "imageAlt" | "challenge" | "solution" | "fullDescription";
 
-type ProjectSource = Pick<Project, "slug" | "client" | "image" | "tags" | "websiteUrl"> & {
+type ProjectSource = Pick<Project, "slug" | "client" | "image" | "websiteUrl"> & {
   text: Localized<Pick<Project, TranslatableFields>>;
+  tags: Localized<string[]>;
   /** Metric values are reported figures and never translated; labels are. */
   results: { value: string; label: Localized }[];
 };
@@ -15,21 +16,24 @@ const source: ProjectSource[] = [
     slug: "element-cleaning-systems",
     client: "Element Cleaning Systems",
     image: ecsImage,
-    tags: ["Next.js", "Tailwind", "Strapi", "Resend"],
+    tags: {
+      es: ["En español e inglés", "Fácil de encontrar", "Cotización en línea", "Avisos por correo"],
+      en: ["Next.js", "Tailwind", "Strapi", "Resend"],
+    },
     websiteUrl: "https://elementjanitorial.com",
     results: [
       { value: "+340%", label: { es: "Solicitudes de cotización", en: "Quote Requests" } },
-      { value: "+45%", label: { es: "Tamaño de contratos", en: "Contract Size" } },
-      { value: "#1", label: { es: "Posición SEO", en: "SEO Rank" } },
+      { value: "+45%", label: { es: "Tamaño de los contratos", en: "Contract Size" } },
+      { value: "#1", label: { es: "Lugar en las búsquedas", en: "SEO Rank" } },
       { value: "+28%", label: { es: "Licitaciones ganadas", en: "RFP Wins" } },
     ],
     text: {
       es: {
-        industry: "Servicios industriales",
-        title: "Transformación digital para un líder en limpieza comercial",
+        industry: "Limpieza comercial",
+        title: "Vivían de las recomendaciones. Ahora los encuentran solos.",
         imageAlt: "Sitio web de Element Cleaning Systems",
         challenge:
-          "Una empresa líder en limpieza comercial no tenía la presencia digital necesaria para competir por contratos corporativos y dependía únicamente de las recomendaciones de boca en boca.",
+          "Todo su trabajo llegaba de boca en boca. Si nadie los recomendaba ese mes, no había clientes nuevos. Necesitaban que las empresas los encontraran por su cuenta.",
         solution:
           "Desarrollé una plataforma bilingüe de alto rendimiento que posiciona a ECS como líder del mercado, con cotizaciones automatizadas y mapas de cobertura por región.",
         fullDescription:
@@ -51,9 +55,10 @@ const source: ProjectSource[] = [
 ];
 
 export function getProjects(locale: Locale): Project[] {
-  return source.map(({ text, results, ...shared }) => ({
+  return source.map(({ text, results, tags, ...shared }) => ({
     ...shared,
     ...text[locale],
+    tags: tags[locale],
     results: results.map((result) => ({ label: result.label[locale], value: result.value })),
   }));
 }

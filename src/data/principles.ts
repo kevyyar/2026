@@ -4,9 +4,9 @@ import type { Locale, Localized } from "../i18n/config";
 const source: Localized<Principle>[] = [
   {
     es: {
-      title: "Precisión estratégica",
+      title: "Primero tu negocio",
       description:
-        "Cada decisión técnica tiene que ganarse su lugar frente a un objetivo de negocio. Si no mueve la aguja, no se lanza.",
+        "Todo lo que hago tiene que servirte para algo: traerte clientes, ahorrarte tiempo o evitarte errores. Si no sirve para eso, no lo hago.",
     },
     en: {
       title: "Strategic Precision",
@@ -16,9 +16,9 @@ const source: Localized<Principle>[] = [
   },
   {
     es: {
-      title: "Transparencia total",
+      title: "Cuentas claras",
       description:
-        "Siempre sabes qué está listo, qué sigue y qué está en riesgo. Avances semanales, tableros compartidos, cero sorpresas.",
+        "Siempre sabes qué está listo, qué sigue y si algo se atrasó. Avances cada semana y cero sorpresas.",
     },
     en: {
       title: "Radical Transparency",
@@ -28,9 +28,9 @@ const source: Localized<Principle>[] = [
   },
   {
     es: {
-      title: "Excelencia técnica",
+      title: "Bien hecho",
       description:
-        "Tipado, probado, documentado y rápido. El código que heredas es código que tu próximo desarrollador va a agradecer.",
+        "Rápido, probado y ordenado. Lo que te entrego sigue funcionando con el tiempo, y cualquiera puede retomarlo después.",
     },
     en: {
       title: "Engineering Excellence",
@@ -40,9 +40,9 @@ const source: Localized<Principle>[] = [
   },
   {
     es: {
-      title: "Diseño centrado en las personas",
+      title: "Fácil de usar",
       description:
-        "El software es para personas. Interfaces claras, accesibles y agradables convierten visitas en clientes.",
+        "Tu página la va a usar gente real, con prisa y desde el celular. Si es clara y agradable, las visitas se vuelven clientes.",
     },
     en: {
       title: "Human-Centric Design",

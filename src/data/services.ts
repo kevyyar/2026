@@ -4,15 +4,10 @@ import type { Locale, Localized } from "../i18n/config";
 const source: Localized<Service>[] = [
   {
     es: {
-      title: "Ingeniería full-stack",
+      title: "Página web para tu negocio",
       description:
-        "Arquitectura de aplicaciones escalables y de alto rendimiento con frameworks modernos. Construyo infraestructura digital sólida, pensada para crecer.",
-      features: [
-        "Ecosistemas Next.js y React",
-        "Arquitectura cloud escalable",
-        "Diseño e integración de APIs",
-        "Manejo de estado complejo",
-      ],
+        "Para que te encuentren, te conozcan y te escriban. Una página clara con lo que tus clientes siempre preguntan: qué vendes, cuánto cuesta, dónde estás y cómo contactarte.",
+      features: ["Menú o catálogo", "Mapa y horarios", "Botón de WhatsApp", "Se ve bien en celular"],
     },
     en: {
       title: "Full-Stack Engineering",
@@ -28,15 +23,10 @@ const source: Localized<Service>[] = [
   },
   {
     es: {
-      title: "Diseño UI/UX premium",
+      title: "Tienda en línea",
       description:
-        "Interfaces intuitivas y cuidadas que atrapan a tus usuarios. Combino psicología del comportamiento y diseño visual para generar interacción.",
-      features: [
-        "Prototipos de alta fidelidad",
-        "Design systems y tokens",
-        "Microinteracciones y motion",
-        "Accesibilidad (WCAG) primero",
-      ],
+        "Vende y cobra aunque el local ya haya cerrado. Tus productos con fotos y precios, un carrito sencillo y pago en línea o al recoger.",
+      features: ["Catálogo con fotos", "Pagos en línea", "Pedidos ordenados", "Envío o recolección"],
     },
     en: {
       title: "Premium UI/UX Design",
@@ -52,15 +42,10 @@ const source: Localized<Service>[] = [
   },
   {
     es: {
-      title: "Lanzamiento de productos digitales",
+      title: "App a tu medida",
       description:
-        "Convierto ideas en productos listos para el mercado. Del MVP al despliegue completo, aseguro una trayectoria sin tropiezos para tus activos digitales.",
-      features: [
-        "Desarrollo estratégico de MVP",
-        "Landing pages listas para marketing",
-        "Soluciones de e-commerce",
-        "Compatibilidad multiplataforma",
-      ],
+        "Para cuando una página ya no alcanza. Una herramienta hecha a la forma en que tú trabajas, que te quita de encima lo que hoy haces a mano.",
+      features: ["Pedidos", "Citas", "Inventario", "Reporte de ventas"],
     },
     en: {
       title: "Digital Product Launch",
@@ -76,15 +61,10 @@ const source: Localized<Service>[] = [
   },
   {
     es: {
-      title: "Ingeniería de rendimiento",
+      title: "Que aparezcas en Google",
       description:
-        "Optimización obsesiva para tiempos de carga mínimos. La velocidad es una funcionalidad, y me aseguro de que tu aplicación responda al instante.",
-      features: [
-        "Dominio de Core Web Vitals",
-        "Estrategias avanzadas de caché",
-        "Optimización del bundle",
-        "Renderizado del lado del servidor (SSR)",
-      ],
+        "Para que te vea la gente que ya anda buscando lo que vendes. Una página rápida y bien acomodada sale antes que una lenta y confusa.",
+      features: ["Búsquedas de tu zona", "Página rápida", "Textos claros", "Lista para celular"],
     },
     en: {
       title: "Performance Engineering",
@@ -100,15 +80,10 @@ const source: Localized<Service>[] = [
   },
   {
     es: {
-      title: "Seguridad y mantenimiento",
+      title: "Arreglo y cuido lo que ya tienes",
       description:
-        "Blindo tu presencia digital. El monitoreo proactivo y las actualizaciones constantes mantienen tu negocio seguro y funcionando sin interrupciones.",
-      features: [
-        "Pipelines de pruebas automatizadas",
-        "Auditorías y hardening de seguridad",
-        "Monitoreo de errores en tiempo real",
-        "Integración continua (CI/CD)",
-      ],
+        "Si tu página está lenta, vieja o descuidada, la dejo al tiro y la mantengo funcionando. Sin que tengas que volver a empezar de cero.",
+      features: ["Revisión completa", "Página segura", "Aviso si algo falla", "Actualizaciones al día"],
     },
     en: {
       title: "Security & Maintenance",
@@ -124,14 +99,14 @@ const source: Localized<Service>[] = [
   },
   {
     es: {
-      title: "Automatización basada en datos",
+      title: "Lo repetitivo, en automático",
       description:
-        "Uso tus datos para agilizar la operación. Construyo herramientas a la medida que automatizan flujos de trabajo y te dan información accionable.",
+        "Recordatorios, cotizaciones y reportes que salen solos. Tú dejas de copiar y pegar, y le dedicas ese tiempo a tus clientes.",
       features: [
-        "Dashboards y paneles de administración",
-        "Automatización de flujos de trabajo",
-        "Visualización de datos",
-        "Integración con APIs de terceros",
+        "Panel para ver tu negocio",
+        "Recordatorios y cotizaciones",
+        "Reportes claros",
+        "Tus herramientas conectadas",
       ],
     },
     en: {
