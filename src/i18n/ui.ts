@@ -26,7 +26,7 @@ const es = {
   "nav.primary": "Principal",
   "nav.siteMenu": "Menú del sitio",
   "nav.footer": "Pie de página",
-  "nav.work": "Caso real",
+  "nav.work": "Proyectos",
   "nav.services": "Servicios",
   "nav.process": "Proceso",
   "nav.about": "Sobre mí",
@@ -65,10 +65,10 @@ const es = {
   "about.p2":
     "Hablas directo conmigo de principio a fin. Nadie te va a pasar de una persona a otra ni a contestarte con palabras raras. Tú conoces tu negocio, y yo me encargo de que funcione igual de bien en internet.",
 
-  "work.label": "Caso real",
-  "work.title": "Un caso *real*",
+  "work.label": "Proyectos",
+  "work.title": "Proyectos *reales*",
   "work.intro":
-    "Un negocio que hacía muy buen trabajo y casi nadie encontraba en internet. Esto fue lo que hicimos y lo que pasó después.",
+    "Un sitio para un cliente y un producto propio que hoy vendo. Los dos los hice de punta a punta.",
   "work.featured": "Caso destacado",
   "work.results": "Resultados",
   "work.stack": "Tecnologías",
@@ -221,10 +221,10 @@ const en: Dictionary = {
   "about.p2":
     "You work with me directly, from the first call to the last deploy — no account managers, no hand-offs. I use AI tooling every day to move faster, and I review every line it touches. The result is software that is fast, accessible and easy for the next developer to own.",
 
-  "work.label": "Case study",
+  "work.label": "Selected work",
   "work.title": "Featured *work*",
   "work.intro":
-    "One engagement, end to end: strategy, a bilingual build and a launch — with the numbers that followed.",
+    "A client site and a product of my own that I sell today — both designed and built end to end.",
   "work.featured": "Featured case",
   "work.results": "Results",
   "work.stack": "Stack",

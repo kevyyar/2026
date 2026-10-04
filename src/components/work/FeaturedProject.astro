@@ -6,7 +6,8 @@ import CountUp from "../ui/CountUp.astro";
 type Props = {
   project: Project;
   href: string;
-  labels: { featured: string; results: string; stack: string; cta: string };
+  /** `featured` is omitted for cards that are not the featured case: no badge is shown. */
+  labels: { featured?: string; results: string; stack: string; cta: string };
 };
 
 const { project, href, labels } = Astro.props;
@@ -15,7 +16,7 @@ const { project, href, labels } = Astro.props;
 <article class="featured on-ink" data-cursor="view">
   <div class="featured__head">
     <div class="featured__meta mono">
-      <span class="featured__badge">{labels.featured}</span>
+      {labels.featured && <span class="featured__badge">{labels.featured}</span>}
       <span class="chip">{project.industry}</span>
     </div>
     <p class="featured__client mono muted">{project.client}</p>
