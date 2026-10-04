@@ -62,7 +62,6 @@ describe("localized content", () => {
         slug: p.slug,
         client: p.client,
         websiteUrl: p.websiteUrl,
-        tags: p.tags,
         values: p.results.map((r) => r.value),
         image: p.image,
       }));
@@ -75,5 +74,7 @@ describe("localized content", () => {
   it("is actually translated (Spanish differs from English)", () => {
     expect(getServices("es")[0].description).not.toBe(getServices("en")[0].description);
     expect(getProjects("es")[0].challenge).not.toBe(getProjects("en")[0].challenge);
+    expect(getProjects("es")[0].tags).not.toEqual(getProjects("en")[0].tags);
+    expect(getExperience("es")[0].technologies).not.toEqual(getExperience("en")[0].technologies);
   });
 });

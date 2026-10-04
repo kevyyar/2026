@@ -4,10 +4,10 @@ import type { Locale, Localized } from "../i18n/config";
 const source: Localized<ProcessStep>[] = [
   {
     es: {
-      title: "Descubrimiento estratégico",
+      title: "Platicamos",
       description:
-        "Empezamos por desmenuzar tus objetivos de negocio. Investigo a fondo para detectar oportunidades de mercado y definir las restricciones técnicas, de modo que la hoja de ruta esté alineada con tu visión.",
-      deliverables: ["Especificación técnica", "Análisis de la competencia", "Plano de arquitectura", "Hoja de ruta del proyecto"],
+        "Me cuentas de tu negocio y qué te gustaría resolver. No necesitas saber nada de tecnología. Yo reviso qué hace tu competencia y te propongo un plan con fechas.",
+      deliverables: ["Qué vamos a hacer, por escrito", "Qué hace tu competencia", "Cómo va a funcionar", "Fechas y pasos"],
     },
     en: {
       title: "Strategic Discovery",
@@ -18,10 +18,15 @@ const source: Localized<ProcessStep>[] = [
   },
   {
     es: {
-      title: "Arquitectura UX/UI",
+      title: "Te enseño cómo quedaría",
       description:
-        "Forma y función, juntas. Creo prototipos interactivos de alta fidelidad que definen el lenguaje visual y el recorrido del usuario, para validar las ideas antes de escribir una sola línea de código.",
-      deliverables: ["Prototipos interactivos", "Design system", "Mapas de flujo de usuario", "Auditoría de accesibilidad"],
+        "Antes de construir nada, ves el diseño, lo pruebas y me dices qué le cambiarías. Es mucho más fácil corregir aquí que cuando ya está hecho.",
+      deliverables: [
+        "Un diseño que puedes probar",
+        "Los colores y el estilo de tu marca",
+        "El recorrido de tu cliente",
+        "Fácil de usar para todos",
+      ],
     },
     en: {
       title: "UX/UI Architecture",
@@ -32,10 +37,10 @@ const source: Localized<ProcessStep>[] = [
   },
   {
     es: {
-      title: "Ingeniería full-stack",
+      title: "Lo construyo",
       description:
-        "La etapa de construcción. Desarrollo tu solución con frameworks modernos y escalables. Cada componente está pensado para el rendimiento, la seguridad y la mantenibilidad, con pruebas rigurosas en cada paso.",
-      deliverables: ["Código listo para producción", "Documentación de API", "Pruebas unitarias y de integración", "Reporte de rendimiento"],
+        "Aquí se arma todo. Cada semana te muestro avances para que no haya sorpresas al final, y pruebo cada parte antes de pasar a la siguiente.",
+      deliverables: ["Tu página o app funcionando", "Todo documentado", "Probado antes de salir", "Reporte de velocidad"],
     },
     en: {
       title: "Full-Stack Engineering",
@@ -46,10 +51,15 @@ const source: Localized<ProcessStep>[] = [
   },
   {
     es: {
-      title: "Lanzamiento y escala",
+      title: "Lo lanzamos",
       description:
-        "El lanzamiento es solo el principio. Me encargo del pipeline de DevOps para una salida a producción impecable y configuro herramientas de monitoreo para que tu aplicación escale sin esfuerzo a medida que crecen tus usuarios.",
-      deliverables: ["Pipeline de CI/CD", "Dashboard de analítica", "Optimización SEO", "Estrategia de crecimiento"],
+        "Sale al público y te sigo apoyando con lo que vaya haciendo falta. La dejo lista para que aguante cuando te lleguen más clientes.",
+      deliverables: [
+        "Cambios sin complicaciones",
+        "Panel con tus visitas",
+        "Lista para aparecer en Google",
+        "Plan para seguir creciendo",
+      ],
     },
     en: {
       title: "Deployment & Scale",

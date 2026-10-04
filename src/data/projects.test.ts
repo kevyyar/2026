@@ -42,7 +42,7 @@ describe("projects", () => {
       results: [
         { label: "Quote Requests", value: "+340%" },
         { label: "Contract Size", value: "+45%" },
-        { label: "SEO Rank", value: "#1" },
+        { label: "Online Quotes", value: "24/7" },
         { label: "RFP Wins", value: "+28%" },
       ],
       tags: ["Next.js", "Tailwind", "Strapi", "Resend"],
@@ -58,7 +58,7 @@ describe("projects", () => {
 
   it("looks projects up by slug", () => {
     expect(getProject("element-cleaning-systems", "en")?.client).toBe("Element Cleaning Systems");
-    expect(getProject("element-cleaning-systems", "es")?.industry).toBe("Servicios industriales");
+    expect(getProject("element-cleaning-systems", "es")?.industry).toBe("Limpieza comercial");
     expect(getProject("aesthete", "en")).toBeUndefined();
   });
 });
