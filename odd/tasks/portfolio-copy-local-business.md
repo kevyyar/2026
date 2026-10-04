@@ -23,3 +23,4 @@ Replace the Spanish (`es`) copy of iamkev.xyz with the new local-business copy s
 - C1: commit 00c0f51; vitest src/i18n 47/47 passed.
 - C2: commit 51a03d4; vitest 100/100 passed, astro check 0 errors (worker).
 - C3: vitest 100/100, astro build OK (only Node 24→22 Vercel runtime notice); new es strings found in build output; /en unchanged. Dev server running in Herdr tab "portfolio dev" (wT:t2) at http://localhost:4321/.
+- C4 (follow-up): services intro reworded; #1 SEO → 24/7 online quotes; EN/ES fact → 100% mobile. Commit 80ad45c; vitest 100/100.
