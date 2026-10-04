@@ -5,7 +5,7 @@ import { getProjects } from "../../data/projects";
 import { getI18n } from "../../i18n/astro";
 
 const { locale, t, href } = getI18n(Astro);
-const [featured] = getProjects(locale);
+const projects = getProjects(locale);
 ---
 
 <section id="work" class="sheet surface-paper work" aria-labelledby="work-title">
@@ -14,17 +14,22 @@ const [featured] = getProjects(locale);
       <Fragment slot="intro">{t("work.intro")}</Fragment>
     </SectionHeading>
 
-    <div class="work__feature">
-      <FeaturedProject
-        project={featured}
-        href={href(`/work/${featured.slug}`)}
-        labels={{
-          featured: t("work.featured"),
-          results: t("work.results"),
-          stack: t("work.stack"),
-          cta: t("work.readCase"),
-        }}
-      />
+    <div class="work__list">
+      {
+        projects.map((project, index) => (
+          <FeaturedProject
+            project={project}
+            href={href(`/work/${project.slug}`)}
+            labels={{
+              // Only the first project is the featured case.
+              featured: index === 0 ? t("work.featured") : undefined,
+              results: t("work.results"),
+              stack: t("work.stack"),
+              cta: t("work.readCase"),
+            }}
+          />
+        ))
+      }
     </div>
   </div>
 </section>
@@ -35,7 +40,9 @@ const [featured] = getProjects(locale);
     padding-bottom: calc(var(--radius-sheet) + clamp(3rem, 8vw, 6rem));
   }
 
-  .work__feature {
+  .work__list {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 3rem);
     padding-top: clamp(2.5rem, 6vw, 5rem);
   }
 </style>
