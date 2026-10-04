@@ -77,7 +77,7 @@ const es = {
   "services.label": "Servicios",
   "services.title": "Lo que *hago*",
   "services.intro":
-    "Seis formas de echarte la mano. Pide una sola o déjame todo el paquete.",
+    "Seis formas de ayudar a tu negocio. Empieza con una o arma la combinación que necesites.",
   "services.includes": "{title} incluye",
 
   "process.label": "Proceso",

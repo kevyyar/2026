@@ -24,7 +24,7 @@ const source: ProjectSource[] = [
     results: [
       { value: "+340%", label: { es: "Solicitudes de cotización", en: "Quote Requests" } },
       { value: "+45%", label: { es: "Tamaño de los contratos", en: "Contract Size" } },
-      { value: "#1", label: { es: "Lugar en las búsquedas", en: "SEO Rank" } },
+      { value: "24/7", label: { es: "Cotizaciones en línea", en: "Online Quotes" } },
       { value: "+28%", label: { es: "Licitaciones ganadas", en: "RFP Wins" } },
     ],
     text: {

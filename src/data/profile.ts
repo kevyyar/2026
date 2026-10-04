@@ -31,7 +31,7 @@ const localized: Localized<Pick<Profile, "role" | "positioning" | "location" | "
 const facts: { value: string; label: Localized }[] = [
   { value: "2019", label: { es: "Haciendo páginas y apps desde", en: "Writing production code since" } },
   { value: "1:1", label: { es: "Trato directo, siempre conmigo", en: "One point of contact, start to finish" } },
-  { value: "EN / ES", label: { es: "Te atiendo en español o en inglés", en: "Bilingual delivery, English & Spanish" } },
+  { value: "100%", label: { es: "Pensado para verse bien en celular", en: "Built to work great on mobile" } },
   { value: "< 24h", label: { es: "Lo que tardo en contestarte", en: "Reply time on new inquiries" } },
 ];
 
