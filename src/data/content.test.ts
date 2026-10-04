@@ -48,7 +48,7 @@ describe("localized content", () => {
 
   it.each(locales)("has the expected counts in %s", (locale) => {
     const c = content(locale);
-    expect(c.projects).toHaveLength(1);
+    expect(c.projects).toHaveLength(2);
     expect(c.services).toHaveLength(6);
     expect(c.processSteps).toHaveLength(4);
     expect(c.experience).toHaveLength(2);
@@ -73,8 +73,12 @@ describe("localized content", () => {
 
   it("is actually translated (Spanish differs from English)", () => {
     expect(getServices("es")[0].description).not.toBe(getServices("en")[0].description);
-    expect(getProjects("es")[0].challenge).not.toBe(getProjects("en")[0].challenge);
-    expect(getProjects("es")[0].tags).not.toEqual(getProjects("en")[0].tags);
+    const es = getProjects("es");
+    const en = getProjects("en");
+    for (const [index, project] of es.entries()) {
+      expect(project.challenge, project.slug).not.toBe(en[index].challenge);
+      expect(project.tags, project.slug).not.toEqual(en[index].tags);
+    }
     expect(getExperience("es")[0].technologies).not.toEqual(getExperience("en")[0].technologies);
   });
 });

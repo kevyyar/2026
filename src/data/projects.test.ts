@@ -13,8 +13,8 @@ const experience = getExperience("en");
 const principles = getPrinciples("en");
 
 describe("projects", () => {
-  it("contains only the Element Cleaning Systems case study", () => {
-    expect(projects.map((p) => p.slug)).toEqual(["element-cleaning-systems"]);
+  it("lists Element Cleaning Systems first, then PídeloConmigo", () => {
+    expect(projects.map((p) => p.slug)).toEqual(["element-cleaning-systems", "pideloconmigo"]);
   });
 
   it("preserves the Element Cleaning Systems data verbatim", () => {
@@ -52,13 +52,34 @@ describe("projects", () => {
     });
   });
 
-  it("has an optimized image", () => {
-    expect(projects[0].image).toBeTruthy();
+  it("has the PídeloConmigo product entry with proven facts only", () => {
+    const pideloconmigo = getProject("pideloconmigo", "en");
+    expect(pideloconmigo?.client).toBe("PídeloConmigo");
+    expect(pideloconmigo?.websiteUrl).toBe("https://pideloconmigo.com");
+    expect(pideloconmigo?.tags).toEqual(["Next.js", "Supabase", "Tailwind", "PWA"]);
+    expect(pideloconmigo?.results).toEqual([
+      { label: "Commission per Order", value: "0%" },
+      { label: "Apps to Install", value: "0" },
+      { label: "Design Themes", value: "4" },
+      { label: "Free Trial Days", value: "7" },
+    ]);
+
+    const es = getProject("pideloconmigo", "es");
+    expect(es?.industry).toBe("Producto propio · Catálogos digitales");
+    expect(es?.tags).toEqual(["Pedidos a WhatsApp", "QR con tu logo", "Se edita desde el celular", "Sin comisiones"]);
+    expect(es?.results.map((r) => r.value)).toEqual(["0%", "0", "4", "7"]);
+    expect(es?.websiteUrl).toBe(pideloconmigo?.websiteUrl);
+  });
+
+  it("has an optimized image for every project", () => {
+    for (const project of projects) expect(project.image).toBeTruthy();
+    expect(projects[1].image).not.toBe(projects[0].image);
   });
 
   it("looks projects up by slug", () => {
     expect(getProject("element-cleaning-systems", "en")?.client).toBe("Element Cleaning Systems");
     expect(getProject("element-cleaning-systems", "es")?.industry).toBe("Limpieza comercial");
+    expect(getProject("pideloconmigo", "es")?.client).toBe("PídeloConmigo");
     expect(getProject("aesthete", "en")).toBeUndefined();
   });
 });
