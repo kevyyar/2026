@@ -63,7 +63,7 @@ const es = {
   "about.p1":
     "Soy Kevin Barreto y trabajo desde México. Empecé en 2019 haciendo páginas para negocios locales, y de ahí no me he bajado. Después pasé varios años en equipos grandes de software, así que lo que te entrego está bien hecho: no se cae ni se queda viejo al mes.",
   "about.p2":
-    "Hablas directo conmigo de principio a fin, en español o en inglés. Nadie te va a pasar de una persona a otra ni a contestarte con palabras raras. Tú conoces tu negocio, y yo me encargo de que funcione igual de bien en internet.",
+    "Hablas directo conmigo de principio a fin. Nadie te va a pasar de una persona a otra ni a contestarte con palabras raras. Tú conoces tu negocio, y yo me encargo de que funcione igual de bien en internet.",
 
   "work.label": "Caso real",
   "work.title": "Un caso *real*",
@@ -108,8 +108,8 @@ const es = {
   "contact.copyFailed": "No se pudo copiar: usa el enlace de correo",
   "contact.replyTime": "Te contesto en",
   "contact.replyValue": "Menos de 24 horas",
-  "contact.languages": "Idiomas",
-  "contact.languagesValue": "Español / English",
+  "contact.languages": "Trato",
+  "contact.languagesValue": "Directo, siempre conmigo",
   "contact.elsewhere": "También en",
 
   "form.name": "¿Cómo te llamas?",
@@ -219,7 +219,7 @@ const en: Dictionary = {
   "about.p1":
     "I’m Kevin — a frontend-heavy full-stack developer working from México with clients anywhere. Since 2019 I’ve shipped websites, online stores and web apps with React, Next.js, Vue and Astro, backed by Node.js and Firebase.",
   "about.p2":
-    "You work with me directly, in English or Spanish, from the first call to the last deploy — no account managers, no hand-offs. I use AI tooling every day to move faster, and I review every line it touches. The result is software that is fast, accessible and easy for the next developer to own.",
+    "You work with me directly, from the first call to the last deploy — no account managers, no hand-offs. I use AI tooling every day to move faster, and I review every line it touches. The result is software that is fast, accessible and easy for the next developer to own.",
 
   "work.label": "Case study",
   "work.title": "Featured *work*",
@@ -265,8 +265,8 @@ const en: Dictionary = {
   "contact.copyFailed": "Couldn’t copy — use the email link",
   "contact.replyTime": "Reply time",
   "contact.replyValue": "Within 24 hours",
-  "contact.languages": "Languages",
-  "contact.languagesValue": "English / Español",
+  "contact.languages": "Point of contact",
+  "contact.languagesValue": "Me, start to finish",
   "contact.elsewhere": "Elsewhere",
 
   "form.name": "Name",
